@@ -934,3 +934,29 @@ header.wp-block-template-part,
 	width: 220px !important;
 	max-width: calc(50% - 6px) !important;
 }
+
+/* --------------------------------------------------------------------------
+   Slider en móvil: más corto y con la escena siempre abajo (cerca de los puntos)
+   -------------------------------------------------------------------------- */
+@media (max-width: 781px) {
+	.jau-slider.is-ready > .jau-slide { align-items: stretch; }
+	.jau-slide.wp-block-cover { padding-bottom: 52px !important; }
+	.jau-slide .wp-block-cover__inner-container { display: flex; flex-direction: column; }
+	.jau-slide__cols { flex: 1; display: flex !important; flex-direction: column; flex-wrap: nowrap !important; gap: 0 !important; }
+	.jau-slide__visual { margin-top: auto !important; flex-grow: 0 !important; }
+	.jau-slide__texto { padding-block: 22px 0; gap: 12px; }
+	.jau-slide__texto h1, .jau-slide__texto h2 { font-size: 30px; }
+	.jau-slide__texto p { font-size: 15px; line-height: 1.5; }
+	.jau-slide .wp-block-buttons { gap: 8px; }
+	.jau-slide .wp-block-button__link { min-height: 44px; padding: 10px 16px; font-size: 14px; }
+	.jau-slide__logo img { height: 40px; }
+	.jau-slide__logo--alto img { height: 72px; }
+	.jau-escena { height: 236px; margin-top: 16px; }
+	.jau-escena::before { width: min(88%, 236px); }
+	.jau-escena--foto-botellas > .jau-escena__foto { width: min(88%, 236px); }
+	.jau-slider__controles { bottom: 12px; }
+}
+
+/* Fotos que rotan de 2 en 2 en móvil (Sobre nosotros y «Momentos» de cada producto) */
+.jau-fotos.is-rotando > figure { display: none !important; }
+.jau-fotos.is-rotando > figure.is-visible { display: block !important; animation: jauAFade .6s ease both; }

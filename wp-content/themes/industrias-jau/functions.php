@@ -49,6 +49,16 @@ add_action(
 			)
 		);
 		wp_register_script(
+			'industrias-jau-fotos',
+			get_theme_file_uri( 'assets/js/fotos.js' ),
+			array(),
+			jau_tema_version( 'assets/js/fotos.js' ),
+			array(
+				'strategy'  => 'defer',
+				'in_footer' => true,
+			)
+		);
+		wp_register_script(
 			'industrias-jau-slider',
 			get_theme_file_uri( 'assets/js/slider.js' ),
 			array(),
@@ -284,3 +294,18 @@ add_filter(
 	10,
 	2
 );
+
+/* Filas de fotos que rotan en móvil: el script solo se carga donde hay una. */
+foreach ( array( 'core/group', 'core/gallery' ) as $jau_bloque_fotos ) {
+	add_filter(
+		'render_block_' . $jau_bloque_fotos,
+		function ( $html, $block ) {
+			if ( ! empty( $block['attrs']['className'] ) && str_contains( $block['attrs']['className'], 'jau-fotos' ) ) {
+				wp_enqueue_script( 'industrias-jau-fotos' );
+			}
+			return $html;
+		},
+		10,
+		2
+	);
+}
