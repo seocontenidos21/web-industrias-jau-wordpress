@@ -1,0 +1,13 @@
+{
+  "name": "jau-prototipo-a-sencillo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prototipo A (Sencillo) de la web de Industrias JAU, escritorio y móvil",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

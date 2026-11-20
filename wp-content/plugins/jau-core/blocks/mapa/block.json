@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jau/mapa",
+	"title": "Mapa de la planta",
+	"category": "widgets",
+	"icon": "location-alt",
+	"description": "Mapa con la dirección de «Datos de la empresa» y el enlace «Cómo llegar».",
+	"textdomain": "jau-core",
+	
+	"supports": { "html": false, "multiple": false, "align": [ "wide", "full" ], "spacing": { "margin": true } },
+	"editorScript": "file:./editor.js",
+	
+	"render": "file:./render.php"
+}

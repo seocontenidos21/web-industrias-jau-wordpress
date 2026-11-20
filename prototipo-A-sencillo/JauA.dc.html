@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="jau-tema.css">
+<script src="jau-data.js"></script>
+<style>
+html,body{margin:0;padding:0;background:var(--jau-paper);font-family:var(--jau-font-text);-webkit-font-smoothing:antialiased;}
+*{box-sizing:border-box;}
+a{color:inherit;text-decoration:none;}
+a:hover{color:var(--jau-primary);}
+@keyframes jauAIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+/* ===== Versión móvil (prototipo A) ===== */
+@keyframes jauAFade{from{opacity:0}to{opacity:1}}
+/* iPad vertical: el banner pasa a una columna; la composición conserva la proporción de escritorio */
+@media (min-width:641px) and (max-width:1000px){
+  .ja-hero-vis{height:auto!important;aspect-ratio:1/1;max-width:480px!important;}
+}
+@media (max-width:640px){
+  .ja-head{height:60px!important;gap:10px!important;}
+  .ja-hero-vis{height:300px!important;}
+  .ja-prods{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;}
+  .ja-pbody{padding:12px!important;}
+  .ja-pname{font-size:15px!important;line-height:1.2;}
+  .ja-pbtn{align-self:stretch!important;}
+  .ja-filt-r{width:100%;}
+  .ja-search{flex:1;min-width:0!important;}
+  .ja-flink{padding:6px 0!important;}
+  .ja-det-h1{font-size:30px!important;}
+  .ja-nos-img{aspect-ratio:auto!important;height:200px;min-height:0!important;}
+}
+@media (max-width:560px){
+  .ja-cta{display:none!important;}
+}
+</style>
+</helmet>
+<sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+<div style="font-family:var(--jau-font-text);background:var(--jau-paper);color:var(--jau-ink);min-height:100vh;overflow-x:clip;">
+
+  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--jau-line);">
+    <div class="ja-head" style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,40px);height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;">
+      <button onClick="{{ goInicio }}" style="border:0;background:none;padding:0;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--jau-ink);">
+        <span style="width:34px;height:34px;border-radius:8px;background:var(--jau-primary);color:#fff;display:grid;place-items:center;font-family:var(--jau-font-display);font-weight:800;font-size:14px;">J</span>
+        <span style="font-family:var(--jau-font-display);font-weight:800;font-size:17px;letter-spacing:.05em;white-space:nowrap;">INDUSTRIAS JAU</span>
+        
+      </button>
+      <sc-if value="{{ navDesk }}" hint-placeholder-val="{{ true }}">
+        <nav style="display:flex;align-items:center;gap:4px;">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+            <button onClick="{{ n.go }}" style="border:0;background:{{ n.bg }};cursor:pointer;height:40px;padding:0 14px;border-radius:8px;font-size:15px;white-space:nowrap;font-weight:{{ n.weight }};color:{{ n.color }};transition:background .2s,color .2s;" style-hover="background:var(--jau-gray);color:var(--jau-ink);">{{ n.label }}</button>
+          </sc-for>
+        </nav>
+      </sc-if>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <sc-if value="{{ showCta }}" hint-placeholder-val="{{ true }}"><button class="ja-cta" onClick="{{ goContacto }}" style="border:0;cursor:pointer;height:44px;padding:0 18px;border-radius:8px;background:var(--jau-primary);color:var(--jau-primary-ink);font-weight:600;font-size:14px;white-space:nowrap;transition:transform .2s,box-shadow .2s;" style-hover="transform:translateY(-1px);box-shadow:0 8px 20px -8px var(--jau-primary);">{{ J.cta }}</button></sc-if>
+        <sc-if value="{{ navMob }}" hint-placeholder-val="{{ false }}"><button onClick="{{ toggleMenu }}" aria-label="{{ menuLabel }}" style="cursor:pointer;width:44px;height:44px;border-radius:8px;border:1px solid var(--jau-line);background:{{ menuBtnBg }};color:var(--jau-ink);display:grid;place-items:center;transition:background .2s;" style-hover="background:var(--jau-gray);"><sc-if value="{{ menuClosed }}" hint-placeholder-val="{{ true }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16 M4 12h16 M4 17h16"></path></svg></sc-if><sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12 M18 6L6 18"></path></svg></sc-if></button></sc-if>
+      </div>
+    </div>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <nav style="position:absolute;left:0;right:0;top:100%;background:#fff;border-bottom:1px solid var(--jau-line);box-shadow:0 24px 40px -24px rgba(20,24,30,.35);padding:6px clamp(16px,4vw,40px) 20px;animation:jauAIn .22s ease both;">
+        <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+            <button onClick="{{ n.go }}" style="display:flex;align-items:center;justify-content:space-between;height:54px;border:0;border-bottom:1px solid var(--jau-line);background:none;padding:0 4px;cursor:pointer;text-align:left;font-size:17px;font-weight:{{ n.weight }};color:{{ n.color }};">{{ n.label }}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></button>
+          </sc-for>
+          <sc-if value="{{ showCta }}" hint-placeholder-val="{{ true }}"><button onClick="{{ goContacto }}" style="margin-top:16px;border:0;cursor:pointer;height:52px;border-radius:8px;background:var(--jau-primary);color:var(--jau-primary-ink);font-weight:700;font-size:16px;">{{ J.cta }}</button></sc-if>
+        </div>
+      </nav>
+    </sc-if>
+  </header>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closeMenu }}" style="position:fixed;inset:0;z-index:40;background:rgba(13,14,17,.35);animation:jauAFade .2s ease both;"></div></sc-if>
+
+  <sc-if value="{{ pInicio }}" hint-placeholder-val="{{ true }}">
+    <section style="background:var(--jau-primary);color:#fff;overflow:hidden;">
+      <div style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(12px,3vw,40px);align-items:center;min-height:min(78vh,620px);">
+        <div style="display:flex;flex-direction:column;gap:20px;padding:clamp(40px,6vw,72px) 0;animation:jauAIn .6s ease both;">
+          <h1 style="margin:0;font-family:var(--jau-font-display);font-weight:800;font-size:clamp(36px,5vw,60px);line-height:1.03;letter-spacing:-.025em;text-wrap:balance;">{{ J.inicio.titulo }}</h1>
+          <p style="margin:0;font-size:clamp(16px,1.4vw,19px);line-height:1.55;opacity:.9;max-width:500px;text-wrap:pretty;">{{ J.inicio.texto }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:4px;">
+            <button onClick="{{ goContacto }}" style="border:0;cursor:pointer;height:52px;padding:0 24px;border-radius:8px;background:#fff;color:var(--jau-ink);font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;transition:transform .2s,box-shadow .2s;" style-hover="transform:translateY(-2px);box-shadow:0 12px 24px -10px rgba(0,0,0,.4);">{{ J.cta }}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14 M13 6l6 6-6 6"></path></svg></button>
+            <button onClick="{{ goProductos }}" style="cursor:pointer;height:52px;padding:0 24px;border-radius:8px;background:transparent;border:1.5px solid rgba(255,255,255,.7);color:#fff;font-weight:600;font-size:16px;transition:background .2s;" style-hover="background:rgba(255,255,255,.12);">{{ J.inicio.ctaSec }}</button>
+          </div>
+        </div>
+        <div class="ja-hero-vis" style="position:relative;width:100%;max-width:620px;justify-self:center;height:clamp(340px,46vw,560px);animation:jauAIn .7s .1s ease both;">
+          <span style="position:absolute;right:-12%;top:50%;width:min(110%,600px);aspect-ratio:1/1;transform:translateY(-50%);border-radius:50%;background:color-mix(in oklch,var(--jau-primary) 78%,white);"></span>
+          <img src="img/productos/frugy-familia.png" alt="Frugy" style="position:absolute;right:0;bottom:12%;width:84%;filter:drop-shadow(0 20px 26px rgba(0,0,0,.25));">
+          <img src="img/productos/drinkcola-recorte.png" alt="Drink Cola" style="position:absolute;left:-4%;bottom:-6%;height:94%;filter:drop-shadow(0 24px 30px rgba(0,0,0,.35));">
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1240px;margin:0 auto;padding:48px clamp(16px,4vw,40px) 8px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+        <h2 style="margin:0;font-family:var(--jau-font-display);font-size:clamp(24px,2.6vw,32px);font-weight:800;letter-spacing:-.01em;">Líneas de producto</h2>
+        
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px;">
+        <sc-for list="{{ lineasCards }}" as="l" hint-placeholder-count="4">
+          <button onClick="{{ l.abrir }}" style="text-align:left;cursor:pointer;border:1px solid var(--jau-line);background:var(--jau-white);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s;color:var(--jau-ink);" style-hover="transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(20,24,30,.35);border-color:transparent;">
+            <span style="width:40px;height:4px;border-radius:2px;background:{{ l.color }};"></span>
+            <strong style="font-family:var(--jau-font-display);font-size:19px;">{{ l.nombre }}</strong>
+            <span style="font-size:14px;color:var(--jau-muted);line-height:1.45;">{{ l.desc }}</span>
+            <span style="font-size:14px;font-weight:600;color:var(--jau-primary);display:flex;align-items:center;gap:6px;">Ver productos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14 M13 6l6 6-6 6"></path></svg></span>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:1240px;margin:0 auto;padding:44px clamp(16px,4vw,40px) 52px;">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+        <h2 style="margin:0;font-family:var(--jau-font-display);font-size:clamp(24px,2.6vw,32px);font-weight:800;letter-spacing:-.01em;">Productos destacados</h2>
+        <button onClick="{{ goProductos }}" style="border:0;background:none;cursor:pointer;font-weight:600;font-size:15px;color:var(--jau-primary);display:flex;align-items:center;gap:6px;padding:8px 0;" style-hover="text-decoration:underline;">Ver el catálogo completo<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14 M13 6l6 6-6 6"></path></svg></button>
+      </div>
+      <div class="ja-prods" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:18px;">
+        <sc-for list="{{ destacadosA }}" as="p" hint-placeholder-count="4">
+          <article style="background:var(--jau-white);border:1px solid var(--jau-line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;" style-hover="transform:translateY(-4px);box-shadow:0 20px 40px -20px rgba(20,24,30,.38);">
+            <div style="aspect-ratio:1/1;position:relative;background:repeating-linear-gradient(135deg,var(--jau-ph-a) 0 10px,var(--jau-ph-b) 10px 20px);display:grid;place-items:center;">
+              <sc-if value="{{ p.hasFoto }}" hint-placeholder-val="{{ false }}"><img src="{{ p.foto }}" alt="{{ p.nombre }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3;"></sc-if>
+              <sc-if value="{{ p.noFoto }}" hint-placeholder-val="{{ true }}"><span style="width:44px;height:120px;border-radius:14px 14px 8px 8px;background:{{ p.color }};opacity:.9;"></span>
+              </sc-if>
+            </div>
+            <div class="ja-pbody" style="padding:16px;display:flex;flex-direction:column;gap:6px;flex:1;">
+              <span style="font-size:12px;font-weight:600;color:var(--jau-muted);text-transform:uppercase;letter-spacing:.05em;">{{ p.lineaNombre }}</span>
+              <strong class="ja-pname" style="font-size:17px;font-family:var(--jau-font-display);">{{ p.nombre }}</strong>
+              <span style="font-size:13px;color:var(--jau-muted);">{{ p.marcaLabel }} · {{ p.presentacion }}</span>
+              <button class="ja-pbtn" onClick="{{ p.ver }}" style="margin-top:auto;align-self:flex-start;cursor:pointer;border:1px solid var(--jau-line);background:var(--jau-white);color:var(--jau-ink);height:38px;padding:0 14px;border-radius:8px;font-weight:600;font-size:13px;transition:background .2s,color .2s,border-color .2s;" style-hover="background:var(--jau-primary);color:#fff;border-color:var(--jau-primary);">Ver producto</button>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="background:var(--jau-white);border-top:1px solid var(--jau-line);border-bottom:1px solid var(--jau-line);">
+      <div style="max-width:1240px;margin:0 auto;padding:52px clamp(16px,4vw,40px);">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;gap:8px;max-width:640px;">
+            <h2 style="margin:0;font-family:var(--jau-font-display);font-size:clamp(24px,2.6vw,32px);font-weight:800;letter-spacing:-.01em;">{{ J.servicios.titulo }}</h2>
+            <p style="margin:0;color:var(--jau-ink-2);font-size:16px;line-height:1.5;">{{ J.servicios.intro }}</p>
+          </div>
+          <button onClick="{{ goServicios }}" style="border:0;background:none;cursor:pointer;font-weight:600;font-size:15px;color:var(--jau-primary);display:flex;align-items:center;gap:6px;padding:8px 0;" style-hover="text-decoration:underline;">Ver servicios<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14 M13 6l6 6-6 6"></path></svg></button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:16px;">
+          <sc-for list="{{ servA }}" as="s" hint-placeholder-count="4">
+            <div style="background:var(--jau-white);border:1px solid var(--jau-line);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:12px;transition:background .25s,box-shadow .25s;" style-hover="background:var(--jau-white);box-shadow:0 16px 32px -18px rgba(20,24,30,.3);">
+              <span style="color:var(--jau-primary);display:flex;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ s.icono }}"></path></svg></span>
+              <strong style="font-family:var(--jau-font-display);font-size:18px;">{{ s.titulo }}</strong>
+              <span style="font-size:14px;line-height:1.5;color:var(--jau-ink-2);">{{ s.texto }}</span><sc-if value="{{ s.link }}" hint-placeholder-val="{{ false }}"><button onClick="{{ s.ver }}" style="align-self:flex-start;border:0;background:none;padding:0;cursor:pointer;color:var(--jau-primary);font-weight:700;font-size:15px;display:flex;align-items:center;gap:6px;" style-hover="text-decoration:underline;">Ver productos →</button></sc-if>
+              
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:var(--jau-ink);color:#fff;">
+      <div style="max-width:1240px;margin:0 auto;padding:52px clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:36px;align-items:center;">
+        <div style="position:relative;overflow:hidden;aspect-ratio:16/10;border-radius:12px;background:repeating-linear-gradient(135deg,#22252c 0 10px,#1b1e24 10px 20px);display:grid;place-items:center;"><img src="https://images.unsplash.com/photo-1664382953403-fc1ac77073a0?fm=jpg&q=70&w=1600&auto=format&fit=crop" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <h2 style="margin:0;font-family:var(--jau-font-display);font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:-.01em;">{{ J.nosotros.titulo }}</h2>
+          <p style="margin:0;font-size:17px;line-height:1.55;color:#C9CCD3;text-wrap:pretty;">{{ J.nosotros.intro }}</p>
+          <button onClick="{{ goNosotros }}" style="align-self:flex-start;cursor:pointer;height:48px;padding:0 22px;border-radius:8px;background:transparent;border:1.5px solid #fff;color:#fff;font-weight:600;font-size:15px;transition:background .2s,color .2s;" style-hover="background:#fff;color:var(--jau-ink);">Conocer la empresa</button>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ pServicios }}" hint-placeholder-val="{{ false }}">
+    <section style="background:var(--jau-primary);color:var(--jau-primary-ink);">
+      <div style="max-width:1240px;margin:0 auto;padding:36px clamp(16px,4vw,40px) 40px;display:flex;flex-direction:column;gap:10px;">
+        <h1 style="margin:0;font-family:var(--jau-font-display);font-weight:800;font-size:clamp(32px,4vw,48px);letter-spacing:-.02em;">{{ J.servicios.titulo }}</h1>
+        <p style="margin:0;font-size:18px;line-height:1.5;opacity:.9;max-width:640px;">{{ J.servicios.intro }}</p>
+      </div>
+    </section>
+    <section style="max-width:1240px;margin:0 auto;padding:40px clamp(16px,4vw,40px) 52px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px;">
+      <sc-for list="{{ servA }}" as="s" hint-placeholder-count="4">
+        <div style="background:var(--jau-white);border:1px solid var(--jau-line);border-radius:12px;padding:26px;display:flex;gap:18px;align-items:flex-start;transition:transform .25s,box-shadow .25s;" style-hover="transform:translateY(-3px);box-shadow:0 18px 36px -20px rgba(20,24,30,.35);">
+          <span style="flex:none;color:var(--jau-primary);display:flex;"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="{{ s.icono }}"></path></svg></span>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <strong style="font-family:var(--jau-font-display);font-size:21px;">{{ s.titulo }}</strong>
+            <span style="font-size:16px;line-height:1.55;color:var(--jau-ink-2);">{{ s.texto }}</span><sc-if value="{{ s.link }}" hint-placeholder-val="{{ false }}"><button onClick="{{ s.ver }}" style="align-self:flex-start;border:0;background:none;padding:0;cursor:pointer;color:var(--jau-primary);font-weight:700;font-size:15px;display:flex;align-items:center;gap:6px;" style-hover="text-decoration:underline;">Ver productos →</button></sc-if>
+            
+          </div>
+        </div>
+      </sc-for>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ pNosotros }}" hint-placeholder-val="{{ false }}">
+    <section style="background:var(--jau-primary);color:var(--jau-primary-ink);">
+      <div style="max-width:1240px;margin:0 auto;padding:36px clamp(16px,4vw,40px) 40px;display:flex;flex-direction:column;gap:10px;">
+        <h1 style="margin:0;font-family:var(--jau-font-display);font-weight:800;font-size:clamp(32px,4vw,48px);letter-spacing:-.02em;">{{ J.nosotros.titulo }}</h1>
+        <p style="margin:0;font-size:18px;line-height:1.5;opacity:.9;max-width:680px;">{{ J.nosotros.intro }}</p>
+      </div>
+    </section>
+    <section style="max-width:1240px;margin:0 auto;padding:40px clamp(16px,4vw,40px) 52px;display:flex;flex-direction:column;gap:28px;">
+      <div class="ja-nos-img" style="position:relative;overflow:hidden;aspect-ratio:21/8;min-height:200px;border-radius:12px;background:repeating-linear-gradient(135deg,var(--jau-ph-a) 0 10px,var(--jau-ph-b) 10px 20px);display:grid;place-items:center;"><img src="https://images.unsplash.com/photo-1553413077-190dd305871c?fm=jpg&q=70&w=1600&auto=format&fit=crop" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;">
+        <sc-for list="{{ J.nosotros.bloques }}" as="b" hint-placeholder-count="4">
+          <div style="background:var(--jau-white);border:1px solid var(--jau-line);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:12px;transition:transform .25s,box-shadow .25s;" style-hover="transform:translateY(-3px);box-shadow:0 18px 36px -20px rgba(20,24,30,.35);">
+            <span style="color:var(--jau-primary);display:flex;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ b.icono }}"></path></svg></span>
+            <strong style="font-family:var(--jau-font-display);font-size:19px;">{{ b.titulo }}</strong>
+            <span style="font-size:15px;line-height:1.5;color:var(--jau-ink-2);">{{ b.texto }}</span>
+            
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ pProductos }}" hint-placeholder-val="{{ false }}">
+    <section style="background:var(--jau-primary);color:var(--jau-primary-ink);">
+      <div style="max-width:1240px;margin:0 auto;padding:36px clamp(16px,4vw,40px) 40px;display:flex;flex-direction:column;gap:10px;">
+        <h1 style="margin:0;font-family:var(--jau-font-display);font-weight:800;font-size:clamp(32px,4vw,48px);letter-spacing:-.02em;">Portafolio de productos</h1>
+        <p style="margin:0;font-size:18px;line-height:1.5;opacity:.9;max-width:640px;">Filtra por línea o marca y consulta el producto que te interesa.</p>
+      </div>
+    </section>
+    <section style="max-width:1240px;margin:0 auto;padding:28px clamp(16px,4vw,40px) 52px;display:flex;flex-direction:column;gap:20px;">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--jau-white);border:1px solid var(--jau-line);border-radius:12px;padding:14px;">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <sc-for list="{{ lineasFA }}" as="l" hint-placeholder-count="5">
+            <button onClick="{{ l.pick }}" style="cursor:pointer;height:38px;padding:0 14px;border-radius:8px;border:1px solid {{ l.bd }};background:{{ l.bg }};color:{{ l.fg }};font-weight:600;font-size:14px;transition:all .2s;">{{ l.nombre }}</button>
+          </sc-for>
+        </div>
+        <div class="ja-filt-r" style="display:flex;flex-wrap:wrap;gap:8px;">
+          <select onChange="{{ onMarca }}" value="{{ marca }}" style="height:40px;padding:0 12px;border-radius:8px;border:1px solid var(--jau-line);background:var(--jau-paper);font-size:14px;color:var(--jau-ink);">
+            <sc-for list="{{ marcasF }}" as="m" hint-placeholder-count="4"><option value="{{ m.id }}">{{ m.nombre }}</option></sc-for>
+          </select>
+          <input class="ja-search" type="search" placeholder="Buscar producto" value="{{ q }}" onChange="{{ onQ }}" style="height:40px;padding:0 12px;border-radius:8px;border:1px solid var(--jau-line);background:var(--jau-paper);font-size:14px;min-width:200px;color:var(--jau-ink);">
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <strong style="font-size:15px;">{{ totalLabel }}</strong>
+        
+      </div>
+      <sc-if value="{{ vacio }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:40px;text-align:center;background:var(--jau-white);border:1px dashed var(--jau-line);border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span style="color:var(--jau-ink-2);">No hay productos con esos filtros.</span>
+          <button onClick="{{ limpiar }}" style="cursor:pointer;border:0;background:var(--jau-ink);color:#fff;height:40px;padding:0 16px;border-radius:8px;font-weight:600;">Limpiar filtros</button>
+        </div>
+      </sc-if>
+      <div class="ja-prods" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:16px;">
+        <sc-for list="{{ listaA }}" as="p" hint-placeholder-count="8">
+          <article style="background:var(--jau-white);border:1px solid var(--jau-line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;animation:jauAIn .4s ease both;" style-hover="transform:translateY(-4px);box-shadow:0 20px 40px -20px rgba(20,24,30,.38);">
+            <div style="aspect-ratio:1/1;position:relative;background:repeating-linear-gradient(135deg,var(--jau-ph-a) 0 10px,var(--jau-ph-b) 10px 20px);display:grid;place-items:center;">
+              <sc-if value="{{ p.hasFoto }}" hint-placeholder-val="{{ false }}"><img src="{{ p.foto }}" alt="{{ p.nombre }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3;"></sc-if>
+              <sc-if value="{{ p.noFoto }}" hint-placeholder-val="{{ true }}"><span style="width:40px;height:108px;border-radius:14px 14px 8px 8px;background:{{ p.color }};opacity:.9;"></span>
+              </sc-if>
+            </div>
+            <div class="ja-pbody" style="padding:16px;display:flex;flex-direction:column;gap:6px;flex:1;">
+              <span style="font-size:12px;font-weight:600;color:var(--jau-muted);text-transform:uppercase;letter-spacing:.05em;">{{ p.lineaNombre }}</span>
+              <strong class="ja-pname" style="font-size:16px;font-family:var(--jau-font-display);">{{ p.nombre }}</strong>
+              <span style="font-size:13px;color:var(--jau-muted);">{{ p.marcaLabel }} · {{ p.presentacion }}</span>
+              <button class="ja-pbtn" onClick="{{ p.ver }}" style="margin-top:auto;align-self:flex-start;cursor:pointer;border:1px solid var(--jau-line);background:var(--jau-white);color:var(--jau-ink);height:38px;padding:0 14px;border-radius:8px;font-weight:600;font-size:13px;transition:background .2s,color .2s,border-color .2s;" style-hover="background:var(--jau-primary);color:#fff;border-color:var(--jau-primary);">Ver producto</button>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ pDetalle }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1240px;margin:0 auto;padding:28px clamp(16px,4vw,40px) 56px;display:flex;flex-direction:column;gap:28px;">
+      <button onClick="{{ det.volver }}" style="align-self:flex-start;border:0;background:none;padding:0;cursor:pointer;color:var(--jau-primary);font-weight:600;font-size:15px;display:flex;align-items:center;gap:6px;" style-hover="text-decoration:underline;">← Volver a productos</button>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(24px,4vw,56px);align-items:start;">
+        <div style="aspect-ratio:1/1;border-radius:14px;overflow:hidden;border:1px solid var(--jau-line);background:var(--jau-white);"><img src="{{ det.foto }}" alt="{{ det.nombre }}" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div style="display:flex;flex-direction:column;gap:18px;">
+          <span style="font-size:14px;font-weight:600;color:var(--jau-primary);">{{ det.lineaNombre }} · {{ det.marca }}</span>
+          <h1 class="ja-det-h1" style="margin:0;font-family:var(--jau-font-display);font-weight:800;font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-.02em;">{{ det.nombre }}</h1>
+          <p style="margin:0;font-size:17px;line-height:1.55;color:var(--jau-ink-2);max-width:520px;">{{ det.desc }}</p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <strong style="font-size:14px;">Presentaciones</strong>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;"><sc-for list="{{ det.tamanos }}" as="t" hint-placeholder-count="3"><sc-if value="{{ t.active }}" hint-placeholder-val="{{ false }}"><button onClick="{{ t.pick }}" style="cursor:pointer;height:42px;padding:0 18px;border-radius:8px;border:1.5px solid var(--jau-primary);background:var(--jau-primary);color:#fff;font-weight:700;font-size:14px;">{{ t.label }}</button></sc-if><sc-if value="{{ t.inactive }}" hint-placeholder-val="{{ true }}"><button onClick="{{ t.pick }}" style="cursor:pointer;height:42px;padding:0 18px;border-radius:8px;border:1.5px solid var(--jau-line);background:var(--jau-white);color:var(--jau-ink);font-weight:600;font-size:14px;">{{ t.label }}</button></sc-if></sc-for></div>
+          </div>
+          <div style="border:1px solid var(--jau-line);border-radius:12px;background:var(--jau-white);overflow:hidden;"><sc-for list="{{ det.specs }}" as="sp" hint-placeholder-count="6"><div style="display:flex;justify-content:space-between;gap:16px;padding:12px 16px;border-bottom:1px solid var(--jau-line);font-size:15px;"><span style="color:var(--jau-muted);">{{ sp.k }}</span><span style="font-weight:600;text-align:right;">{{ sp.v }}</span></div></sc-for></div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <button onClick="{{ det.consultar }}" style="border:0;cursor:pointer;height:52px;padding:0 24px;border-radius:8px;background:var(--jau-primary);color:#fff;font-weight:700;font-size:16px;">Consultar disponibilidad</button>
+            <button onClick="{{ wa }}" style="cursor:pointer;height:52px;padding:0 22px;border-radius:8px;border:1.5px solid var(--jau-line);background:var(--jau-white);color:var(--jau-ink);font-weight:600;font-size:16px;">WhatsApp de ventas</button>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:16px;">
+        <h2 style="margin:0;font-family:var(--jau-font-display);font-size:clamp(22px,2.4vw,30px);font-weight:800;">También te puede interesar</h2>
+        <div class="ja-prods" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:16px;">
+          <sc-for list="{{ det.relacionados }}" as="p" hint-placeholder-count="4">
+            <article onClick="{{ p.ver }}" style="cursor:pointer;background:var(--jau-white);border:1px solid var(--jau-line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;" style-hover="transform:translateY(-3px);box-shadow:0 18px 36px -20px rgba(20,24,30,.35);">
+              <div style="aspect-ratio:1/1;"><img src="{{ p.foto }}" alt="{{ p.nombre }}" style="width:100%;height:100%;object-fit:cover;"></div>
+              <div style="padding:14px 16px;display:flex;flex-direction:column;gap:4px;"><span style="font-size:12px;color:var(--jau-muted);">{{ p.lineaNombre }}</span><strong style="font-size:16px;">{{ p.nombre }}</strong></div>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ pContacto }}" hint-placeholder-val="{{ false }}">
+    <section style="background:var(--jau-primary);color:var(--jau-primary-ink);">
+      <div style="max-width:1240px;margin:0 auto;padding:36px clamp(16px,4vw,40px) 40px;display:flex;flex-direction:column;gap:10px;">
+        <h1 style="margin:0;font-family:var(--jau-font-display);font-weight:800;font-size:clamp(32px,4vw,48px);letter-spacing:-.02em;">{{ J.contacto.titulo }}</h1>
+        <p style="margin:0;font-size:18px;line-height:1.5;opacity:.9;max-width:640px;">{{ J.contacto.intro }}</p>
+      </div>
+    </section>
+    <section style="max-width:1240px;margin:0 auto;padding:36px clamp(16px,4vw,40px) 52px;display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;">
+      <div style="flex:2 1 520px;min-width:0;background:var(--jau-white);border:1px solid var(--jau-line);border-radius:14px;padding:clamp(20px,3vw,32px);">
+        <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submit }}" novalidate style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px;">
+            <h2 style="grid-column:1 / -1;margin:0 0 4px;font-family:var(--jau-font-display);font-size:24px;font-weight:800;">{{ J.formulario.titulo }}</h2>
+            <sc-for list="{{ camposA }}" as="f" hint-placeholder-count="7">
+              <label style="display:flex;flex-direction:column;gap:6px;grid-column:{{ f.span }};font-size:14px;font-weight:600;color:var(--jau-ink);">
+                <span>{{ f.label }} <span style="color:var(--jau-accent);">{{ f.reqMark }}</span></span>
+                <sc-if value="{{ f.isInput }}" hint-placeholder-val="{{ true }}"><input type="{{ f.tipo }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="height:46px;padding:0 12px;border-radius:8px;border:1.5px solid {{ f.bd }};background:var(--jau-white);font-size:15px;color:var(--jau-ink);outline:none;" style-focus="border-color:var(--jau-primary);background:#fff;"></sc-if>
+                <sc-if value="{{ f.isSelect }}" hint-placeholder-val="{{ false }}"><select value="{{ f.value }}" onChange="{{ f.onChange }}" style="height:46px;padding:0 10px;border-radius:8px;border:1.5px solid {{ f.bd }};background:var(--jau-white);font-size:15px;color:var(--jau-ink);"><sc-for list="{{ f.opciones }}" as="o"><option value="{{ o }}">{{ o }}</option></sc-for></select></sc-if>
+                <sc-if value="{{ f.isArea }}" hint-placeholder-val="{{ false }}"><textarea value="{{ f.value }}" onChange="{{ f.onChange }}" rows="4" style="padding:12px;border-radius:8px;border:1.5px solid {{ f.bd }};background:var(--jau-white);font-size:15px;color:var(--jau-ink);resize:vertical;outline:none;" style-focus="border-color:var(--jau-primary);background:#fff;"></textarea></sc-if>
+                <sc-if value="{{ f.hasError }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:500;color:#B3261E;">{{ f.error }}</span></sc-if>
+              </label>
+            </sc-for>
+            <div style="grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between;">
+              <span style="font-size:12px;color:var(--jau-muted);">{{ J.formulario.nota }}</span>
+              <button type="submit" style="border:0;cursor:pointer;height:50px;padding:0 26px;border-radius:8px;background:var(--jau-primary);color:var(--jau-primary-ink);font-weight:600;font-size:15px;transition:transform .2s,box-shadow .2s;" style-hover="transform:translateY(-1px);box-shadow:0 10px 22px -10px var(--jau-primary);">{{ J.formulario.enviar }}</button>
+            </div>
+          </form>
+        </sc-if>
+        <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:12px 0;animation:jauAIn .4s ease both;">
+            <span style="width:52px;height:52px;border-radius:50%;background:color-mix(in oklch,var(--jau-primary) 12%,white);color:var(--jau-primary);display:grid;place-items:center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+            <h2 style="margin:0;font-family:var(--jau-font-display);font-size:24px;">Solicitud enviada</h2>
+            <p style="margin:0;color:var(--jau-ink-2);font-size:16px;">{{ J.formulario.exito }}</p>
+            <button onClick="{{ resetForm }}" style="cursor:pointer;border:1.5px solid var(--jau-ink);background:none;height:44px;padding:0 18px;border-radius:8px;font-weight:600;color:var(--jau-ink);">Enviar otra solicitud</button>
+          </div>
+        </sc-if>
+      </div>
+      <div style="flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:12px;">
+        <sc-for list="{{ J.contacto.canales }}" as="c" hint-placeholder-count="4">
+          <div style="background:var(--jau-white);border:1px solid var(--jau-line);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;">
+            <span style="flex:none;width:44px;height:44px;border-radius:10px;background:color-mix(in oklch,var(--jau-primary) 12%,white);color:var(--jau-primary);display:grid;place-items:center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ c.icono }}"></path></svg></span>
+            <div style="display:flex;flex-direction:column;gap:4px;min-width:0;">
+              <strong style="font-size:15px;">{{ c.titulo }}</strong>
+              <span style="font-size:14px;color:var(--jau-muted);">{{ c.valor }}</span>
+            </div>
+          </div>
+        </sc-for>
+        <button onClick="{{ wa }}" style="cursor:pointer;border:0;height:50px;border-radius:10px;background:#25D366;color:#0B3B1F;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:10px;transition:filter .2s;" style-hover="filter:brightness(1.06);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ J.iconos.wa }}"></path></svg>{{ J.whatsapp.label }}</button>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ showCierre }}" hint-placeholder-val="{{ true }}">
+    <section style="max-width:1240px;margin:0 auto;padding:56px clamp(16px,4vw,40px) 56px;">
+      <div style="background:var(--jau-primary);color:var(--jau-primary-ink);border-radius:16px;padding:clamp(28px,4vw,48px);display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;position:relative;overflow:hidden;">
+        <span style="position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:var(--jau-accent);opacity:.9;"></span>
+        <div style="display:flex;flex-direction:column;gap:10px;max-width:620px;position:relative;">
+          <h2 style="margin:0;font-family:var(--jau-font-display);font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:-.01em;">{{ J.inicio.cierreTitulo }}</h2>
+          <p style="margin:0;font-size:17px;line-height:1.5;opacity:.9;">{{ J.inicio.cierreTexto }}</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;position:relative;">
+          <button onClick="{{ goContacto }}" style="border:0;cursor:pointer;height:52px;padding:0 24px;border-radius:8px;background:#fff;color:var(--jau-ink);font-weight:700;font-size:15px;transition:transform .2s;" style-hover="transform:translateY(-2px);">{{ J.cta }}</button>
+          <button onClick="{{ wa }}" style="cursor:pointer;height:52px;padding:0 22px;border-radius:8px;background:transparent;border:1.5px solid rgba(255,255,255,.7);color:#fff;font-weight:600;font-size:15px;transition:background .2s;" style-hover="background:rgba(255,255,255,.12);">WhatsApp de ventas</button>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <footer style="background:var(--jau-dark);color:#C9CCD3;">
+    <div style="max-width:1240px;margin:0 auto;padding:44px clamp(16px,4vw,40px) 90px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:28px;">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <span style="font-family:var(--jau-font-display);font-weight:800;font-size:17px;letter-spacing:.05em;color:#fff;">INDUSTRIAS JAU</span>
+        <span style="font-size:14px;line-height:1.5;">Distribución de bebidas. Buscamos nuevos distribuidores.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <strong style="color:#fff;font-size:14px;">Secciones</strong>
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5"><button class="ja-flink" onClick="{{ n.go }}" style="border:0;background:none;padding:2px 0;text-align:left;cursor:pointer;color:#C9CCD3;font-size:14px;" style-hover="color:#fff;">{{ n.label }}</button></sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <strong style="color:#fff;font-size:14px;">Contacto</strong>
+        <sc-for list="{{ J.contacto.canales }}" as="c" hint-placeholder-count="4"><span style="font-size:14px;">{{ c.titulo }}: {{ c.valor }}</span></sc-for>
+      </div>
+    </div>
+    <div style="border-top:1px solid #23262d;"><div style="max-width:1240px;margin:0 auto;padding:16px clamp(16px,4vw,40px) 80px;font-size:13px;color:#8C929D;">© {{ year }} Industrias JAU</div></div>
+  </footer>
+
+  <button onClick="{{ wa }}" title="{{ J.whatsapp.label }}" style="position:fixed;right:18px;bottom:18px;z-index:80;width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;background:#25D366;color:#fff;display:grid;place-items:center;box-shadow:0 12px 28px -8px rgba(0,0,0,.4);transition:transform .2s;" style-hover="transform:scale(1.07);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ J.iconos.wa }}"></path></svg></button>
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;right:18px;bottom:88px;z-index:81;background:var(--jau-ink);color:#fff;padding:12px 16px;border-radius:10px;font-size:14px;box-shadow:0 12px 28px -8px rgba(0,0,0,.4);animation:jauAIn .25s ease both;">{{ J.whatsapp.aviso }}</div>
+  </sc-if>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = window.JAU ? window.JAU.estadoInicial() : { wait: true };
+  componentDidMount() {
+    const go = () => { if (this.state.wait) this.setState({ ...window.JAU.estadoInicial(), wait: false }); window.JAU.montar(this); };
+    if (window.JAU) go(); else this._i = setInterval(() => { if (window.JAU) { clearInterval(this._i); go(); } }, 50);
+  }
+  componentWillUnmount() { clearInterval(this._i); if (window.JAU) window.JAU.desmontar(this); }
+  renderVals() {
+    if (!window.JAU || this.state.wait) return { ready: false };
+    const c = window.JAU.comun(this);
+    const col = id => `var(--jau-scene-${id})`;
+    return {
+      ...c, ready: true,
+      navItems: c.J.nav.map(n => {
+        const on = n.id === c.page;
+        return { ...n, go: () => c.go(n.id), bg: on ? 'color-mix(in oklch, var(--jau-primary) 10%, white)' : 'transparent', color: on ? 'var(--jau-primary)' : 'var(--jau-ink-2)', weight: on ? 700 : 500 };
+      }),
+      lineasCards: c.J.lineas.map(l => ({ ...l, color: col(l.id), abrir: () => { this.setState({ linea: l.id, marca: 'todas', q: '' }); c.go('productos'); } })),
+      destacadosA: c.destacados.map(p => ({ ...p, color: col(p.linea) })),
+      listaA: c.lista.map(p => ({ ...p, color: col(p.linea) })),
+      lineasFA: c.lineasF.map(l => ({ ...l, bg: l.active ? 'var(--jau-ink)' : 'var(--jau-paper)', fg: l.active ? '#fff' : 'var(--jau-ink)', bd: l.active ? 'var(--jau-ink)' : 'var(--jau-line)' })),
+      marca: this.state.marca, onMarca: e => this.setState({ marca: e.target.value }),
+      camposA: c.campos.map(f => ({ ...f, span: f.isArea ? '1 / -1' : 'auto', bd: f.hasError ? '#B3261E' : 'var(--jau-line)' })),
+      servA: c.J.servicios.items.map(s => ({ ...s, link: s.id === 's1', ver: () => c.go('productos') })),
+      showCierre: c.page !== 'contacto', showCta: c.page !== 'contacto', menuClosed: !c.menuOpen, menuLabel: c.menuOpen ? 'Cerrar menú' : 'Abrir menú', menuBtnBg: c.menuOpen ? 'var(--jau-gray)' : '#fff', navDesk: c.w >= 1180, navMob: c.w < 1180
+    };
+  }
+}
+</script>
+</body>
+</html>

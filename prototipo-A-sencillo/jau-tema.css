@@ -1,0 +1,45 @@
+/* Industrias JAU · Sistema visual PROVISIONAL.
+   Cuando llegue la marca, cambiar SOLO este archivo (colores, fuentes, radios). */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Tipografía */
+  --jau-font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --jau-font-text: 'Figtree', 'Helvetica Neue', Arial, sans-serif;
+  --jau-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Neutros */
+  --jau-ink: #16181D;
+  --jau-ink-2: #3B3F48;
+  --jau-muted: #646a76;
+  --jau-paper: #F5F6F8;
+  --jau-white: #FFFFFF;
+  --jau-line: #E4E2DC;
+  --jau-dark: #0D0E11;
+  --jau-dark-2: #1A1C21;
+  --jau-gray: #E9E8E4;
+
+  /* Marca (provisional) */
+  --jau-primary: oklch(0.40 0.11 255);
+  --jau-primary-ink: #FFFFFF;
+  --jau-accent: oklch(0.70 0.17 50);
+  --jau-accent-ink: #16181D;
+
+  /* Escenas por línea de producto (prototipo B) */
+  --jau-scene-refrescos: oklch(0.62 0.19 25);
+  --jau-scene-jugos: oklch(0.76 0.16 70);
+  --jau-scene-otros: oklch(0.64 0.13 240);
+  --jau-scene-extra: oklch(0.68 0.16 145);
+
+  /* Placeholders */
+  --jau-ph-a: #E9EBEF;
+  --jau-ph-b: #F2F3F6;
+
+  /* Radios */
+  --jau-r-sm: 6px;
+  --jau-r-md: 12px;
+  --jau-r-lg: 28px;
+
+  /* Marcadores «por confirmar»: inline-flex para verlos, none para ocultarlos */
+  --jau-pc-display: none;
+}

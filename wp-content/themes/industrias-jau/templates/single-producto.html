@@ -1,0 +1,73 @@
+<!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"jau-main","layout":{"type":"default"}} -->
+<main class="wp-block-group jau-main"><!-- wp:group {"tagName":"section","className":"jau-ficha","style":{"spacing":{"padding":{"top":"28px","bottom":"24px"},"blockGap":"28px"}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group jau-ficha" style="padding-top:28px;padding-bottom:24px"><!-- wp:paragraph {"className":"jau-volver"} -->
+<p class="jau-volver"><a href="/productos/">← Volver a productos</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"clamp(24px, 4vw, 56px)","top":"28px"}}}} -->
+<div class="wp-block-columns"><!-- wp:column {"className":"jau-ficha__foto"} -->
+<div class="wp-block-column jau-ficha__foto"><!-- wp:post-featured-image /--></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"jau-ficha__info"} -->
+<div class="wp-block-column jau-ficha__info"><!-- wp:post-terms {"term":"marca","className":"jau-ficha__marca"} /-->
+
+<!-- wp:post-title {"level":1,"fontSize":"pagina"} /-->
+
+<!-- wp:post-excerpt /-->
+
+<!-- wp:group {"style":{"spacing":{"blockGap":"10px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:paragraph {"style":{"typography":{"fontWeight":"700"}},"fontSize":"sm"} -->
+<p class="has-sm-font-size" style="font-weight:700">Presentaciones</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:post-terms {"term":"presentacion","className":"is-style-pildoras"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:jau/ficha-datos /-->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"metadata":{"bindings":{"url":{"source":"jau/producto","args":{"key":"consultar_url"}}}}} -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/contacto/#formulario">Consultar disponibilidad</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-contorno","metadata":{"bindings":{"url":{"source":"jau/producto","args":{"key":"whatsapp_url"}}}}} -->
+<div class="wp-block-button is-style-contorno"><a class="wp-block-button__link wp-element-button" href="#" target="_blank" rel="noreferrer noopener">WhatsApp de ventas</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:post-content {"className":"jau-ficha__contenido","layout":{"type":"constrained"}} /--></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","className":"jau-relacionados","style":{"spacing":{"padding":{"top":"16px","bottom":"16px"},"blockGap":"16px"}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group jau-relacionados" style="padding-top:16px;padding-bottom:16px"><!-- wp:heading {"fontSize":"seccion"} -->
+<h2 class="wp-block-heading has-seccion-font-size">También te puede interesar</h2>
+<!-- /wp:heading -->
+
+<!-- wp:query {"queryId":2,"query":{"perPage":4,"pages":0,"offset":0,"postType":"producto","order":"asc","orderBy":"menu_order","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"jau-productos jau-q-relacionados"} -->
+<div class="wp-block-query jau-productos jau-q-relacionados"><!-- wp:post-template -->
+<!-- wp:group {"className":"jau-producto","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-producto"><!-- wp:post-featured-image /-->
+
+<!-- wp:group {"className":"jau-producto__cuerpo","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-producto__cuerpo"><!-- wp:post-terms {"term":"marca","className":"is-style-etiqueta"} /-->
+
+<!-- wp:post-title {"level":3,"isLink":true} /-->
+
+<!-- wp:post-terms {"term":"presentacion","separator":" · ","className":"jau-producto__meta"} /-->
+
+<!-- wp:read-more {"content":"Ver producto"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- /wp:post-template --></div>
+<!-- /wp:query --></section>
+<!-- /wp:group --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"cierre-distribuidor","tagName":"div"} /-->
+
+<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->

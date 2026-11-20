@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jau/formulario-distribuidor",
+	"title": "Formulario «Quiero ser distribuidor»",
+	"category": "widgets",
+	"icon": "forms",
+	"description": "Formulario de solicitud para distribuidores. Guarda cada solicitud en «Distribuidores».",
+	"textdomain": "jau-core",
+	
+	"supports": { "html": false, "multiple": false, "align": [ "wide", "full" ], "spacing": { "margin": true } },
+	"editorScript": "file:./editor.js",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

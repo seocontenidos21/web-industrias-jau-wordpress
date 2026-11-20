@@ -1,0 +1,38 @@
+# Industrias JAU · Solo se versiona lo propio del proyecto (lista blanca).
+# Núcleo de WordPress, base de datos, uploads, wp-config.php y originales pesados quedan FUERA.
+
+/*
+
+!/.gitignore
+!/.gitattributes
+!/.dockerignore
+!/README.md
+!/AGENTS.md
+!/CLAUDE.md
+!/STUDIO.md
+!/Dockerfile
+!/railway.json
+!/docker/
+
+!/herramientas/
+!/insumos-optimizados/
+!/prototipo-A-sencillo/
+
+!/wp-content/
+/wp-content/*
+!/wp-content/themes/
+/wp-content/themes/*
+!/wp-content/themes/industrias-jau/
+!/wp-content/plugins/
+/wp-content/plugins/*
+!/wp-content/plugins/jau-core/
+
+# Nunca: secretos, base de datos, temporales
+wp-config.php
+*.sqlite
+*.sql
+*.log
+.DS_Store
+Thumbs.db
+node_modules/
+__pycache__/

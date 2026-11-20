@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jau/filtros-catalogo",
+	"title": "Filtros del catálogo",
+	"category": "widgets",
+	"icon": "filter",
+	"description": "Filtros por marca, presentación y sabor, con buscador. Va encima del listado de productos.",
+	"textdomain": "jau-core",
+	
+	"supports": { "html": false, "multiple": false, "align": [ "wide", "full" ], "spacing": { "margin": true } },
+	"editorScript": "file:./editor.js",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "industrias-jau/icono",
+	"title": "Ícono JAU",
+	"category": "design",
+	"icon": "star-filled",
+	"description": "Ícono del set propio de Industrias JAU. Toma el color del texto.",
+	"textdomain": "industrias-jau",
+	"attributes": {
+		"icono": { "type": "string", "default": "caja" },
+		"tamano": { "type": "number", "default": 40 },
+		"estilo": { "type": "string", "default": "simple" }
+	},
+	"supports": {
+		"html": false,
+		"color": { "text": true, "background": false },
+		"spacing": { "margin": true }
+	},
+	"editorScript": "file:./editor.js",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,45 @@
+<!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"jau-main","layout":{"type":"default"}} -->
+<main class="wp-block-group jau-main"><!-- wp:cover {"dimRatio":100,"overlayColor":"primary","isUserOverlayColor":true,"isDark":true,"align":"full","className":"jau-banner","layout":{"type":"constrained"}} -->
+<div class="wp-block-cover alignfull jau-banner"><span aria-hidden="true" class="wp-block-cover__background has-primary-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:heading {"level":1} -->
+<h1 class="wp-block-heading">Portafolio de productos</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Filtra por marca, presentación o sabor y consulta la bebida que te interesa.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:cover -->
+
+<!-- wp:group {"tagName":"section","className":"jau-catalogo","style":{"spacing":{"padding":{"top":"28px","bottom":"52px"},"blockGap":"20px"}},"layout":{"type":"constrained"}} -->
+<section class="wp-block-group jau-catalogo" style="padding-top:28px;padding-bottom:52px"><!-- wp:jau/filtros-catalogo /-->
+
+<!-- wp:query {"queryId":1,"query":{"perPage":100,"pages":0,"offset":0,"postType":"producto","order":"asc","orderBy":"menu_order","author":"","search":"","exclude":[],"sticky":"","inherit":true},"className":"jau-productos"} -->
+<div class="wp-block-query jau-productos"><!-- wp:post-template -->
+<!-- wp:group {"className":"jau-producto","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-producto"><!-- wp:post-featured-image /-->
+
+<!-- wp:group {"className":"jau-producto__cuerpo","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-producto__cuerpo"><!-- wp:post-terms {"term":"marca","className":"is-style-etiqueta"} /-->
+
+<!-- wp:post-title {"level":2,"isLink":true} /-->
+
+<!-- wp:post-terms {"term":"presentacion","separator":" · ","className":"jau-producto__meta"} /-->
+
+<!-- wp:read-more {"content":"Ver producto"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph -->
+<p>Todavía no hay productos cargados.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results --></div>
+<!-- /wp:query --></section>
+<!-- /wp:group --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"cierre-distribuidor","tagName":"div"} /-->
+
+<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->
