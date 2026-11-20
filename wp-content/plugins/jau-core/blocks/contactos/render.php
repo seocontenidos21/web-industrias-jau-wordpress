@@ -2,6 +2,7 @@
 /**
  * Contactos de la empresa (DWIJ-81): distribuidores, cliente directo por ciudad y atención al
  * consumidor, con enlaces tel:, WhatsApp y mailto:. Los datos salen de «Datos de la empresa».
+ * Cada número se muestra una sola vez y abre WhatsApp (o llama, si no tiene WhatsApp).
  * - «tarjeta»: filas con ícono para las tarjetas de Contacto.
  * - «compacta»: líneas cortas para el footer.
  *
@@ -30,36 +31,46 @@ $jau_correo = function ( $correo ) {
 	$partes = explode( '@', $correo, 2 );
 	return 2 === count( $partes ) ? esc_html( $partes[0] ) . '@<wbr>' . esc_html( $partes[1] ) : esc_html( $correo );
 };
-// Nombre accesible del enlace de WhatsApp: empieza por el texto visible.
-$jau_wa_label = function ( $grupo, $fila ) {
-	return 'WhatsApp de ' . ( '' !== $fila['lugar'] ? $fila['lugar'] : $grupo['titulo'] ) . ': ' . $fila['telefono'];
+// Un solo enlace por número: abre WhatsApp si el número lo tiene; si no, llama (tel:).
+$jau_numero = function ( $grupo, $fila, $tamano ) use ( $jau_svg ) {
+	$es_wa   = '' !== $fila['wa'];
+	$destino = '' !== $fila['lugar'] ? $fila['lugar'] : $grupo['titulo'];
+	return sprintf(
+		'<a class="jau-contactos__num%1$s" href="%2$s"%3$s aria-label="%4$s">%5$s<span>%6$s</span></a>',
+		$es_wa ? ' is-wa' : '',
+		esc_url( $es_wa ? $fila['wa'] : $fila['tel'], array( 'https', 'tel' ) ),
+		$es_wa ? ' target="_blank" rel="noopener"' : '',
+		esc_attr( $fila['telefono'] . ( $es_wa ? ' (WhatsApp, ' : ' (llamar, ' ) . $destino . ')' ),
+		$jau_svg( $es_wa ? 'wa' : 'telefono', $tamano ),
+		esc_html( $fila['telefono'] )
+	);
+};
+$jau_correo_enlace = function ( $correo, $tamano ) use ( $jau_svg, $jau_correo ) {
+	return sprintf(
+		'<a class="jau-contactos__correo" href="%1$s">%2$s<span>%3$s</span></a>',
+		esc_url( 'mailto:' . $correo ),
+		$jau_svg( 'mail', $tamano ),
+		$jau_correo( $correo )
+	);
 };
 
 $jau_wrap = get_block_wrapper_attributes( array( 'class' => 'jau-contactos jau-contactos--' . $jau_variante ) );
 echo '<div ' . $jau_wrap . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-foreach ( $jau_grupos as $jau_g ) {
+foreach ( $jau_grupos as $jau_clave => $jau_g ) {
 	if ( 'compacta' === $jau_variante ) {
-		echo '<div class="jau-contactos__grupo">';
+		echo '<div class="jau-contactos__grupo jau-contactos__grupo--' . esc_attr( $jau_clave ) . '">';
 		echo '<p class="jau-contactos__titulo">' . esc_html( $jau_g['titulo'] ) . '</p>';
 		foreach ( $jau_g['filas'] as $jau_f ) {
 			echo '<p class="jau-contactos__linea">';
 			if ( '' !== $jau_f['lugar'] ) {
-				echo esc_html( $jau_f['lugar'] ) . ': ';
+				echo '<span class="jau-contactos__lugar">' . esc_html( $jau_f['lugar'] ) . '</span>';
 			}
-			printf( '<a href="%s">%s</a>', esc_url( $jau_f['tel'], array( 'tel' ) ), esc_html( $jau_f['telefono'] ) );
-			if ( '' !== $jau_f['wa'] ) {
-				printf(
-					' <a class="jau-contactos__wa-mini" href="%1$s" target="_blank" rel="noopener" aria-label="%2$s" title="%2$s">%3$s</a>',
-					esc_url( $jau_f['wa'] ),
-					esc_attr( $jau_wa_label( $jau_g, $jau_f ) ),
-					$jau_svg( 'wa', 16 ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				);
-			}
+			echo $jau_numero( $jau_g, $jau_f, 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</p>';
 		}
 		if ( '' !== $jau_g['correo'] ) {
-			printf( '<p class="jau-contactos__linea"><a href="%s">%s</a></p>', esc_url( 'mailto:' . $jau_g['correo'] ), $jau_correo( $jau_g['correo'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<p class="jau-contactos__linea">' . $jau_correo_enlace( $jau_g['correo'], 16 ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		echo '</div>';
 		continue;
@@ -77,30 +88,11 @@ foreach ( $jau_grupos as $jau_g ) {
 		if ( '' !== $jau_f['lugar'] ) {
 			echo '<span class="jau-contactos__lugar">' . esc_html( $jau_f['lugar'] ) . '</span>';
 		}
-		echo '<span class="jau-contactos__acciones">';
-		printf(
-			'<a class="jau-contactos__tel" href="%1$s">%2$s<span>%3$s</span></a>',
-			esc_url( $jau_f['tel'], array( 'tel' ) ),
-			$jau_svg( 'telefono' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			esc_html( $jau_f['telefono'] )
-		);
-		if ( '' !== $jau_f['wa'] ) {
-			printf(
-				'<a class="jau-contactos__wa" href="%1$s" target="_blank" rel="noopener" aria-label="%2$s">%3$s<span>WhatsApp</span></a>',
-				esc_url( $jau_f['wa'] ),
-				esc_attr( $jau_wa_label( $jau_g, $jau_f ) ),
-				$jau_svg( 'wa', 16 ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			);
-		}
-		echo '</span></li>';
+		echo $jau_numero( $jau_g, $jau_f, 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '</li>';
 	}
 	if ( '' !== $jau_g['correo'] ) {
-		printf(
-			'<li class="jau-contactos__fila"><a class="jau-contactos__correo" href="%1$s">%2$s<span>%3$s</span></a></li>',
-			esc_url( 'mailto:' . $jau_g['correo'] ),
-			$jau_svg( 'mail' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			$jau_correo( $jau_g['correo'] ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		);
+		echo '<li class="jau-contactos__fila">' . $jau_correo_enlace( $jau_g['correo'], 18 ) . '</li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 	echo '</ul>';
 }

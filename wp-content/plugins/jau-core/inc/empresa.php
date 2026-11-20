@@ -24,7 +24,7 @@ function jau_empresa_campos() {
 		'clientes_nota'       => array( 'label' => 'Cliente directo: nota visible', 'tipo' => 'text', 'ayuda' => 'Ej.: Solo atención en Maracaibo, Caracas, Maracay y Valencia' ),
 		'consumidor_telefono' => array( 'label' => 'Atención al consumidor: teléfono', 'tipo' => 'text' ),
 		'consumidor_correo'   => array( 'label' => 'Atención al consumidor: correo', 'tipo' => 'email' ),
-		'whatsapp_contactos'  => array( 'label' => 'WhatsApp en cliente directo y atención al consumidor', 'tipo' => 'checkbox', 'ayuda' => 'Marcar si esos números tienen WhatsApp: se agrega el enlace junto a cada número y el botón flotante muestra un menú con los tres tipos de contacto.' ),
+		'whatsapp_contactos'  => array( 'label' => 'WhatsApp en cliente directo y atención al consumidor', 'tipo' => 'checkbox', 'ayuda' => 'Marcar si esos números tienen WhatsApp: al tocar cada número se abre WhatsApp (si no, llama) y el botón flotante muestra un menú con los tres tipos de contacto.' ),
 		'direccion'        => array( 'label' => 'Dirección de la planta', 'tipo' => 'textarea' ),
 		'mapa'             => array( 'label' => 'Punto del mapa (opcional)', 'tipo' => 'text', 'ayuda' => 'Coordenadas «latitud,longitud» o texto de búsqueda. Si se deja vacío, el mapa usa la dirección.' ),
 		'horario'          => array( 'label' => 'Horario de atención', 'tipo' => 'text' ),

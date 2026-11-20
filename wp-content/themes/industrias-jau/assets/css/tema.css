@@ -574,27 +574,39 @@ header.wp-block-template-part,
 }
 .jau-contactos__nota svg { flex: none; margin-top: 1px; }
 .jau-contactos__lista { list-style: none; margin: 0; padding: 0; }
-.jau-contactos__fila { display: flex; flex-direction: column; gap: 4px; padding: 12px 0; border-top: 1px solid var(--jau-line); }
+.jau-contactos__fila { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 12px; padding: 8px 0; border-top: 1px solid var(--jau-line); }
 .jau-contactos__fila:first-child { padding-top: 0; border-top: 0; }
 .jau-contactos__fila:last-child { padding-bottom: 0; }
 .jau-contactos__lugar { font-size: 14px; font-weight: 700; color: var(--jau-ink); }
-.jau-contactos__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
-.jau-contactos__tel,
-.jau-contactos__correo { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; color: var(--jau-ink); font-weight: 600; overflow-wrap: anywhere; }
-.jau-contactos__tel svg,
+/* Un solo enlace por número (abre WhatsApp) y el correo */
+.jau-contactos__num,
+.jau-contactos__correo { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; color: var(--jau-ink); font-weight: 600; }
+.jau-contactos__num { white-space: nowrap; }
+.jau-contactos__correo { font-size: 15px; overflow-wrap: anywhere; }
+.jau-contactos__num svg,
 .jau-contactos__correo svg { flex: none; color: var(--jau-primary); }
-.jau-contactos__correo { font-size: 15px; }
-.jau-contactos__wa { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 999px; background: #E7F8EE; color: #11743E; font-size: 13px; font-weight: 700; }
-.jau-contactos__wa:hover,
-.jau-contactos__wa:focus-visible { background: var(--wp--preset--color--whatsapp); color: #fff; text-decoration: none; }
+.jau-contactos__num.is-wa svg { color: #1DA851; }
+.jau-contactos__num:hover,
+.jau-contactos__correo:hover { color: var(--jau-primary); }
 
 /* Versión compacta (footer) */
-.jau-contactos--compacta { display: grid; gap: 12px; }
-.jau-footer .jau-contactos__titulo { margin: 0 0 2px; color: #fff; font-size: 14px; font-weight: 700; }
-.jau-contactos__linea { display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; overflow-wrap: anywhere; }
-.jau-contactos__wa-mini { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; }
-.jau-footer a.jau-contactos__wa-mini { color: var(--wp--preset--color--whatsapp); }
-.jau-footer a.jau-contactos__wa-mini:hover { background: rgba(37, 211, 102, .16); color: var(--wp--preset--color--whatsapp); }
+.jau-contactos--compacta { display: grid; gap: 14px; container-type: inline-size; }
+.jau-footer .jau-contactos__titulo { margin: 0 0 4px; color: #fff; font-size: 14px; font-weight: 700; }
+.jau-contactos__linea { display: flex; flex-wrap: wrap; align-items: center; gap: 0 10px; }
+.jau-footer .jau-contactos__lugar { color: #8C929D; font-weight: 400; }
+.jau-footer .jau-contactos__num,
+.jau-footer .jau-contactos__correo { min-height: 28px; gap: 7px; color: #C9CCD3; font-size: 14px; font-weight: 500; }
+.jau-footer .jau-contactos__num:hover,
+.jau-footer .jau-contactos__correo:hover { color: #fff; }
+.jau-footer .jau-contactos__num.is-wa svg { color: var(--wp--preset--color--whatsapp); }
+.jau-footer .jau-contactos__correo svg,
+.jau-footer .jau-contactos__num:not(.is-wa) svg { color: #8C929D; }
+/* Cliente directo como tablita (ciudad | número) cuando hay ancho; si no, la ciudad va arriba. */
+@container (min-width: 270px) {
+	.jau-contactos__grupo--cliente { display: grid; grid-template-columns: max-content auto; align-items: center; column-gap: 14px; }
+	.jau-contactos__grupo--cliente > .jau-contactos__titulo { grid-column: 1 / -1; }
+	.jau-contactos__grupo--cliente > .jau-contactos__linea { display: contents; }
+}
 
 /* --------------------------------------------------------------------------
    Valores (DWIJ-80): tarjetas en Sobre nosotros y franja en el inicio
@@ -626,13 +638,24 @@ header.wp-block-template-part,
 .jau-footer .jau-footer__titulo { font-family: var(--wp--preset--font-family--text); font-size: 18px; font-weight: 700; letter-spacing: 0; margin: 0 0 6px; }
 .jau-footer p { font-size: 14px; line-height: 1.5; margin: 0; }
 .jau-footer .wp-block-navigation__container { gap: 8px; }
-/* Secciones en dos columnas (3 + 2), para que el footer no se alargue. */
-.jau-footer .jau-footer-nav .wp-block-navigation__container {
-	display: grid !important;
-	grid-template-rows: repeat(3, auto);
-	grid-auto-flow: column;
-	grid-auto-columns: max-content;
-	gap: 8px 36px;
+/* Footer en móvil: Secciones en dos columnas (3 + 2), Distribuidores y Atención al consumidor lado a
+   lado, Cliente directo debajo como tablita, y líneas finas entre bloques para ordenar la lectura. */
+@media (max-width: 781px) {
+	.jau-footer .jau-footer-nav .wp-block-navigation__container {
+		display: grid !important;
+		grid-template-rows: repeat(3, auto);
+		grid-auto-flow: column;
+		grid-auto-columns: max-content;
+		gap: 8px 40px;
+	}
+}
+@media (max-width: 600px) {
+	.jau-footer__columnas { row-gap: 0 !important; padding-top: 36px !important; }
+	.jau-footer__columnas > * + * { margin-top: 24px !important; padding-top: 24px; border-top: 1px solid #23262D; }
+	.jau-footer .jau-footer__titulo { font-size: 17px; }
+	.jau-contactos--compacta { grid-template-columns: 1fr 1fr; gap: 18px 16px; }
+	.jau-contactos__grupo--consumidor { order: 1; }
+	.jau-contactos__grupo--cliente { grid-column: 1 / -1; order: 2; }
 }
 .jau-footer .wp-block-navigation-item__content { font-size: 14px; padding: 2px 0; color: #C9CCD3; }
 .jau-footer .wp-block-navigation-item__content:hover { color: #fff; }
