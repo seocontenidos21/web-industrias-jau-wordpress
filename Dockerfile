@@ -5,11 +5,15 @@
 FROM wordpress:7.1.5-php8.4-apache
 
 # WP-CLI (para preparar el sitio y correr los scripts de herramientas/) y cliente de MariaDB.
+# mod_php necesita mpm_prefork: se desactiva cualquier otro MPM («More than one MPM loaded»).
 COPY --from=wordpress:cli-2.12.0-php8.4 /usr/local/bin/wp /usr/local/bin/wp
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends mariadb-client less \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& a2enmod headers
+	&& a2enmod headers \
+	&& (a2dismod -f mpm_event mpm_worker || true) \
+	&& a2enmod mpm_prefork \
+	&& ls /etc/apache2/mods-enabled/ | grep mpm_
 
 # Configuración extra de wp-config (HTTPS detrás del proxy, dominio, entorno).
 COPY docker/jau-config.php /usr/src/wordpress/jau-config.php
