@@ -26,7 +26,6 @@ COPY wp-content/plugins/jau-core /usr/src/wordpress/wp-content/plugins/jau-core
 
 # Recursos para los scripts de carga (fuera de la carpeta pública).
 COPY herramientas /opt/jau/herramientas
-COPY prototipo-A-sencillo/img /opt/jau/prototipo-A-sencillo/img
 COPY insumos-optimizados /opt/jau/insumos-optimizados
 
 COPY docker/jau-entrypoint.sh /usr/local/bin/jau-entrypoint.sh

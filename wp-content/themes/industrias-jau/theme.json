@@ -10,9 +10,9 @@
 			"defaultDuotone": false,
 			"custom": true,
 			"palette": [
-				{ "slug": "primary", "name": "Primario (provisional)", "color": "#164781" },
-				{ "slug": "primary-soft", "name": "Primario suave", "color": "#496E9D" },
-				{ "slug": "primary-tint", "name": "Primario tinte", "color": "#E1E8F0" },
+				{ "slug": "primary", "name": "Primario (azul del logo)", "color": "#30406E" },
+				{ "slug": "primary-soft", "name": "Primario suave", "color": "#58678D" },
+				{ "slug": "primary-tint", "name": "Primario tinte", "color": "#E3E6ED" },
 				{ "slug": "accent", "name": "Acento (provisional)", "color": "#EF7926" },
 				{ "slug": "ink", "name": "Tinta", "color": "#16181D" },
 				{ "slug": "ink-2", "name": "Tinta secundaria", "color": "#3B3F48" },
@@ -106,7 +106,7 @@
 			"radius": { "sm": "8px", "md": "12px", "lg": "16px" },
 			"header": { "height": "72px", "height-mobile": "60px" },
 			"gutter": "clamp(16px, 4vw, 40px)",
-			"pc-display": "inline-flex",
+			"pc-display": "none",
 			"transition": "transform .25s ease, box-shadow .25s ease, border-color .25s ease, background-color .2s ease, color .2s ease"
 		}
 	},

@@ -30,8 +30,6 @@ $jau_filas = array(
 	'Marca'              => esc_html( $jau_nombres( 'marca' ) ),
 	'Sabor'              => esc_html( $jau_nombres( 'sabor' ) ),
 	'Presentaciones'     => esc_html( $jau_nombres( 'presentacion' ) ),
-	'Envase'             => jau_pc(),
-	'Unidades por bulto' => jau_pc(),
 );
 $jau_filas = array_filter( $jau_filas, 'strlen' );
 

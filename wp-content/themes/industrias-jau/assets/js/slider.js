@@ -81,6 +81,8 @@
 			Array.prototype.forEach.call( puntos.children, function ( p, n ) {
 				p.setAttribute( 'aria-current', n === actual ? 'true' : 'false' );
 			} );
+			// Sobre fondos claros (Frugy) los controles pasan a color oscuro.
+			slider.classList.toggle( 'es-claro', slides[ actual ].classList.contains( 'is-light' ) );
 			if ( delUsuario ) {
 				programar();
 			}

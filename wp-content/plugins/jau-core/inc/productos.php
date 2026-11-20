@@ -342,3 +342,18 @@ add_filter(
 	10,
 	3
 );
+
+/* La ficha toma el color de su marca (círculo detrás de la botella). */
+add_filter(
+	'body_class',
+	function ( $clases ) {
+		if ( is_singular( 'producto' ) ) {
+			foreach ( (array) get_the_terms( get_queried_object_id(), 'marca' ) as $term ) {
+				if ( $term instanceof WP_Term ) {
+					$clases[] = 'marca-' . $term->slug;
+				}
+			}
+		}
+		return $clases;
+	}
+);

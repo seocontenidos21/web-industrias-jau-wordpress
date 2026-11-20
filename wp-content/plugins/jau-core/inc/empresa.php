@@ -151,8 +151,9 @@ function jau_dato_html( $clave, $etiqueta = '', $enlace = false ) {
 		$html = $texto;
 	}
 
+	// Sin dato no se muestra nada (ni la etiqueta): el bloque se oculta solo.
 	if ( '' === $html ) {
-		$html = jau_pc();
+		return '';
 	}
 	if ( '' !== $etiqueta ) {
 		$html = '<strong>' . esc_html( $etiqueta ) . ':</strong> ' . $html;
@@ -216,6 +217,9 @@ add_action(
 		$valores = array();
 		foreach ( array( 'telefono', 'whatsapp', 'direccion', 'horario', 'correo', 'redes', 'copyright' ) as $clave ) {
 			$valores[ $clave ] = wp_strip_all_tags( jau_dato_html( $clave ) );
+			if ( '' === $valores[ $clave ] ) {
+				$valores[ $clave ] = '(sin dato: se oculta en la web)';
+			}
 		}
 		foreach ( array( 'whatsapp_url', 'tel_url', 'correo_url', 'como_llegar_url' ) as $clave ) {
 			$valores[ $clave ] = (string) jau_dato( $clave );
@@ -312,3 +316,17 @@ function jau_empresa_pagina() {
 	</div>
 	<?php
 }
+
+/* Párrafos enlazados a un dato vacío: no se imprimen (sin huecos ni etiquetas sueltas). */
+add_filter(
+	'render_block_core/paragraph',
+	function ( $html, $block ) {
+		$fuente = $block['attrs']['metadata']['bindings']['content']['source'] ?? '';
+		if ( 'jau/empresa' === $fuente && '' === trim( wp_strip_all_tags( $html ) ) ) {
+			return '';
+		}
+		return $html;
+	},
+	10,
+	2
+);

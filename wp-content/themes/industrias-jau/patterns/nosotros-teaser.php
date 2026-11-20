@@ -14,7 +14,11 @@ defined( 'ABSPATH' ) || exit;
 <!-- wp:group {"align":"full","className":"jau-dark","style":{"spacing":{"padding":{"top":"52px","bottom":"52px"}}},"backgroundColor":"ink","textColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull jau-dark has-white-color has-ink-background-color has-text-color has-background" style="padding-top:52px;padding-bottom:52px"><!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"left":"36px","top":"28px"}}}} -->
 <div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center"} -->
-<div class="wp-block-column is-vertically-aligned-center"><?php echo jau_tema_bloque_imagen( 'ambiente-nosotros', 'jau-img-redonda jau-img-16-10', 'large' ); // phpcs:ignore ?></div>
+<div class="wp-block-column is-vertically-aligned-center"><!-- wp:group {"className":"jau-fotos","style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"grid","columnCount":2,"minimumColumnWidth":"120px"}} -->
+<div class="wp-block-group jau-fotos"><?php echo jau_tema_bloque_imagen( 'frugy-desayuno-4', '', 'large' ) . "
+
+" . jau_tema_bloque_imagen( 'frugy-kids-1', '', 'large' ); // phpcs:ignore ?></div>
+<!-- /wp:group --></div>
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center"} -->

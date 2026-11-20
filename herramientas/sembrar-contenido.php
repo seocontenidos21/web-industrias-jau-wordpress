@@ -3,7 +3,7 @@
  * Industrias JAU · carga inicial de contenido (idempotente: se puede correr varias veces).
  *
  * Uso (desde la raíz del sitio):
- *   studio wp eval-file herramientas/sembrar-contenido.php medios      ← 1) importa imágenes provisionales
+ *   studio wp eval-file herramientas/sembrar-contenido.php medios      ← 1) importa insumos-optimizados/ y retira las muestras
  *   studio wp eval-file herramientas/sembrar-contenido.php contenido   ← 2) términos, productos, páginas, ajustes
  *   studio wp eval-file herramientas/sembrar-contenido.php paginas     ← solo regenera las páginas desde los patrones
  *
@@ -119,9 +119,6 @@ $jau_sabores = array(
 	'mango'      => 'Mango',
 	'limon-coco' => 'Limón-coco',
 );
-$jau_archivo_sabor = array(
-	'limon-coco' => 'limoncoco',
-);
 $jau_ml = array(
 	'250-ml' => array( '250 mL', '250' ),
 	'400-ml' => array( '400 mL', '400' ),
@@ -129,25 +126,72 @@ $jau_ml = array(
 	'1-5-l'  => array( '1.5 L', '1500' ),
 );
 
-/* ---------------------------------------------------------------------------
- * 1) Medios provisionales (botellas del prototipo y 2 fotos de referencia)
- * ------------------------------------------------------------------------- */
-if ( 'medios' === $jau_modo ) {
-	$dir = $jau_raiz . '/prototipo-A-sencillo/img/productos/';
-	jau_log( 'Importando imágenes provisionales…' );
-	jau_importar( 'frugy-familia', $dir . 'frugy-familia.png', 'Botellas de Frugy en sus 6 sabores', 'frugy-familia.png' );
-	jau_importar( 'drinkcola-recorte', $dir . 'drinkcola-recorte.png', 'Botella de Drink Cola', 'drink-cola-botella.png' );
-	jau_importar( 'drinkcola-400', $dir . 'drinkcola-400.webp', 'Drink Cola 400 mL', 'drink-cola-400-ml.webp' );
-	jau_importar( 'drinkcola-1500', $dir . 'drinkcola-1500.webp', 'Drink Cola 1.5 L', 'drink-cola-1-5-l.webp' );
-	foreach ( $jau_sabores as $slug => $nombre ) {
-		$base = isset( $jau_archivo_sabor[ $slug ] ) ? $jau_archivo_sabor[ $slug ] : $slug;
-		foreach ( array( '250-ml', '500-ml', '1-5-l' ) as $p ) {
-			jau_importar( "frugy-{$slug}-{$jau_ml[ $p ][1]}", $dir . "frugy-{$base}-{$jau_ml[ $p ][1]}.webp", "Frugy {$nombre} {$jau_ml[ $p ][0]}", "frugy-{$slug}-{$p}.webp" );
+/**
+ * Texto alternativo a partir del nombre del archivo optimizado.
+ *
+ * @param string $clave   Nombre sin extensión.
+ * @param array  $sabores Sabores (slug => nombre).
+ * @return string
+ */
+function jau_alt_de( $clave, $sabores ) {
+	$fijos = array(
+		'logo-industrias-jau-azul'   => 'Industrias JAU',
+		'isotipo-industrias-jau'     => 'Isotipo de Industrias JAU',
+		'favicon-industrias-jau-512' => 'Isotipo de Industrias JAU',
+		'logo-drink-cola'            => 'Drink Cola',
+		'logo-frugy-verde-blanco'    => 'Frugy',
+		'logo-frugy-blanco-verde'    => 'Frugy',
+		'drink-cola-400-ml'          => 'Botella de Drink Cola 400 mL',
+		'drink-cola-1-5-l'           => 'Botella de Drink Cola 1.5 L',
+	);
+	if ( isset( $fijos[ $clave ] ) ) {
+		return $fijos[ $clave ];
+	}
+	if ( preg_match( '/^frugy-(.+)-botella$/', $clave, $m ) ) {
+		return 'Botella de Frugy ' . ( $sabores[ $m[1] ] ?? ucfirst( $m[1] ) );
+	}
+	$series = array(
+		'desayuno'     => 'Frugy en el desayuno',
+		'casual'       => 'Frugy en el día a día',
+		'kids'         => 'Frugy en la lonchera',
+		'supermercado' => 'Frugy en el supermercado',
+		'mango'        => 'Frugy Mango',
+		'lc'           => 'Frugy Limón-coco',
+		'frr'          => 'Frugy para la mesa y las reuniones',
+	);
+	foreach ( $series as $k => $texto ) {
+		if ( str_starts_with( $clave, 'frugy-' . $k ) ) {
+			return $texto;
 		}
 	}
-	// Fotos de referencia del prototipo (Unsplash) hasta recibir las del cliente (DWIJ-78).
-	jau_importar( 'ambiente-nosotros', 'https://images.unsplash.com/photo-1664382953403-fc1ac77073a0?fm=jpg&q=70&w=1600&auto=format&fit=crop', 'Bebidas en el punto de venta (foto de referencia)', 'referencia-nosotros.jpg' );
-	jau_importar( 'ambiente-almacen', 'https://images.unsplash.com/photo-1553413077-190dd305871c?fm=jpg&q=70&w=1600&auto=format&fit=crop', 'Almacén de distribución (foto de referencia)', 'referencia-almacen.jpg' );
+	return 'Industrias JAU';
+}
+
+/* ---------------------------------------------------------------------------
+ * 1) Medios: imágenes oficiales del cliente ya optimizadas (insumos-optimizados/)
+ *    y retiro de las imágenes de muestra del prototipo (DWIJ-79).
+ * ------------------------------------------------------------------------- */
+if ( 'medios' === $jau_modo ) {
+	$dir = $jau_raiz . '/insumos-optimizados/';
+	jau_log( 'Importando imágenes oficiales…' );
+	foreach ( array_merge( glob( $dir . '*.webp' ), glob( $dir . '*.png' ) ) as $archivo ) {
+		$clave = pathinfo( $archivo, PATHINFO_FILENAME );
+		jau_importar( $clave, $archivo, jau_alt_de( $clave, $jau_sabores ), basename( $archivo ) );
+	}
+
+	$muestras = array( 'frugy-familia', 'drinkcola-recorte', 'drinkcola-400', 'drinkcola-1500', 'ambiente-nosotros', 'ambiente-almacen' );
+	foreach ( array_keys( $jau_sabores ) as $slug ) {
+		foreach ( array( '250', '500', '1500' ) as $ml ) {
+			$muestras[] = "frugy-{$slug}-{$ml}";
+		}
+	}
+	foreach ( $muestras as $clave ) {
+		$id = jau_adjunto( $clave );
+		if ( $id ) {
+			wp_delete_attachment( $id, true );
+			jau_log( "  − muestra retirada: {$clave}" );
+		}
+	}
 	jau_log( 'Listo. Ahora corre el paso «contenido».' );
 	return;
 }
@@ -197,7 +241,7 @@ if ( 'contenido' === $jau_modo ) {
 	jau_log( '✓ Marcas, presentaciones y sabores' );
 
 	/* Productos: una ficha por producto o sabor (DWIJ-65, DWIJ-66) */
-	$galeria = function ( $items ) {
+	$galeria = function ( $items, $titulo = 'Presentaciones', $clase = '' ) {
 		$html = '';
 		foreach ( $items as $it ) {
 			list( $clave, $leyenda ) = $it;
@@ -208,17 +252,24 @@ if ( 'contenido' === $jau_modo ) {
 			$url   = wp_get_attachment_image_url( $id, 'medium_large' );
 			$alt   = get_post_meta( $id, '_wp_attachment_image_alt', true );
 			$html .= '<!-- wp:image {"id":' . $id . ',"sizeSlug":"medium_large","linkDestination":"none"} -->' . "\n"
-				. '<figure class="wp-block-image size-medium_large"><img src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '" class="wp-image-' . $id . '"/><figcaption class="wp-element-caption">' . esc_html( $leyenda ) . '</figcaption></figure>' . "\n"
+				. '<figure class="wp-block-image size-medium_large"><img src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '" class="wp-image-' . $id . '"/>' . ( '' !== $leyenda ? '<figcaption class="wp-element-caption">' . esc_html( $leyenda ) . '</figcaption>' : '' ) . '</figure>' . "\n"
 				. '<!-- /wp:image -->' . "\n\n";
 		}
 		if ( '' === $html ) {
 			return '';
 		}
-		$cols = count( $items );
-		return '<!-- wp:heading {"fontSize":"subtitulo"} -->' . "\n" . '<h2 class="wp-block-heading has-subtitulo-font-size">Presentaciones</h2>' . "\n" . '<!-- /wp:heading -->' . "\n\n"
-			. '<!-- wp:gallery {"columns":' . $cols . ',"imageCrop":false,"linkTo":"none","sizeSlug":"medium_large"} -->' . "\n"
-			. '<figure class="wp-block-gallery has-nested-images columns-' . $cols . '">' . $html . '</figure>' . "\n" . '<!-- /wp:gallery -->';
+		$cols  = count( $items );
+		$attrs = '"columns":' . $cols . ',"imageCrop":false,"linkTo":"none","sizeSlug":"medium_large"' . ( $clase ? ',"className":"' . $clase . '"' : '' );
+		return '<!-- wp:heading {"fontSize":"subtitulo"} -->' . "\n" . '<h2 class="wp-block-heading has-subtitulo-font-size">' . esc_html( $titulo ) . '</h2>' . "\n" . '<!-- /wp:heading -->' . "\n\n"
+			. '<!-- wp:gallery {' . $attrs . '} -->' . "\n"
+			. '<figure class="wp-block-gallery has-nested-images columns-' . $cols . ( $clase ? ' ' . $clase : '' ) . '">' . $html . '</figure>' . "\n" . '<!-- /wp:gallery -->';
 	};
+
+	// Fotos de ambiente propias de cada sabor (DWIJ-76). Los demás sabores quedan solo con la botella.
+	$jau_momentos = array(
+		'mango'      => array( array( array( 'frugy-mango-1', '' ), array( 'frugy-mango-2', '' ), array( 'frugy-mango-3', '' ), array( 'frugy-mango-4', '' ) ), 'Momentos Frugy Mango', 'jau-fotos' ),
+		'limon-coco' => array( array( array( 'frugy-lc-1', '' ) ), 'Momentos Frugy Limón-coco', 'jau-fotos' ),
+	);
 
 	$productos   = array();
 	$productos[] = array(
@@ -228,8 +279,8 @@ if ( 'contenido' === $jau_modo ) {
 		'marca'     => $marca_dc,
 		'pres'      => array( '400-ml', '1-5-l' ),
 		'sabor'     => 0,
-		'foto'      => 'drinkcola-1500',
-		'galeria'   => array( array( 'drinkcola-400', '400 mL' ), array( 'drinkcola-1500', '1.5 L' ) ),
+		'foto'      => 'drink-cola-1-5-l',
+		'contenido' => array( array( array( 'drink-cola-400-ml', '400 mL' ), array( 'drink-cola-1-5-l', '1.5 L' ) ), 'Presentaciones', 'jau-galeria-botellas' ),
 		'destacado' => true,
 	);
 	foreach ( $jau_sabores as $slug => $nombre ) {
@@ -240,8 +291,8 @@ if ( 'contenido' === $jau_modo ) {
 			'marca'     => $marca_fr,
 			'pres'      => array( '250-ml', '500-ml', '1-5-l' ),
 			'sabor'     => $sab[ $slug ],
-			'foto'      => "frugy-{$slug}-1500",
-			'galeria'   => array( array( "frugy-{$slug}-250", '250 mL' ), array( "frugy-{$slug}-500", '500 mL' ), array( "frugy-{$slug}-1500", '1.5 L' ) ),
+			'foto'      => "frugy-{$slug}-botella",
+			'contenido' => $jau_momentos[ $slug ] ?? null,
 			'destacado' => in_array( $slug, array( 'naranja', 'manzana', 'mango' ), true ),
 		);
 	}
@@ -254,7 +305,7 @@ if ( 'contenido' === $jau_modo ) {
 			'post_name'    => $p['slug'],
 			'post_title'   => $p['titulo'],
 			'post_excerpt' => $p['extracto'],
-			'post_content' => $galeria( $p['galeria'] ),
+			'post_content' => $p['contenido'] ? $galeria( ...$p['contenido'] ) : '',
 			'menu_order'   => $orden,
 		);
 		if ( $existente ) {
@@ -273,6 +324,18 @@ if ( 'contenido' === $jau_modo ) {
 		}
 		jau_log( "✓ Producto {$p['titulo']} (#{$id})" );
 	}
+
+	// Logos de las marcas (DWIJ-74, DWIJ-77) y favicon (DWIJ-72).
+	foreach ( array( 'drink-cola' => 'logo-drink-cola', 'frugy' => 'logo-frugy-verde-blanco' ) as $slug => $clave ) {
+		$t = get_term_by( 'slug', $slug, 'marca' );
+		if ( $t && jau_adjunto( $clave ) ) {
+			update_term_meta( $t->term_id, 'jau_logo_id', jau_adjunto( $clave ) );
+		}
+	}
+	if ( jau_adjunto( 'favicon-industrias-jau-512' ) ) {
+		update_option( 'site_icon', jau_adjunto( 'favicon-industrias-jau-512' ) );
+	}
+	jau_log( '✓ Logos de marca y favicon' );
 	$jau_modo = 'paginas';
 }
 

@@ -26,6 +26,9 @@ from pathlib import Path
 
 from PIL import Image, ImageOps, UnidentifiedImageError
 
+# Las fotos de ambiente del cliente son muy grandes (hasta 40 MB); se sube el tope de Pillow.
+Image.MAX_IMAGE_PIXELS = 300_000_000
+
 RAIZ = Path(__file__).resolve().parent.parent
 ORIGEN = Path(sys.argv[1]) if len(sys.argv) > 1 else RAIZ / "insumos-originales"
 DESTINO = Path(sys.argv[2]) if len(sys.argv) > 2 else RAIZ / "insumos-optimizados"
@@ -42,12 +45,12 @@ NOMBRES = {
     "logotipo-frugy-blanco-y-verde-mr": "logo-frugy-blanco-verde",
     "logotipo-frugy-verde-y-blanco-mr": "logo-frugy-verde-blanco",
     "logotipo-drink-cola": "logo-drink-cola",
-    "botella-limon-coco-1-5l": "frugy-limon-coco-1-5l",
-    "mango-1-5l": "frugy-mango-1-5l",
-    "jugo-de-manzana-gotas": "frugy-manzana",
-    "jugo-de-naranja-gotas": "frugy-naranja",
-    "jugo-de-pera-con-gotas": "frugy-pera",
-    "jugo-de-durazno-con-gotas": "frugy-durazno",
+    "botella-limon-coco-1-5l": "frugy-limon-coco-botella",
+    "mango-1-5l": "frugy-mango-botella",
+    "jugo-de-manzana-gotas": "frugy-manzana-botella",
+    "jugo-de-naranja-gotas": "frugy-naranja-botella",
+    "jugo-de-pera-con-gotas": "frugy-pera-botella",
+    "jugo-de-durazno-con-gotas": "frugy-durazno-botella",
     "botella-400ml": "drink-cola-400-ml",
     "botella-actualizada-2026": "drink-cola-1-5-l",
 }

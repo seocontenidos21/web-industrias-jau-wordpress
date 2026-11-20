@@ -79,20 +79,15 @@ header.wp-block-template-part,
 	gap: 20px !important;
 }
 
-/* Logo provisional en texto (DWIJ-12): «J» + INDUSTRIAS JAU. Se reemplaza por el logo oficial (DWIJ-72). */
+/* Logo (DWIJ-72): isotipo oficial + nombre en la tipografía del sitio. */
 .jau-wordmark { margin: 0; white-space: nowrap; }
 .jau-wordmark a { display: inline-flex; align-items: center; gap: 10px; color: var(--jau-ink); }
 .jau-wordmark a::before {
-	content: "J";
-	display: grid;
-	place-items: center;
-	width: 34px;
-	height: 34px;
-	border-radius: var(--jau-r-sm);
-	background: var(--jau-primary);
-	color: #fff;
-	font-size: 14px;
-	letter-spacing: 0;
+	content: "";
+	flex: none;
+	width: 40px;
+	height: 36px;
+	background: url("../img/isotipo-industrias-jau.png") center / contain no-repeat;
 }
 .jau-dark .jau-wordmark a { color: #fff; }
 
@@ -360,45 +355,53 @@ header.wp-block-template-part,
 .jau-slide.is-active .jau-slide__texto { animation: jauAIn .6s ease both; }
 .jau-slide.is-active .jau-slide__visual { animation: jauAIn .7s .1s ease both; }
 
+.jau-slider { --jau-ctrl: #fff; }
+.jau-slider.es-claro { --jau-ctrl: var(--jau-ink); }
 .jau-slider__controles {
 	position: absolute;
 	left: 0;
 	right: 0;
-	bottom: 18px;
+	bottom: 22px;
 	z-index: 5;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 12px;
+	gap: 10px;
 	pointer-events: none;
+	color: var(--jau-ctrl);
 }
 .jau-slider__controles > * { pointer-events: auto; }
 .jau-slider__flecha {
-	width: 44px;
-	height: 44px;
+	width: 30px;
+	height: 30px;
+	border: 0;
 	border-radius: 50%;
-	border: 1.5px solid rgba(255, 255, 255, .7);
-	background: rgba(13, 14, 17, .18);
-	color: #fff;
+	background: transparent;
+	color: inherit;
 	display: grid;
 	place-items: center;
 	cursor: pointer;
 	padding: 0;
-	transition: background-color .2s;
+	opacity: .65;
+	transition: opacity .2s;
 }
-.jau-slider__flecha:hover { background: rgba(255, 255, 255, .2); }
+.jau-slider__flecha:hover, .jau-slider__flecha:focus-visible { opacity: 1; }
+.jau-slider__flecha svg { width: 18px; height: 18px; }
+.jau-slider__pausa svg { width: 14px; height: 14px; }
 .jau-slider__puntos { display: flex; gap: 8px; align-items: center; }
 .jau-slider__punto {
-	width: 28px;
-	height: 6px;
-	border-radius: 3px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
 	border: 0;
 	padding: 0;
 	cursor: pointer;
-	background: rgba(255, 255, 255, .45);
-	transition: background-color .2s, width .3s;
+	background: currentColor;
+	opacity: .35;
+	transition: opacity .2s, transform .2s;
 }
-.jau-slider__punto[aria-current="true"] { background: #fff; width: 44px; }
+.jau-slider__punto:hover { opacity: .7; }
+.jau-slider__punto[aria-current="true"] { opacity: 1; transform: scale(1.25); }
 @media (max-width: 640px) {
 	.jau-slider > .jau-slide { min-height: 0 !important; }
 	.jau-slide__texto { padding-block: 32px 8px; }
@@ -431,12 +434,14 @@ header.wp-block-template-part,
 .jau-producto .wp-block-post-featured-image {
 	margin: 0;
 	aspect-ratio: 1 / 1;
-	background: var(--jau-white);
+	background: radial-gradient(circle closest-side at 50% 52%, var(--jau-tinte, #EEF0F4) 0 70%, transparent 71%), var(--jau-white);
 	border-bottom: 1px solid var(--jau-line);
 	display: grid;
 	place-items: center;
 }
-.jau-producto .wp-block-post-featured-image img { width: 100%; height: 100%; object-fit: contain; }
+.jau-producto .wp-block-post-featured-image img { width: 100%; height: 100%; object-fit: contain; padding: 9% 0; filter: drop-shadow(0 10px 12px rgba(20, 24, 30, .18)); }
+.marca-frugy { --jau-tinte: #FDEBCB; }
+.marca-drink-cola { --jau-tinte: #F6DADA; }
 .jau-q-destacados .wp-block-post-template,
 .jau-q-relacionados .wp-block-post-template { grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
 .jau-producto .wp-block-post-featured-image a { display: block; width: 100%; height: 100%; }
@@ -504,9 +509,9 @@ header.wp-block-template-part,
 	border: 1px solid var(--jau-line);
 	border-radius: 14px;
 	overflow: hidden;
-	background: var(--jau-white);
+	background: radial-gradient(circle closest-side at 50% 52%, var(--jau-tinte, #EEF0F4) 0 72%, transparent 73%), var(--jau-white);
 }
-.jau-ficha__foto .wp-block-post-featured-image img { width: 100%; height: 100%; object-fit: contain; }
+.jau-ficha__foto .wp-block-post-featured-image img { width: 100%; height: 100%; object-fit: contain; padding: 8% 0; filter: drop-shadow(0 16px 18px rgba(20, 24, 30, .2)); }
 .jau-ficha__info > * { margin-block: 0 !important; }
 .jau-ficha__info > * + * { margin-block-start: 18px !important; }
 .jau-ficha__info .wp-block-post-excerpt__excerpt { font-size: 17px; line-height: 1.55; color: var(--jau-ink-2); max-width: 520px; margin: 0; }
@@ -704,31 +709,7 @@ header.wp-block-template-part,
 .jau-relacionados { margin-top: 0 !important; }
 .jau-cierre-seccion { margin-top: 0 !important; }
 
-/* Composición de botellas del slider institucional (como el hero del prototipo) */
-.jau-composicion { position: relative; width: 100%; max-width: 620px; margin-inline: auto; height: clamp(340px, 46vw, 560px); }
-.jau-composicion::before {
-	content: "";
-	position: absolute;
-	right: -12%;
-	top: 50%;
-	width: min(110%, 600px);
-	aspect-ratio: 1 / 1;
-	transform: translateY(-50%);
-	border-radius: 50%;
-	background: var(--wp--preset--color--primary-soft);
-}
-.jau-composicion > figure { position: absolute; margin: 0 !important; }
-.jau-composicion > figure img { width: 100%; height: 100%; object-fit: contain; }
-.jau-composicion__a { right: 0; bottom: 12%; width: 84%; filter: drop-shadow(0 20px 26px rgba(0, 0, 0, .25)); }
-.jau-composicion__b { left: -4%; bottom: -6%; height: 94%; width: auto; filter: drop-shadow(0 24px 30px rgba(0, 0, 0, .35)); }
-.jau-composicion__b img { height: 100% !important; width: auto !important; }
-@media (min-width: 641px) and (max-width: 1000px) { .jau-composicion { height: auto; aspect-ratio: 1 / 1; max-width: 480px; } }
-@media (max-width: 640px) { .jau-composicion { height: 300px; } }
 
-/* Visual de producto suelto en el slider */
-.jau-slide__producto { max-height: 520px; margin-inline: auto; }
-.jau-slide__producto img { max-height: 520px; width: auto; margin-inline: auto; display: block; filter: drop-shadow(0 24px 30px rgba(0, 0, 0, .35)); }
-@media (max-width: 640px) { .jau-slide__producto img { max-height: 280px; } }
 
 /* Datos de la ficha */
 .jau-ficha-datos__lista { margin: 0; border: 1px solid var(--jau-line); border-radius: var(--jau-r-md); background: var(--jau-white); overflow: hidden; }
@@ -777,23 +758,12 @@ header.wp-block-template-part,
 @media (max-width: 781px) {
 	.jau-slider.is-ready > .jau-slide { align-items: flex-start; }
 	.jau-slide__cols { gap: 8px !important; }
-	.jau-composicion { height: 240px; max-width: 340px; }
-	.jau-slide__producto img { max-height: 220px; }
 	.jau-slide__texto { padding-block: 28px 0; gap: 14px; }
 }
 .jau-slide__texto { position: relative; z-index: 2; }
 @media (max-width: 781px) {
-	.jau-composicion { margin-top: 28px; }
-	.jau-composicion::before { width: min(92%, 280px); right: 4%; }
-	.jau-composicion__a { width: 88%; bottom: 8%; }
-	.jau-composicion__b { height: 84%; left: 0; bottom: -2%; }
-}
-@media (max-width: 781px) {
 	.jau-slider { padding-bottom: 68px; }
 	.jau-slider__controles { bottom: 14px; }
-}
-@media (min-width: 641px) and (max-width: 781px) {
-	.jau-composicion { height: 320px; max-width: 420px; }
 }
 @media (max-width: 1179px) {
 	.jau-header .jau-nav .wp-block-navigation__container { position: static !important; width: auto !important; background: none !important; }
@@ -803,3 +773,78 @@ header.wp-block-template-part,
 	.jau-slide.wp-block-cover { padding-bottom: 72px !important; }
 }
 @media (max-width: 781px) { .jau-ficha__foto { max-width: 480px; } }
+
+/* --------------------------------------------------------------------------
+   Escenas del slider: círculo de fondo + botellas o foto (como la primera diapositiva)
+   -------------------------------------------------------------------------- */
+.jau-escena {
+	position: relative;
+	isolation: isolate;
+	width: 100%;
+	max-width: 600px;
+	margin-inline: auto;
+	height: clamp(340px, 42vw, 540px);
+	display: flex !important;
+	align-items: flex-end;
+	justify-content: center;
+}
+.jau-escena::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: min(100%, 540px);
+	aspect-ratio: 1 / 1;
+	transform: translate(-50%, -50%);
+	border-radius: 50%;
+	background: var(--jau-circulo, rgba(255, 255, 255, .16));
+	z-index: -1;
+}
+.jau-escena--primario { --jau-circulo: var(--wp--preset--color--primary-soft); }
+.jau-escena--claro { --jau-circulo: rgba(255, 255, 255, .38); }
+.jau-escena > * { margin: 0 !important; }
+.jau-botellas { display: flex !important; align-items: flex-end; justify-content: center; height: 86%; width: 100%; padding-bottom: 4%; }
+.jau-botellas > figure { flex: none; height: 74%; margin: 0 !important; position: relative; }
+.jau-botellas > figure + figure { margin-left: -5% !important; }
+.jau-botellas > figure img { height: 100% !important; width: auto !important; max-width: none; filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .28)); }
+.jau-botellas > .jau-botella--media { height: 86%; z-index: 1; }
+.jau-botellas > .jau-botella--centro { height: 100%; z-index: 2; }
+.jau-escena--foto { align-items: center; }
+.jau-escena--foto > figure { height: 88%; aspect-ratio: 9 / 16; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 40px -18px rgba(0, 0, 0, .55); }
+.jau-escena--foto > figure img { width: 100%; height: 100%; object-fit: cover; }
+.jau-slide__logo { margin: 0 0 4px !important; }
+.jau-slide__logo img { height: 56px; width: auto; }
+@media (max-width: 781px) {
+	.jau-escena { height: 280px; margin-top: 20px; }
+	.jau-escena::before { width: min(92%, 280px); }
+	.jau-slide__logo img { height: 44px; }
+}
+
+/* Tarjetas de marca con logo (DWIJ-74 / DWIJ-77) */
+.jau-marca-logo { margin: 0 !important; }
+.jau-marca-logo img { height: 56px; width: auto; }
+.jau-marca-card:has(.jau-marca-logo)::before { display: none; }
+
+/* Fotos verticales de ambiente (formato historia) */
+.jau-fotos img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--jau-r-md); display: block; }
+.jau-fotos figure { margin: 0 !important; }
+.jau-dark .jau-fotos img { box-shadow: 0 20px 36px -20px rgba(0, 0, 0, .7); }
+
+/* Footer: isotipo sobre recuadro blanco (no se recolorea el logo) */
+.jau-footer .jau-wordmark a::before { background-color: #fff; border-radius: 8px; padding: 4px; background-origin: content-box; width: 44px; height: 40px; }
+
+/* Datos sin cargar: no se muestran (sin marcadores «por confirmar») */
+.jau-canal:not(:has(.jau-canal__valor)) { display: none !important; }
+.jau-pc { display: none !important; }
+
+/* Galerías de la ficha: botellas sobre círculo de color de la marca */
+.jau-galeria-botellas figure { background: radial-gradient(circle closest-side at 50% 52%, var(--jau-tinte, #EEF0F4) 0 72%, transparent 73%), var(--jau-white); padding: 20px 0 8px; }
+.jau-galeria-botellas img { max-height: 360px; width: auto !important; margin-inline: auto; filter: drop-shadow(0 14px 16px rgba(20, 24, 30, .2)); }
+.jau-galeria-botellas figcaption { position: static !important; background: none !important; color: var(--jau-ink) !important; font-weight: 600; text-align: center; padding: 8px 0 0 !important; }
+.jau-ficha__contenido .jau-fotos figure { border: 0; background: none; }
+
+/* Botellas siempre completas dentro del cuadro 1:1 (las oficiales son verticales y finas) */
+.jau-producto .wp-block-post-featured-image,
+.jau-ficha__foto .wp-block-post-featured-image { position: relative; display: block; }
+.jau-producto .wp-block-post-featured-image img,
+.jau-ficha__foto .wp-block-post-featured-image img { position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: contain !important; }

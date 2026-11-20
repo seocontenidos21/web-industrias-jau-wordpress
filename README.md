@@ -17,7 +17,7 @@ No se versionan el núcleo de WordPress, la base de datos, `wp-config.php` ni `w
 
 ## Dónde se cambia cada cosa
 
-- **Colores, fuentes, tamaños:** `theme.json` (paleta provisional hasta el manual de marca). Los marcadores «Por confirmar» se ocultan con `settings.custom.pc-display` → `none`.
+- **Colores, fuentes, tamaños:** `theme.json`. El primario es el azul del logo (#30406E); el resto de la paleta sigue provisional hasta el manual de marca.
 - **Teléfono, WhatsApp, dirección, horario, correo y redes:** admin → *Ajustes › Datos de la empresa*. Se actualizan en todo el sitio.
 - **Productos:** admin → *Productos*. Una ficha por producto o sabor, con marca, presentaciones y sabor; la casilla «Inicio» lo muestra en destacados. El logo de cada marca se elige en *Productos › Marcas*.
 - **Solicitudes de distribuidores:** admin → *Distribuidores* (botón **Exportar CSV**). Se envía correo cuando hay un destinatario en Datos de la empresa.
@@ -27,17 +27,17 @@ No se versionan el núcleo de WordPress, la base de datos, `wp-config.php` ni `w
 
 ```bash
 studio start --skip-browser
-studio wp eval-file herramientas/sembrar-contenido.php medios      # imágenes provisionales
+studio wp eval-file herramientas/sembrar-contenido.php medios      # importa insumos-optimizados/ y retira las muestras
 studio wp eval-file herramientas/sembrar-contenido.php contenido   # marcas, productos, páginas, datos
 studio wp eval-file herramientas/sembrar-contenido.php paginas     # solo regenera páginas desde los patrones
 ```
 
 > ⚠ `paginas` y `contenido` reescriben el contenido de las páginas con los patrones del tema.
 
-Imágenes del cliente: descarga la carpeta de Drive «Insumos Industrias JAU» en `insumos-originales/` y corre:
+Imágenes del cliente: descarga la carpeta de Drive «Insumos Industrias JAU» y corre (los originales no se versionan):
 
 ```bash
-python -I herramientas/optimizar-imagenes.py
+python -I herramientas/optimizar-imagenes.py "<carpeta descargada>/Insumos Industrias JAU" insumos-optimizados
 ```
 
 ## Entorno de pruebas (Railway)

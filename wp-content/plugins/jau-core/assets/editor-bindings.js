@@ -6,7 +6,7 @@
 	var datos = window.jauEmpresa || {};
 
 	function texto( args ) {
-		var v = datos[ args.key ] || 'Por confirmar';
+		var v = datos[ args.key ] || '(sin dato)';
 		return args.etiqueta ? args.etiqueta + ': ' + v : v;
 	}
 

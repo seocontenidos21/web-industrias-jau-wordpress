@@ -18,7 +18,9 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:group {"style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"grid","columnCount":2,"minimumColumnWidth":"240px"}} -->
 <div class="wp-block-group"><!-- wp:group {"className":"is-style-tarjeta-hover jau-card-link jau-marca-card jau-marca--drink-cola","style":{"spacing":{"padding":{"top":"20px","bottom":"20px","left":"20px","right":"20px"},"blockGap":"10px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
-<div class="wp-block-group is-style-tarjeta-hover jau-card-link jau-marca-card jau-marca--drink-cola" style="padding-top:20px;padding-right:20px;padding-bottom:20px;padding-left:20px"><!-- wp:heading {"level":3,"fontSize":"lg"} -->
+<div class="wp-block-group is-style-tarjeta-hover jau-card-link jau-marca-card jau-marca--drink-cola" style="padding-top:20px;padding-right:20px;padding-bottom:20px;padding-left:20px"><?php echo jau_tema_bloque_imagen( 'logo-drink-cola', 'jau-marca-logo', 'medium' ); // phpcs:ignore ?>
+
+<!-- wp:heading {"level":3,"fontSize":"lg"} -->
 <h3 class="wp-block-heading has-lg-font-size"><a href="/productos/?marca=drink-cola">Drink Cola</a></h3>
 <!-- /wp:heading -->
 
@@ -32,7 +34,9 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"is-style-tarjeta-hover jau-card-link jau-marca-card jau-marca--frugy","style":{"spacing":{"padding":{"top":"20px","bottom":"20px","left":"20px","right":"20px"},"blockGap":"10px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
-<div class="wp-block-group is-style-tarjeta-hover jau-card-link jau-marca-card jau-marca--frugy" style="padding-top:20px;padding-right:20px;padding-bottom:20px;padding-left:20px"><!-- wp:heading {"level":3,"fontSize":"lg"} -->
+<div class="wp-block-group is-style-tarjeta-hover jau-card-link jau-marca-card jau-marca--frugy" style="padding-top:20px;padding-right:20px;padding-bottom:20px;padding-left:20px"><?php echo jau_tema_bloque_imagen( 'logo-frugy-verde-blanco', 'jau-marca-logo', 'medium' ); // phpcs:ignore ?>
+
+<!-- wp:heading {"level":3,"fontSize":"lg"} -->
 <h3 class="wp-block-heading has-lg-font-size"><a href="/productos/?marca=frugy">Frugy</a></h3>
 <!-- /wp:heading -->
 

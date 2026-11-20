@@ -3,7 +3,7 @@
  * Title: Slider del inicio
  * Slug: industrias-jau/hero-slider
  * Categories: industrias-jau, banner
- * Description: Banner principal en 4 diapositivas: institucional, Drink Cola, Frugy y distribuidores (DWIJ-53). Solo el primer titular es H1.
+ * Description: Banner principal en 4 diapositivas: institucional, Drink Cola, Frugy y distribuidores (DWIJ-53). Cada una con su escena (círculo + botellas o foto). Solo el primer titular es H1.
  * Keywords: slider, hero, banner, carrusel
  * Viewport Width: 1440
  *
@@ -11,6 +11,17 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+/**
+ * Botella dentro de una escena.
+ *
+ * @param string $clave Clave del adjunto.
+ * @param string $tipo  '', 'media' o 'centro' (altura relativa).
+ * @return string
+ */
+$jau_botella = function ( $clave, $tipo = '' ) {
+	return jau_tema_bloque_imagen( $clave, 'jau-botella' . ( $tipo ? ' jau-botella--' . $tipo : '' ), 'full' );
+};
 ?>
 <!-- wp:group {"align":"full","className":"jau-slider","layout":{"type":"default"}} -->
 <div class="wp-block-group alignfull jau-slider"><!-- wp:cover {"dimRatio":100,"overlayColor":"primary","isUserOverlayColor":true,"isDark":true,"className":"jau-slide","layout":{"type":"constrained"}} -->
@@ -40,10 +51,10 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","className":"jau-slide__visual"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-composicion","layout":{"type":"default"}} -->
-<div class="wp-block-group jau-composicion"><?php echo jau_tema_bloque_imagen( 'frugy-familia', 'jau-composicion__a' ); // phpcs:ignore ?>
-
-<?php echo jau_tema_bloque_imagen( 'drinkcola-recorte', 'jau-composicion__b' ); // phpcs:ignore ?></div>
+<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena jau-escena--primario","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-escena jau-escena--primario"><!-- wp:group {"className":"jau-botellas","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-botellas"><?php echo $jau_botella( 'frugy-naranja-botella' ) . "\n\n" . $jau_botella( 'frugy-manzana-botella', 'media' ) . "\n\n" . $jau_botella( 'drink-cola-1-5-l', 'centro' ) . "\n\n" . $jau_botella( 'frugy-limon-coco-botella', 'media' ) . "\n\n" . $jau_botella( 'frugy-mango-botella' ); // phpcs:ignore ?></div>
+<!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div></div>
@@ -72,7 +83,11 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","className":"jau-slide__visual"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><?php echo jau_tema_bloque_imagen( 'drinkcola-recorte', 'jau-slide__producto' ); // phpcs:ignore ?></div>
+<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-escena"><!-- wp:group {"className":"jau-botellas","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-botellas"><?php echo $jau_botella( 'drink-cola-1-5-l', 'centro' ) . "\n\n" . $jau_botella( 'drink-cola-400-ml', 'media' ); // phpcs:ignore ?></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div></div>
 <!-- /wp:cover -->
@@ -80,16 +95,14 @@ defined( 'ABSPATH' ) || exit;
 <!-- wp:cover {"dimRatio":100,"overlayColor":"frugy","isUserOverlayColor":true,"isDark":false,"className":"jau-slide","layout":{"type":"constrained"}} -->
 <div class="wp-block-cover is-light jau-slide"><span aria-hidden="true" class="wp-block-cover__background has-frugy-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:columns {"verticalAlignment":"center","className":"jau-slide__cols"} -->
 <div class="wp-block-columns are-vertically-aligned-center jau-slide__cols"><!-- wp:column {"verticalAlignment":"center","className":"jau-slide__texto"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><!-- wp:paragraph {"className":"jau-ojo"} -->
-<p class="jau-ojo">Bebidas saborizadas</p>
-<!-- /wp:paragraph -->
+<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><?php echo jau_tema_bloque_imagen( 'logo-frugy-verde-blanco', 'jau-slide__logo', 'medium' ); // phpcs:ignore ?>
 
 <!-- wp:heading -->
-<h2 class="wp-block-heading">Frugy</h2>
+<h2 class="wp-block-heading">Bebidas saborizadas a frutas</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Bebidas saborizadas a frutas · 6 sabores: manzana, naranja, pera, durazno, mango y limón-coco.</p>
+<p>6 sabores: manzana, naranja, pera, durazno, mango y limón-coco · 250 mL, 500 mL y 1.5 L</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons -->
@@ -100,15 +113,19 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","className":"jau-slide__visual"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><?php echo jau_tema_bloque_imagen( 'frugy-familia', 'jau-slide__producto' ); // phpcs:ignore ?></div>
+<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena jau-escena--claro","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-escena jau-escena--claro"><!-- wp:group {"className":"jau-botellas","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-botellas"><?php echo $jau_botella( 'frugy-pera-botella' ) . "\n\n" . $jau_botella( 'frugy-durazno-botella', 'media' ) . "\n\n" . $jau_botella( 'frugy-limon-coco-botella', 'centro' ) . "\n\n" . $jau_botella( 'frugy-naranja-botella', 'media' ) . "\n\n" . $jau_botella( 'frugy-manzana-botella' ); // phpcs:ignore ?></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div></div>
 <!-- /wp:cover -->
 
 <!-- wp:cover {"dimRatio":100,"overlayColor":"ink","isUserOverlayColor":true,"isDark":true,"className":"jau-slide jau-slide--distribuidores","layout":{"type":"constrained"}} -->
 <div class="wp-block-cover jau-slide jau-slide--distribuidores"><span aria-hidden="true" class="wp-block-cover__background has-ink-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:columns {"verticalAlignment":"center","className":"jau-slide__cols"} -->
-<div class="wp-block-columns are-vertically-aligned-center jau-slide__cols"><!-- wp:column {"verticalAlignment":"center","width":"66.66%","className":"jau-slide__texto"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__texto" style="flex-basis:66.66%"><!-- wp:paragraph {"className":"jau-ojo"} -->
+<div class="wp-block-columns are-vertically-aligned-center jau-slide__cols"><!-- wp:column {"verticalAlignment":"center","className":"jau-slide__texto"} -->
+<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><!-- wp:paragraph {"className":"jau-ojo"} -->
 <p class="jau-ojo">Distribuidores</p>
 <!-- /wp:paragraph -->
 
@@ -135,10 +152,10 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:buttons --></div>
 <!-- /wp:column -->
 
-<!-- wp:column {"verticalAlignment":"center","width":"33.33%","className":"jau-slide__visual"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__visual" style="flex-basis:33.33%"><!-- wp:paragraph {"className":"jau-slide__nota"} -->
-<p class="jau-slide__nota"><span class="jau-pc">Foto de producto en anaquel por confirmar</span></p>
-<!-- /wp:paragraph --></div>
+<!-- wp:column {"verticalAlignment":"center","className":"jau-slide__visual"} -->
+<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena jau-escena--foto","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-escena jau-escena--foto"><?php echo jau_tema_bloque_imagen( 'frugy-supermercado-3', '', 'large' ); // phpcs:ignore ?></div>
+<!-- /wp:group --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div></div>
 <!-- /wp:cover --></div>
