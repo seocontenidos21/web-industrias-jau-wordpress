@@ -274,3 +274,13 @@ function jau_tema_bloque_imagen( $clave, $clase = '', $tam = 'full' ) {
 		$img['id']
 	);
 }
+
+/* Tamaños intermedios en WebP con más calidad (por defecto 82 ablanda las fotos en el slider). */
+add_filter(
+	'wp_editor_set_quality',
+	function ( $calidad, $mime ) {
+		return 'image/webp' === $mime ? 90 : $calidad;
+	},
+	10,
+	2
+);

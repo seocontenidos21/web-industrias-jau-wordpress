@@ -926,3 +926,11 @@ header.wp-block-template-part,
 	.jau-escena--foto-botellas > .jau-escena__foto { width: min(92%, 262px); }
 	.jau-escena--foto-botellas > .jau-botellas { height: 54%; padding-bottom: 6%; }
 }
+
+/* Ficha · «Momentos Frugy»: fotos pequeñas (no se estiran aunque haya una sola) */
+.jau-ficha__contenido .wp-block-gallery.jau-fotos { justify-content: flex-start; gap: 12px; }
+.jau-ficha__contenido .wp-block-gallery.jau-fotos > figure.wp-block-image {
+	flex: 0 0 220px !important;
+	width: 220px !important;
+	max-width: calc(50% - 6px) !important;
+}
