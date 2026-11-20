@@ -850,8 +850,8 @@ header.wp-block-template-part,
 
 /* Slider · diapositiva Drink Cola: logo grande y círculo rojo de marca */
 .jau-escena--rojo { --jau-circulo: var(--wp--preset--color--drink-cola-fondo); }
-.jau-slide__logo--alto img { height: 104px; }
-@media (max-width: 781px) { .jau-slide__logo--alto img { height: 76px; } }
+.jau-slide__logo--alto img { height: 160px; max-height: none; }
+@media (max-width: 781px) { .jau-slide__logo--alto img { height: 96px; } }
 
 /* Slider · diapositiva Distribuidores: la foto es el círculo */
 .jau-escena--foto-circulo { align-items: center; }
@@ -861,9 +861,10 @@ header.wp-block-template-part,
 	aspect-ratio: 1 / 1;
 	border-radius: 50%;
 	overflow: hidden;
-	box-shadow: 0 0 0 10px rgba(255, 255, 255, .08), 0 30px 50px -24px rgba(0, 0, 0, .6);
+	box-shadow: 0 30px 50px -24px rgba(0, 0, 0, .6);
 }
-.jau-escena--foto-circulo > figure img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
+/* Encuadre: cabeza completa arriba y las botellas abajo. */
+.jau-escena--foto-circulo > figure img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 4%; }
 @media (max-width: 781px) { .jau-escena--foto-circulo > figure { width: min(100%, 280px); } }
 
 /* --------------------------------------------------------------------------
