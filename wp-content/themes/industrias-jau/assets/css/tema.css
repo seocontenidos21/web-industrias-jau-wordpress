@@ -906,21 +906,23 @@ header.wp-block-template-part,
 .jau-pildora[aria-current="true"] { border-color: var(--jau-primary); background: var(--jau-primary); color: #fff; font-weight: 700; }
 .jau-ficha__presentacion { white-space: nowrap; }
 
-/* Slider · Distribuidores: foto circular más pequeña y botellas por delante que se salen del borde */
+/* Slider · Distribuidores: la foto es el círculo (centrado como en los otros slides, un poco más pequeño)
+   y las botellas quedan sobre la mesa, dentro del círculo, saliéndose apenas por la curva inferior. */
 .jau-escena--foto-botellas::before { display: none; }
 .jau-escena--foto-botellas > .jau-escena__foto {
 	position: absolute;
 	left: 50%;
-	top: 2%;
-	transform: translateX(-50%);
-	width: min(80%, 430px);
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: min(94%, 500px);
 	aspect-ratio: 1 / 1;
 	margin: 0 !important;
 	z-index: 0;
 }
 .jau-escena--foto-botellas > .jau-escena__foto img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 26px 40px rgba(0, 0, 0, .45)); }
-.jau-escena--foto-botellas > .jau-botellas { position: relative; z-index: 1; height: 50%; padding-bottom: 0; }
+.jau-escena--foto-botellas > .jau-botellas { position: relative; z-index: 1; height: 54%; padding-bottom: 7%; }
+.jau-escena--foto-botellas > .jau-botellas > figure + figure { margin-left: -1.5% !important; }
 @media (max-width: 781px) {
-	.jau-escena--foto-botellas > .jau-escena__foto { width: min(78%, 230px); }
-	.jau-escena--foto-botellas > .jau-botellas { height: 54%; }
+	.jau-escena--foto-botellas > .jau-escena__foto { width: min(92%, 262px); }
+	.jau-escena--foto-botellas > .jau-botellas { height: 54%; padding-bottom: 6%; }
 }
