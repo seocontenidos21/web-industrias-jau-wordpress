@@ -22,4 +22,10 @@ if [ -n "$PORT" ] && [ "$PORT" != "80" ]; then
 	sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-available/000-default.conf
 fi
 
+# Carga de contenido en segundo plano (solo si cambió herramientas/version-contenido.txt).
+# La salida va al log del contenedor.
+if [ -f /opt/jau/herramientas/auto-preparar.sh ]; then
+	( sh /opt/jau/herramientas/auto-preparar.sh > /proc/1/fd/1 2>&1 & )
+fi
+
 exec docker-entrypoint.sh "$@"

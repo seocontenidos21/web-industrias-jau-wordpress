@@ -46,5 +46,8 @@ El proyecto **[WEB] JAU WordPress - [Daiana]** construye el `Dockerfile` desde l
 
 - Se trabaja en la rama `desarrollo`; al cerrar una fase se hace merge a `main` y Railway redespliega.
 - En el servidor no se instalan plugins ni se editan archivos desde el admin (`DISALLOW_FILE_MODS`): todo cambio de código entra por el repo.
-- Primera vez: completar el instalador en `/wp-admin/install.php` y luego correr:
-  `railway ssh -s wordpress -- sh /opt/jau/herramientas/preparar-sitio.sh`
+- Primera vez: completar el instalador en `/wp-admin/install.php`. Al arrancar, el contenedor carga el contenido
+  (tema, plugin, imágenes, productos y páginas) con `herramientas/preparar-sitio.sh`.
+- La carga corre **una vez por versión**: para volver a cargar el contenido en Railway, sube el número de
+  `herramientas/version-contenido.txt` y haz push a `main`. ⚠ Regenera las páginas: no subir la versión si el
+  cliente ya editó textos en el admin de Railway.
