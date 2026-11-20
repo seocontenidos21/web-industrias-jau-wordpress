@@ -547,19 +547,17 @@ header.wp-block-template-part,
 .jau-mapa { border-radius: var(--jau-r-md); overflow: hidden; border: 1px solid var(--jau-line); background: var(--jau-white); }
 .jau-mapa iframe { display: block; width: 100%; height: 360px; border: 0; }
 .jau-mapa__pie { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; padding: 14px 16px; font-size: 14px; }
-@media (min-width: 782px) {
-	.jau-contacto__cols .jau-mapa iframe { height: 440px; }
-}
 
-/* Tipos de contacto (DWIJ-81): distribuidores, cliente directo por ciudad y atención al consumidor */
+/* Tipos de contacto (DWIJ-81), en la columna junto al formulario: distribuidores, cliente directo
+   por ciudad y atención al consumidor; luego horario y redes (se ocultan si no hay dato). */
 .jau-tipo-contacto > * { margin: 0 !important; }
+.jau-tipo-contacto__cabecera { align-items: center; }
+.jau-tipo-contacto__cabecera > * { margin: 0 !important; }
 .jau-tipo-contacto__desc { font-size: 15px; line-height: 1.5; color: var(--jau-muted); }
-.jau-tipo-contacto__cta { margin-top: auto !important; }
-/* Tablet: en 2 columnas, «Cliente directo» (la más alta) ocupa la derecha y las otras dos se apilan. */
-@media (min-width: 600px) and (max-width: 1023px) {
-	.jau-tipos-contacto { grid-template-columns: 1fr 1fr !important; }
-	.jau-tipos-contacto > .jau-tipo-contacto:nth-child(2) { grid-column: 2; grid-row: 1 / span 2; }
-}
+.jau-contacto__dato { padding: 4px 4px 0; font-size: 15px; line-height: 1.5; }
+.jau-contacto__dato > * { margin: 0 !important; }
+.jau-contacto__dato .jau-icono { margin-top: 2px !important; color: var(--jau-primary); }
+.jau-contacto__dato:not(:has(p)) { display: none !important; }
 .jau-contactos { width: 100%; }
 .jau-contactos__nota {
 	display: flex;
@@ -589,11 +587,6 @@ header.wp-block-template-part,
 .jau-contactos__wa { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 999px; background: #E7F8EE; color: #11743E; font-size: 13px; font-weight: 700; }
 .jau-contactos__wa:hover,
 .jau-contactos__wa:focus-visible { background: var(--wp--preset--color--whatsapp); color: #fff; text-decoration: none; }
-.jau-contacto__info:not(:has(p)) { display: none !important; }
-.jau-contacto__dato:not(:has(p)) { display: none !important; }
-.jau-contacto__dato { align-items: center; font-size: 15px; }
-.jau-contacto__dato > * { margin: 0 !important; }
-.jau-contacto__dato .jau-icono { color: var(--jau-primary); }
 
 /* Versión compacta (footer) */
 .jau-contactos--compacta { display: grid; gap: 12px; }
@@ -630,9 +623,17 @@ header.wp-block-template-part,
 .jau-footer :is(h2, h3, strong) { color: #fff; }
 .jau-footer a { color: #C9CCD3; }
 .jau-footer a:hover { color: #fff; text-decoration: none; }
-.jau-footer .jau-footer__titulo { font-family: var(--wp--preset--font-family--text); font-size: 14px; font-weight: 700; letter-spacing: 0; margin: 0 0 4px; }
+.jau-footer .jau-footer__titulo { font-family: var(--wp--preset--font-family--text); font-size: 18px; font-weight: 700; letter-spacing: 0; margin: 0 0 6px; }
 .jau-footer p { font-size: 14px; line-height: 1.5; margin: 0; }
 .jau-footer .wp-block-navigation__container { gap: 8px; }
+/* Secciones en dos columnas (3 + 2), para que el footer no se alargue. */
+.jau-footer .jau-footer-nav .wp-block-navigation__container {
+	display: grid !important;
+	grid-template-rows: repeat(3, auto);
+	grid-auto-flow: column;
+	grid-auto-columns: max-content;
+	gap: 8px 36px;
+}
 .jau-footer .wp-block-navigation-item__content { font-size: 14px; padding: 2px 0; color: #C9CCD3; }
 .jau-footer .wp-block-navigation-item__content:hover { color: #fff; }
 .jau-footer .jau-wordmark a { color: #fff; }
@@ -702,10 +703,19 @@ header.wp-block-template-part,
 /* --------------------------------------------------------------------------
    Formulario «Quiero ser distribuidor» (lo genera JAU Core)
    -------------------------------------------------------------------------- */
-.jau-form { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
-.jau-form__titulo { grid-column: 1 / -1; margin: 0 0 4px; font-size: 24px; }
+.jau-form { display: flex; flex-direction: column; gap: 16px; }
+.jau-form__campos { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.jau-form__titulo { margin: 0 0 4px; font-size: 24px; }
 .jau-form__campo { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; color: var(--jau-ink); }
-.jau-form__campo--ancho { grid-column: 1 / -1; }
+/* En Contacto (escritorio), el formulario ocupa todo el alto de su columna y el mensaje crece,
+   así termina a la par de las tarjetas de contacto de al lado. */
+@media (min-width: 782px) {
+	.jau-contacto__cols > .wp-block-column:first-child { display: flex; flex-direction: column; }
+	.jau-contacto__cols .jau-form-caja { flex: 1 1 auto; display: flex; flex-direction: column; }
+	.jau-contacto__cols .jau-form,
+	.jau-contacto__cols .jau-form__campo--ancho,
+	.jau-contacto__cols .jau-form__campo--ancho textarea { flex: 1 1 auto; }
+}
 .jau-form__req { color: var(--jau-accent); }
 .jau-form input, .jau-form select, .jau-form textarea {
 	width: 100%;
@@ -725,7 +735,7 @@ header.wp-block-template-part,
 .jau-form .is-error :is(input, select, textarea) { border-color: var(--wp--preset--color--error); }
 .jau-form__error { font-size: 12px; font-weight: 500; color: var(--wp--preset--color--error); }
 .jau-form__error:empty { display: none; }
-.jau-form__pie { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; justify-content: space-between; }
+.jau-form__pie { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; justify-content: space-between; }
 .jau-form__nota { font-size: 12px; color: var(--jau-muted); }
 .jau-form__enviar {
 	border: 0;

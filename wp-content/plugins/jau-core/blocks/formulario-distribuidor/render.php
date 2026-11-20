@@ -42,8 +42,15 @@ $jau_check  = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" strok
 			<?php if ( $jau_errores ) : ?>
 				<p class="jau-form__aviso" role="alert"><?php echo esc_html( isset( $jau_errores['_form'] ) ? $jau_errores['_form'] : 'Revisa los campos marcados.' ); ?></p>
 			<?php endif; ?>
+			<div class="jau-form__campos">
 			<?php
+			// Los campos cortos van en su propia grilla; el mensaje va aparte y puede crecer a lo alto.
+			$jau_grilla_abierta = true;
 			foreach ( jau_form_campos() as $jau_id => $jau_c ) :
+				if ( 'textarea' === $jau_c['tipo'] && $jau_grilla_abierta ) {
+					echo '</div>';
+					$jau_grilla_abierta = false;
+				}
 				$jau_fid    = 'jau-f-' . $jau_id;
 				$jau_val    = isset( $jau_valores[ $jau_id ] ) ? $jau_valores[ $jau_id ] : '';
 				$jau_err    = isset( $jau_errores[ $jau_id ] ) ? $jau_errores[ $jau_id ] : '';
@@ -80,6 +87,7 @@ $jau_check  = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" strok
 					<span class="jau-form__error" id="<?php echo esc_attr( $jau_fid ); ?>-error"><?php echo esc_html( $jau_err ); ?></span>
 				</div>
 			<?php endforeach; ?>
+			<?php echo $jau_grilla_abierta ? '</div>' : ''; ?>
 
 			<div class="jau-form__trampa" aria-hidden="true">
 				<label for="jau-f-sitio">No llenar este campo</label>

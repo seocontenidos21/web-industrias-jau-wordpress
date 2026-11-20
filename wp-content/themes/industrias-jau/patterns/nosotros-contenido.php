@@ -1,20 +1,16 @@
 <?php
 /**
- * Title: Sobre nosotros: fotos, misión, visión y bloques
+ * Title: Sobre nosotros: fotos, misión, visión y valores
  * Slug: industrias-jau/nosotros-contenido
  * Categories: industrias-jau
- * Description: Fotos de consumo, misión y visión oficiales en dos tarjetas grandes (DWIJ-54, DWIJ-60), los cinco valores (DWIJ-80) y bloques de historia y capacidad.
- * Keywords: nosotros, misión, visión, valores, historia
+ * Description: Fotos de consumo, misión y visión oficiales en dos tarjetas grandes (DWIJ-54, DWIJ-60) y los cinco valores (DWIJ-80). Historia y capacidad se agregan cuando el cliente envíe los textos.
+ * Keywords: nosotros, misión, visión, valores
  *
  * @package industrias-jau
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$jau_bloques = array(
-	array( 'reloj', 'Historia', 'Cómo nació Industrias JAU y cómo llegó a producir sus propias bebidas.' ),
-	array( 'fabrica', 'Capacidad', 'Capacidad de producción de la planta y alcance de la distribución.' ),
-);
 // Valores oficiales (DWIJ-80), en el orden del cliente y sin numerar.
 $jau_valores = array(
 	array( 'escudo', 'Integridad' ),
@@ -66,21 +62,5 @@ $jau_fotos = array( 'frugy-desayuno-3', 'frugy-kids-3', 'frugy-casual-5', 'frugy
 
 <?php endforeach; ?></div>
 <!-- /wp:group --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"grid","columnCount":2,"minimumColumnWidth":"300px"}} -->
-<div class="wp-block-group"><?php foreach ( $jau_bloques as $jau_b ) : ?><!-- wp:group {"className":"is-style-tarjeta-hover","style":{"spacing":{"padding":{"top":"22px","bottom":"22px","left":"22px","right":"22px"},"blockGap":"12px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
-<div class="wp-block-group is-style-tarjeta-hover" style="padding-top:22px;padding-right:22px;padding-bottom:22px;padding-left:22px"><!-- wp:industrias-jau/icono {"icono":"<?php echo esc_attr( $jau_b[0] ); ?>","tamano":40} /-->
-
-<!-- wp:heading {"fontSize":"lg"} -->
-<h2 class="wp-block-heading has-lg-font-size"><?php echo esc_html( $jau_b[1] ); ?></h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"textColor":"ink-2","style":{"typography":{"fontSize":"15px"}}} -->
-<p class="has-ink-2-color has-text-color" style="font-size:15px"><?php echo esc_html( $jau_b[2] ); ?></p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<?php endforeach; ?></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->
