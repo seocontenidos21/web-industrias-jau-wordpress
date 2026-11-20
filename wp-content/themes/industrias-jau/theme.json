@@ -22,7 +22,7 @@
 				{ "slug": "line", "name": "Línea", "color": "#E4E2DC" },
 				{ "slug": "gray", "name": "Gris", "color": "#E9E8E4" },
 				{ "slug": "dark", "name": "Oscuro (footer)", "color": "#0D0E11" },
-				{ "slug": "drink-cola", "name": "Drink Cola", "color": "#E24947" },
+				{ "slug": "drink-cola", "name": "Drink Cola (rojo del logo)", "color": "#C4023C" },
 				{ "slug": "drink-cola-fondo", "name": "Drink Cola (fondo con texto blanco)", "color": "#B3302D" },
 				{ "slug": "drink-cola-oscuro", "name": "Drink Cola (negro cola)", "color": "#1F1416" },
 				{ "slug": "frugy", "name": "Frugy", "color": "#F09C17" },

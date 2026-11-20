@@ -139,8 +139,20 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","className":"jau-slide__visual"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena jau-escena--foto-circulo","layout":{"type":"default"}} -->
-<div class="wp-block-group jau-escena jau-escena--foto-circulo"><?php echo jau_tema_bloque_imagen( 'jau-distribuidores', '', 'large' ); // phpcs:ignore ?></div>
+<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena jau-escena--foto-botellas","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-escena jau-escena--foto-botellas"><?php echo jau_tema_bloque_imagen( 'jau-distribuidora-circulo', 'jau-escena__foto', 'full' ); // phpcs:ignore ?>
+
+<!-- wp:group {"className":"jau-botellas","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-botellas"><?php echo $jau_botella( 'frugy-durazno-botella' ) . "
+
+" . $jau_botella( 'frugy-manzana-botella', 'media' ) . "
+
+" . $jau_botella( 'drink-cola-1-5-l', 'centro' ) . "
+
+" . $jau_botella( 'frugy-naranja-botella', 'media' ) . "
+
+" . $jau_botella( 'drink-cola-400-ml' ); // phpcs:ignore ?></div>
+<!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div></div>

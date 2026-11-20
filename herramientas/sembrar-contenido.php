@@ -164,6 +164,7 @@ function jau_alt_de( $clave, $sabores ) {
 		'drink-cola-400-ml'          => 'Botella de Drink Cola 400 mL',
 		'drink-cola-1-5-l'           => 'Botella de Drink Cola 1.5 L',
 		'jau-distribuidores'         => 'Distribuidora de Industrias JAU con bebidas Frugy en el punto de venta',
+		'jau-distribuidora-circulo'  => 'Distribuidora de Industrias JAU en el punto de venta',
 	);
 	if ( isset( $fijos[ $clave ] ) ) {
 		return $fijos[ $clave ];
