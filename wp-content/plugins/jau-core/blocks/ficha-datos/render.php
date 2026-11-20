@@ -29,8 +29,13 @@ $jau_nombres = function ( $tax ) use ( $jau_post_id ) {
 $jau_filas = array(
 	'Marca'              => esc_html( $jau_nombres( 'marca' ) ),
 	'Sabor'              => esc_html( $jau_nombres( 'sabor' ) ),
-	'Presentaciones'     => esc_html( $jau_nombres( 'presentacion' ) ),
 );
+// Presentación elegida (cambia sin recargar con el selector de presentaciones).
+$jau_pres_lista  = $jau_post_id ? jau_presentaciones_de( $jau_post_id ) : array();
+$jau_pres_actual = $jau_post_id ? jau_presentacion_actual( $jau_post_id ) : '';
+if ( $jau_pres_actual ) {
+	$jau_filas['Presentación'] = '<span data-jau-presentacion-nombre>' . esc_html( $jau_pres_lista[ $jau_pres_actual ]['nombre'] ) . '</span>';
+}
 $jau_filas = array_filter( $jau_filas, 'strlen' );
 
 if ( ! $jau_post_id ) {

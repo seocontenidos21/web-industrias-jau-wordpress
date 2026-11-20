@@ -26,10 +26,10 @@
     "archivo": "drink-cola-1-5-l.webp",
     "tipo": "botella",
     "marca": "drink-cola",
-    "ancho": 309,
+    "ancho": 254,
     "alto": 800,
     "kb_original": 32474,
-    "kb": 62,
+    "kb": 63,
     "supera_limite": false
   },
   {
@@ -48,10 +48,10 @@
     "archivo": "frugy-limon-coco-botella.webp",
     "tipo": "botella",
     "marca": "frugy",
-    "ancho": 377,
+    "ancho": 240,
     "alto": 800,
     "kb_original": 1051,
-    "kb": 40,
+    "kb": 39,
     "supera_limite": false
   },
   {
@@ -59,7 +59,7 @@
     "archivo": "frugy-durazno-botella.webp",
     "tipo": "botella",
     "marca": "frugy",
-    "ancho": 242,
+    "ancho": 237,
     "alto": 800,
     "kb_original": 35088,
     "kb": 34,
@@ -70,10 +70,10 @@
     "archivo": "frugy-manzana-botella.webp",
     "tipo": "botella",
     "marca": "frugy",
-    "ancho": 239,
+    "ancho": 237,
     "alto": 800,
     "kb_original": 32543,
-    "kb": 36,
+    "kb": 37,
     "supera_limite": false
   },
   {
@@ -81,10 +81,10 @@
     "archivo": "frugy-naranja-botella.webp",
     "tipo": "botella",
     "marca": "frugy",
-    "ancho": 240,
+    "ancho": 237,
     "alto": 800,
     "kb_original": 32717,
-    "kb": 35,
+    "kb": 36,
     "supera_limite": false
   },
   {
@@ -103,10 +103,10 @@
     "archivo": "frugy-mango-botella.webp",
     "tipo": "botella",
     "marca": "frugy",
-    "ancho": 276,
+    "ancho": 216,
     "alto": 800,
     "kb_original": 6598,
-    "kb": 30,
+    "kb": 29,
     "supera_limite": false
   },
   {

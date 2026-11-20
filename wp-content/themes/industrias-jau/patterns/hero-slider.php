@@ -27,11 +27,7 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <div class="wp-block-group alignfull jau-slider"><!-- wp:cover {"dimRatio":100,"overlayColor":"primary","isUserOverlayColor":true,"isDark":true,"className":"jau-slide","layout":{"type":"constrained"}} -->
 <div class="wp-block-cover jau-slide"><span aria-hidden="true" class="wp-block-cover__background has-primary-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:columns {"verticalAlignment":"center","className":"jau-slide__cols"} -->
 <div class="wp-block-columns are-vertically-aligned-center jau-slide__cols"><!-- wp:column {"verticalAlignment":"center","className":"jau-slide__texto"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><!-- wp:paragraph {"className":"jau-ojo"} -->
-<p class="jau-ojo">Hecho en Venezuela</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":1} -->
+<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><!-- wp:heading {"level":1} -->
 <h1 class="wp-block-heading">Bebidas hechas en Venezuela para tu negocio</h1>
 <!-- /wp:heading -->
 
@@ -60,15 +56,13 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <!-- /wp:columns --></div></div>
 <!-- /wp:cover -->
 
-<!-- wp:cover {"dimRatio":100,"overlayColor":"drink-cola-fondo","isUserOverlayColor":true,"isDark":true,"className":"jau-slide","layout":{"type":"constrained"}} -->
-<div class="wp-block-cover jau-slide"><span aria-hidden="true" class="wp-block-cover__background has-drink-cola-fondo-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:columns {"verticalAlignment":"center","className":"jau-slide__cols"} -->
+<!-- wp:cover {"dimRatio":100,"overlayColor":"drink-cola-oscuro","isUserOverlayColor":true,"isDark":true,"className":"jau-slide","layout":{"type":"constrained"}} -->
+<div class="wp-block-cover jau-slide"><span aria-hidden="true" class="wp-block-cover__background has-drink-cola-oscuro-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:columns {"verticalAlignment":"center","className":"jau-slide__cols"} -->
 <div class="wp-block-columns are-vertically-aligned-center jau-slide__cols"><!-- wp:column {"verticalAlignment":"center","className":"jau-slide__texto"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><!-- wp:paragraph {"className":"jau-ojo"} -->
-<p class="jau-ojo">Refresco de cola</p>
-<!-- /wp:paragraph -->
+<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><?php echo jau_tema_bloque_imagen( 'logo-drink-cola', 'jau-slide__logo jau-slide__logo--alto', 'medium' ); // phpcs:ignore ?>
 
 <!-- wp:heading -->
-<h2 class="wp-block-heading">Drink Cola</h2>
+<h2 class="wp-block-heading">Refresco de cola</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
@@ -83,8 +77,8 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","className":"jau-slide__visual"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena","layout":{"type":"default"}} -->
-<div class="wp-block-group jau-escena"><!-- wp:group {"className":"jau-botellas","layout":{"type":"default"}} -->
+<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena jau-escena--rojo","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-escena jau-escena--rojo"><!-- wp:group {"className":"jau-botellas","layout":{"type":"default"}} -->
 <div class="wp-block-group jau-botellas"><?php echo $jau_botella( 'drink-cola-1-5-l', 'centro' ) . "\n\n" . $jau_botella( 'drink-cola-400-ml', 'media' ); // phpcs:ignore ?></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
@@ -125,20 +119,12 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <!-- wp:cover {"dimRatio":100,"overlayColor":"ink","isUserOverlayColor":true,"isDark":true,"className":"jau-slide jau-slide--distribuidores","layout":{"type":"constrained"}} -->
 <div class="wp-block-cover jau-slide jau-slide--distribuidores"><span aria-hidden="true" class="wp-block-cover__background has-ink-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:columns {"verticalAlignment":"center","className":"jau-slide__cols"} -->
 <div class="wp-block-columns are-vertically-aligned-center jau-slide__cols"><!-- wp:column {"verticalAlignment":"center","className":"jau-slide__texto"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><!-- wp:paragraph {"className":"jau-ojo"} -->
-<p class="jau-ojo">Distribuidores</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
+<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><!-- wp:heading -->
 <h2 class="wp-block-heading">Quiero ser distribuidor</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>Lleva Drink Cola y Frugy a tu negocio. Déjanos tus datos y el equipo de ventas te contactará con las condiciones para distribuidores.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"jau/empresa","args":{"key":"telefono","etiqueta":"Teléfono para distribuidores","enlace":true}}}}} -->
-<p>Teléfono para distribuidores</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons -->
@@ -153,8 +139,8 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","className":"jau-slide__visual"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena jau-escena--foto","layout":{"type":"default"}} -->
-<div class="wp-block-group jau-escena jau-escena--foto"><?php echo jau_tema_bloque_imagen( 'frugy-supermercado-3', '', 'large' ); // phpcs:ignore ?></div>
+<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena jau-escena--foto-circulo","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-escena jau-escena--foto-circulo"><?php echo jau_tema_bloque_imagen( 'jau-distribuidores', '', 'large' ); // phpcs:ignore ?></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div></div>

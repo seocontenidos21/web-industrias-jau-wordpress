@@ -195,13 +195,13 @@ add_action(
 				'uses_context'       => array( 'postId', 'postType' ),
 				'get_value_callback' => function ( array $args, $block_instance ) {
 					$post_id = isset( $block_instance->context['postId'] ) ? (int) $block_instance->context['postId'] : get_the_ID();
-					$nombre  = $post_id ? get_the_title( $post_id ) : '';
+					// Nombre con la presentación elegida (p. ej. «Drink Cola 400 mL»).
+					$nombre = $post_id ? jau_producto_nombre_sku( $post_id ) : '';
 					switch ( isset( $args['key'] ) ? $args['key'] : '' ) {
 						case 'consultar_url':
-							// «interes» y no «producto»: «producto» es la variable de consulta del tipo de contenido.
-							return add_query_arg( 'interes', rawurlencode( $nombre ), home_url( '/contacto/' ) ) . '#formulario';
+							return jau_producto_consultar_url( $nombre );
 						case 'whatsapp_url':
-							return jau_whatsapp_url( sprintf( 'Hola, quiero información para distribuir %s de Industrias JAU.', $nombre ) );
+							return jau_producto_whatsapp_url( $nombre );
 					}
 					return null;
 				},

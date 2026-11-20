@@ -81,7 +81,7 @@ header.wp-block-template-part,
 
 /* Logo (DWIJ-72): isotipo oficial + nombre en la tipografía del sitio. */
 .jau-wordmark { margin: 0; white-space: nowrap; }
-.jau-wordmark a { display: inline-flex; align-items: center; gap: 10px; color: var(--jau-ink); }
+.jau-wordmark a { display: inline-flex; align-items: center; gap: 10px; color: var(--jau-primary); }
 .jau-wordmark a::before {
 	content: "";
 	flex: none;
@@ -356,7 +356,6 @@ header.wp-block-template-part,
 .jau-slide.is-active .jau-slide__visual { animation: jauAIn .7s .1s ease both; }
 
 .jau-slider { --jau-ctrl: #fff; }
-.jau-slider.es-claro { --jau-ctrl: var(--jau-ink); }
 .jau-slider__controles {
 	position: absolute;
 	left: 0;
@@ -387,7 +386,6 @@ header.wp-block-template-part,
 }
 .jau-slider__flecha:hover, .jau-slider__flecha:focus-visible { opacity: 1; }
 .jau-slider__flecha svg { width: 18px; height: 18px; }
-.jau-slider__pausa svg { width: 14px; height: 14px; }
 .jau-slider__puntos { display: flex; gap: 8px; align-items: center; }
 .jau-slider__punto {
 	width: 8px;
@@ -396,8 +394,9 @@ header.wp-block-template-part,
 	border: 0;
 	padding: 0;
 	cursor: pointer;
+	color: inherit;
 	background: currentColor;
-	opacity: .35;
+	opacity: .45;
 	transition: opacity .2s, transform .2s;
 }
 .jau-slider__punto:hover { opacity: .7; }
@@ -805,7 +804,7 @@ header.wp-block-template-part,
 .jau-escena > * { margin: 0 !important; }
 .jau-botellas { display: flex !important; align-items: flex-end; justify-content: center; height: 86%; width: 100%; padding-bottom: 4%; }
 .jau-botellas > figure { flex: none; height: 74%; margin: 0 !important; position: relative; }
-.jau-botellas > figure + figure { margin-left: -5% !important; }
+.jau-botellas > figure + figure { margin-left: -6% !important; }
 .jau-botellas > figure img { height: 100% !important; width: auto !important; max-width: none; filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .28)); }
 .jau-botellas > .jau-botella--media { height: 86%; z-index: 1; }
 .jau-botellas > .jau-botella--centro { height: 100%; z-index: 2; }
@@ -848,3 +847,59 @@ header.wp-block-template-part,
 .jau-ficha__foto .wp-block-post-featured-image { position: relative; display: block; }
 .jau-producto .wp-block-post-featured-image img,
 .jau-ficha__foto .wp-block-post-featured-image img { position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: contain !important; }
+
+/* Slider · diapositiva Drink Cola: logo grande y círculo rojo de marca */
+.jau-escena--rojo { --jau-circulo: var(--wp--preset--color--drink-cola-fondo); }
+.jau-slide__logo--alto img { height: 104px; }
+@media (max-width: 781px) { .jau-slide__logo--alto img { height: 76px; } }
+
+/* Slider · diapositiva Distribuidores: la foto es el círculo */
+.jau-escena--foto-circulo { align-items: center; }
+.jau-escena--foto-circulo::before { display: none; }
+.jau-escena--foto-circulo > figure {
+	width: min(100%, 520px);
+	aspect-ratio: 1 / 1;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: 0 0 0 10px rgba(255, 255, 255, .08), 0 30px 50px -24px rgba(0, 0, 0, .6);
+}
+.jau-escena--foto-circulo > figure img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
+@media (max-width: 781px) { .jau-escena--foto-circulo > figure { width: min(100%, 280px); } }
+
+/* --------------------------------------------------------------------------
+   Presentaciones (como en el prototipo)
+   -------------------------------------------------------------------------- */
+.jau-presentaciones--chips { display: flex; flex-wrap: wrap; gap: 6px; position: relative; z-index: 2; margin: 2px 0 0 !important; }
+.jau-chip {
+	display: inline-flex;
+	align-items: center;
+	height: 24px;
+	padding: 0 9px;
+	border-radius: 999px;
+	border: 1px solid var(--jau-line);
+	background: var(--jau-white);
+	color: var(--jau-ink-2);
+	font-size: 12px;
+	font-weight: 600;
+	transition: border-color .2s, color .2s, background-color .2s;
+}
+.jau-chip:hover, .jau-chip.is-activa { border-color: var(--jau-primary); color: var(--jau-primary); text-decoration: none; }
+.jau-chip.is-activa { background: var(--wp--preset--color--primary-tint); }
+.jau-presentaciones__titulo { margin: 0 0 10px; font-size: 14px; font-weight: 700; }
+.jau-presentaciones__lista { display: flex; flex-wrap: wrap; gap: 8px; }
+.jau-pildora {
+	display: inline-flex;
+	align-items: center;
+	height: 42px;
+	padding: 0 18px;
+	border-radius: var(--jau-r-sm);
+	border: 1.5px solid var(--jau-line);
+	background: var(--jau-white);
+	color: var(--jau-ink);
+	font-weight: 600;
+	font-size: 14px;
+	transition: border-color .2s, background-color .2s, color .2s;
+}
+.jau-pildora:hover { border-color: var(--jau-primary); color: var(--jau-ink); text-decoration: none; }
+.jau-pildora[aria-current="true"] { border-color: var(--jau-primary); background: var(--jau-primary); color: #fff; font-weight: 700; }
+.jau-ficha__presentacion { white-space: nowrap; }

@@ -1,6 +1,6 @@
 /* Industrias JAU · slider del inicio (DWIJ-53 / DWIJ-58).
-   Avance automático con pausa, flechas, indicadores sin números, teclado, swipe
-   y respeto a «movimiento reducido». Sin librerías. */
+   Avance automático cada 5,5 s que se detiene con el cursor o el foco encima, flechas,
+   indicadores sin números, teclado, swipe y respeto a «movimiento reducido». Sin librerías. */
 ( function () {
 	var INTERVALO = 5500;
 	var reducido = window.matchMedia( '(prefers-reduced-motion: reduce)' );
@@ -42,10 +42,8 @@
 		controles.innerHTML =
 			'<button type="button" class="jau-slider__flecha" data-dir="-1" aria-label="Diapositiva anterior">' + icono( 'M15 6l-6 6 6 6' ) + '</button>' +
 			'<div class="jau-slider__puntos"></div>' +
-			'<button type="button" class="jau-slider__flecha" data-dir="1" aria-label="Diapositiva siguiente">' + icono( 'M9 6l6 6-6 6' ) + '</button>' +
-			'<button type="button" class="jau-slider__flecha jau-slider__pausa" aria-label="Pausar presentación"></button>';
+			'<button type="button" class="jau-slider__flecha" data-dir="1" aria-label="Diapositiva siguiente">' + icono( 'M9 6l6 6-6 6' ) + '</button>';
 		var puntos = controles.querySelector( '.jau-slider__puntos' );
-		var pausa = controles.querySelector( '.jau-slider__pausa' );
 
 		titulos.forEach( function ( t, i ) {
 			var b = document.createElement( 'button' );
@@ -59,12 +57,6 @@
 			puntos.appendChild( b );
 		} );
 		slider.appendChild( controles );
-
-		function pintarPausa() {
-			var detenido = pausadoUsuario;
-			pausa.innerHTML = detenido ? icono( 'M8 5l11 7-11 7z' ) : icono( 'M8 5v14 M16 5v14' );
-			pausa.setAttribute( 'aria-label', detenido ? 'Reanudar presentación' : 'Pausar presentación' );
-		}
 
 		function ir( i, delUsuario ) {
 			actual = ( i + slides.length ) % slides.length;
@@ -81,8 +73,6 @@
 			Array.prototype.forEach.call( puntos.children, function ( p, n ) {
 				p.setAttribute( 'aria-current', n === actual ? 'true' : 'false' );
 			} );
-			// Sobre fondos claros (Frugy) los controles pasan a color oscuro.
-			slider.classList.toggle( 'es-claro', slides[ actual ].classList.contains( 'is-light' ) );
 			if ( delUsuario ) {
 				programar();
 			}
@@ -105,12 +95,6 @@
 				ir( actual + parseInt( f.getAttribute( 'data-dir' ), 10 ), true );
 			}
 		} );
-		pausa.addEventListener( 'click', function () {
-			pausadoUsuario = ! pausadoUsuario;
-			pintarPausa();
-			programar();
-		} );
-
 		slider.addEventListener( 'mouseenter', function () { pausadoHover = true; programar(); } );
 		slider.addEventListener( 'mouseleave', function () { pausadoHover = false; programar(); } );
 		slider.addEventListener( 'focusin', function () { pausadoHover = true; programar(); } );
@@ -130,7 +114,6 @@
 		document.addEventListener( 'visibilitychange', programar );
 		reducido.addEventListener( 'change', function ( mq ) {
 			pausadoUsuario = mq.matches;
-			pintarPausa();
 			programar();
 		} );
 
@@ -159,7 +142,6 @@
 		slider.addEventListener( 'pointercancel', function () { x0 = null; } );
 
 		slider.classList.add( 'is-ready' );
-		pintarPausa();
 		ir( 0 );
 		programar();
 	}

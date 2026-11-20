@@ -125,9 +125,12 @@ def procesar(ruta: Path) -> dict | None:
         limite = LIMITE_AMBIENTE
     else:
         img = img.convert("RGBA")
-        caja = img.getchannel("A").getbbox()
+        # Recorte por la silueta real: se ignoran halos y sombras casi transparentes (alfa <= 40),
+        # que agrandan la caja y separan las botellas en las composiciones.
+        caja = img.getchannel("A").point(lambda v: 255 if v > 40 else 0).getbbox()
         if caja:
             img = img.crop(caja)
+        alta = img.copy()  # versión en resolución original (para isotipo y favicon)
         if tipo == "botella" and img.height > ALTO_BOTELLA:
             img = img.resize((round(img.width * ALTO_BOTELLA / img.height), ALTO_BOTELLA), Image.LANCZOS)
         if tipo == "logo" and img.width > ANCHO_LOGO:
@@ -142,11 +145,29 @@ def procesar(ruta: Path) -> dict | None:
     VISTOS.add(destino.name)
     peso = guardar_webp(img, destino, limite)
 
-    # Favicon: PNG cuadrado de 512 px a partir del logo de la empresa (DWIJ-72).
+    # Logo de la empresa (DWIJ-72): se separa el isotipo (lo que está antes del hueco más ancho)
+    # para el header, y el favicon sale del isotipo, no del logo completo.
     if nombre == "logo-industrias-jau-azul":
-        lado = max(img.width, img.height)
-        lienzo = Image.new("RGBA", (lado, lado), (255, 255, 255, 0))
-        lienzo.paste(img, ((lado - img.width) // 2, (lado - img.height) // 2), img)
+        alfa = alta.getchannel("A")
+        chica = alfa.resize((max(1, alta.width // 4), max(1, alta.height // 4)))
+        columnas = [max(chica.getpixel((x, y)) for y in range(chica.height)) for x in range(chica.width)]
+        hueco, inicio, mejor = None, None, 0
+        for x, v in enumerate(columnas + [255]):
+            if v <= 20 and inicio is None:
+                inicio = x
+            elif v > 20 and inicio is not None:
+                if x - inicio > mejor and inicio < chica.width // 2:
+                    mejor, hueco = x - inicio, inicio * 4
+                inicio = None
+        iso = alta.crop((0, 0, hueco or alta.width, alta.height))
+        iso = iso.crop(iso.getchannel("A").getbbox())
+        web = iso.copy()
+        web.thumbnail((400, 256), Image.LANCZOS)
+        web.save(DESTINO / "isotipo-industrias-jau.png", optimize=True)
+        lado = max(iso.size)
+        margen = int(lado * 0.08)
+        lienzo = Image.new("RGBA", (lado + 2 * margen, lado + 2 * margen), (255, 255, 255, 0))
+        lienzo.alpha_composite(iso, ((lienzo.width - iso.width) // 2, (lienzo.height - iso.height) // 2))
         lienzo.resize((512, 512), Image.LANCZOS).save(DESTINO / "favicon-industrias-jau-512.png", optimize=True)
 
     return {

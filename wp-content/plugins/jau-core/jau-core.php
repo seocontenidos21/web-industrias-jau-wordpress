@@ -26,7 +26,7 @@ require_once JAU_CORE_DIR . '/inc/solicitudes.php';
 add_action(
 	'init',
 	function () {
-		foreach ( array( 'formulario-distribuidor', 'filtros-catalogo', 'ficha-datos', 'mapa' ) as $jau_bloque ) {
+		foreach ( array( 'formulario-distribuidor', 'filtros-catalogo', 'ficha-datos', 'mapa', 'presentaciones' ) as $jau_bloque ) {
 			register_block_type( JAU_CORE_DIR . '/blocks/' . $jau_bloque );
 		}
 	}

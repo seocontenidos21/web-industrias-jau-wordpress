@@ -34,7 +34,7 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:post-title {"level":3,"isLink":true} /-->
 
-<!-- wp:post-terms {"term":"presentacion","separator":" · ","className":"jau-producto__meta"} /-->
+<!-- wp:jau/presentaciones {"modo":"chips"} /-->
 
 <!-- wp:read-more {"content":"Ver producto"} /--></div>
 <!-- /wp:group --></div>

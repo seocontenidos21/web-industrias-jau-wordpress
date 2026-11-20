@@ -58,7 +58,24 @@ function jau_importar( $clave, $archivo, $alt, $nombre = '' ) {
 		)
 	);
 	if ( $existe ) {
-		return (int) $existe[0];
+		$id = (int) $existe[0];
+		// Si el archivo local cambió (p. ej. se volvió a optimizar), se reemplaza conservando el ID.
+		if ( ! preg_match( '#^https?://#', $archivo ) && file_exists( $archivo ) ) {
+			$md5 = md5_file( $archivo );
+			if ( get_post_meta( $id, '_jau_md5', true ) !== $md5 ) {
+				$ruta = get_attached_file( $id );
+				$meta = wp_get_attachment_metadata( $id );
+				foreach ( (array) ( $meta['sizes'] ?? array() ) as $tam ) {
+					wp_delete_file( path_join( dirname( $ruta ), $tam['file'] ) );
+				}
+				copy( $archivo, $ruta );
+				wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $ruta ) );
+				update_post_meta( $id, '_jau_md5', $md5 );
+				update_post_meta( $id, '_wp_attachment_image_alt', $alt );
+				jau_log( "  ↻ {$clave} actualizado (#{$id})" );
+			}
+		}
+		return $id;
 	}
 	if ( preg_match( '#^https?://#', $archivo ) ) {
 		$tmp = download_url( $archivo, 60 );
@@ -87,6 +104,9 @@ function jau_importar( $clave, $archivo, $alt, $nombre = '' ) {
 	}
 	update_post_meta( $id, '_jau_clave', $clave );
 	update_post_meta( $id, '_wp_attachment_image_alt', $alt );
+	if ( ! preg_match( '#^https?://#', $archivo ) ) {
+		update_post_meta( $id, '_jau_md5', md5_file( $archivo ) );
+	}
 	jau_log( "  ✓ {$clave} → #{$id}" );
 	return (int) $id;
 }
@@ -143,6 +163,7 @@ function jau_alt_de( $clave, $sabores ) {
 		'logo-frugy-blanco-verde'    => 'Frugy',
 		'drink-cola-400-ml'          => 'Botella de Drink Cola 400 mL',
 		'drink-cola-1-5-l'           => 'Botella de Drink Cola 1.5 L',
+		'jau-distribuidores'         => 'Distribuidora de Industrias JAU con bebidas Frugy en el punto de venta',
 	);
 	if ( isset( $fijos[ $clave ] ) ) {
 		return $fijos[ $clave ];
@@ -280,7 +301,9 @@ if ( 'contenido' === $jau_modo ) {
 		'pres'      => array( '400-ml', '1-5-l' ),
 		'sabor'     => 0,
 		'foto'      => 'drink-cola-1-5-l',
-		'contenido' => array( array( array( 'drink-cola-400-ml', '400 mL' ), array( 'drink-cola-1-5-l', '1.5 L' ) ), 'Presentaciones', 'jau-galeria-botellas' ),
+		'contenido' => null,
+		// Cada presentación con su botella: la ficha cambia de foto al elegir 400 mL o 1.5 L.
+		'fotos_pres' => array( '400-ml' => 'drink-cola-400-ml', '1-5-l' => 'drink-cola-1-5-l' ),
 		'destacado' => true,
 	);
 	foreach ( $jau_sabores as $slug => $nombre ) {
@@ -318,6 +341,13 @@ if ( 'contenido' === $jau_modo ) {
 		wp_set_object_terms( $id, array_map( fn( $s ) => $pres[ $s ], $p['pres'] ), 'presentacion' );
 		wp_set_object_terms( $id, $p['sabor'] ? array( $p['sabor'] ) : array(), 'sabor' );
 		update_post_meta( $id, 'jau_destacado', $p['destacado'] );
+		$fotos_pres = array();
+		foreach ( $p['fotos_pres'] ?? array() as $slug_pres => $clave ) {
+			if ( jau_adjunto( $clave ) ) {
+				$fotos_pres[ $slug_pres ] = jau_adjunto( $clave );
+			}
+		}
+		update_post_meta( $id, 'jau_fotos_presentacion', $fotos_pres );
 		$foto = jau_adjunto( $p['foto'] );
 		if ( $foto ) {
 			set_post_thumbnail( $id, $foto );

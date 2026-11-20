@@ -43,6 +43,43 @@
 				visibles++;
 			}
 		} );
+		// Con una presentación filtrada, la tarjeta la marca y abre la ficha con ella elegida.
+		datos.forEach( function ( d ) {
+			d.el.querySelectorAll( '.wp-block-post-title a, a.wp-block-read-more' ).forEach( function ( a ) {
+				if ( ! a.getAttribute( 'data-base' ) ) {
+					a.setAttribute( 'data-base', a.getAttribute( 'href' ) );
+				}
+				var u = new URL( a.getAttribute( 'data-base' ), window.location.href );
+				if ( estado.presentacion ) {
+					u.searchParams.set( 'presentacion', estado.presentacion );
+				}
+				a.href = u.toString();
+			} );
+			var foto = d.el.querySelector( '.wp-block-post-featured-image img' );
+			var fotoPres = '';
+			d.el.querySelectorAll( '.jau-chip' ).forEach( function ( ch ) {
+				var activa = !! estado.presentacion && ch.getAttribute( 'data-presentacion' ) === estado.presentacion;
+				ch.classList.toggle( 'is-activa', activa );
+				if ( activa && ch.getAttribute( 'data-img' ) ) {
+					fotoPres = ch.getAttribute( 'data-img' );
+				}
+			} );
+			if ( foto ) {
+				if ( ! foto.hasAttribute( 'data-src-base' ) ) {
+					foto.setAttribute( 'data-src-base', foto.getAttribute( 'src' ) );
+					foto.setAttribute( 'data-srcset-base', foto.getAttribute( 'srcset' ) || '' );
+				}
+				if ( fotoPres ) {
+					foto.src = fotoPres;
+					foto.removeAttribute( 'srcset' );
+				} else {
+					foto.src = foto.getAttribute( 'data-src-base' );
+					if ( foto.getAttribute( 'data-srcset-base' ) ) {
+						foto.setAttribute( 'srcset', foto.getAttribute( 'data-srcset-base' ) );
+					}
+				}
+			}
+		} );
 		total.textContent = visibles === 1 ? '1 producto' : visibles + ' productos';
 		vacio.hidden = visibles !== 0;
 

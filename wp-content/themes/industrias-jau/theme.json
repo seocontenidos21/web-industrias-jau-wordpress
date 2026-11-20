@@ -24,6 +24,7 @@
 				{ "slug": "dark", "name": "Oscuro (footer)", "color": "#0D0E11" },
 				{ "slug": "drink-cola", "name": "Drink Cola", "color": "#E24947" },
 				{ "slug": "drink-cola-fondo", "name": "Drink Cola (fondo con texto blanco)", "color": "#B3302D" },
+				{ "slug": "drink-cola-oscuro", "name": "Drink Cola (negro cola)", "color": "#1F1416" },
 				{ "slug": "frugy", "name": "Frugy", "color": "#F09C17" },
 				{ "slug": "whatsapp", "name": "WhatsApp", "color": "#25D366" },
 				{ "slug": "error", "name": "Error", "color": "#B3261E" }

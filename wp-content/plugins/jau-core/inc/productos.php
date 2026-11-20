@@ -275,12 +275,12 @@ add_action(
 function jau_marca_campo_logo( $term ) {
 	$logo_id = is_object( $term ) ? (int) get_term_meta( $term->term_id, 'jau_logo_id', true ) : 0;
 	wp_enqueue_media();
-	wp_enqueue_script( 'jau-core-marca', JAU_CORE_URL . 'assets/admin-marca.js', array( 'jquery' ), JAU_CORE_VERSION, true );
+	wp_enqueue_script( 'jau-core-imagen', JAU_CORE_URL . 'assets/admin-imagen.js', array( 'jquery' ), JAU_CORE_VERSION, true );
 	$preview = $logo_id ? wp_get_attachment_image( $logo_id, 'medium', false, array( 'style' => 'max-height:80px;width:auto' ) ) : '';
-	$campo   = '<input type="hidden" name="jau_logo_id" id="jau-logo-id" value="' . esc_attr( (string) $logo_id ) . '">'
-		. '<div id="jau-logo-preview" style="margin:8px 0">' . $preview . '</div>'
-		. '<button type="button" class="button" id="jau-logo-elegir">Elegir logo</button> '
-		. '<button type="button" class="button-link-delete" id="jau-logo-quitar">Quitar</button>'
+	$campo   = '<div class="jau-imagen-campo"><input type="hidden" name="jau_logo_id" value="' . esc_attr( (string) $logo_id ) . '">'
+		. '<div class="jau-imagen-vista" style="margin:8px 0">' . $preview . '</div>'
+		. '<button type="button" class="button jau-imagen-elegir">Elegir logo</button> '
+		. '<button type="button" class="button-link-delete jau-imagen-quitar">Quitar</button></div>'
 		. '<p class="description">Se usa en los filtros del catálogo y en las fichas.</p>';
 	if ( is_object( $term ) ) {
 		echo '<tr class="form-field"><th scope="row"><label>Logo de la marca</label></th><td>' . $campo . '</td></tr>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -355,5 +355,201 @@ add_filter(
 			}
 		}
 		return $clases;
+	}
+);
+
+/* ---------------------------------------------------------------------------
+ * Presentaciones como en el prototipo: la ficha muestra la presentación elegida
+ * (?presentacion=400-ml) y cambia foto, título y datos sin salir de la página.
+ * ------------------------------------------------------------------------- */
+add_action(
+	'init',
+	function () {
+		register_post_meta(
+			'producto',
+			'jau_fotos_presentacion',
+			array(
+				'type'          => 'object',
+				'single'        => true,
+				'default'       => array(),
+				'show_in_rest'  => array(
+					'schema' => array(
+						'type'                 => 'object',
+						'additionalProperties' => array( 'type' => 'integer' ),
+					),
+				),
+				'auth_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
+			)
+		);
+	}
+);
+
+/**
+ * Presentaciones de un producto, de menor a mayor, con su foto (propia o la destacada).
+ *
+ * @param int $post_id Producto.
+ * @return array<string, array{nombre: string, img: int}>
+ */
+function jau_presentaciones_de( $post_id ) {
+	$terms = get_the_terms( $post_id, 'presentacion' );
+	if ( ! $terms || is_wp_error( $terms ) ) {
+		return array();
+	}
+	$fotos = get_post_meta( $post_id, 'jau_fotos_presentacion', true );
+	$fotos = is_array( $fotos ) ? $fotos : array();
+	$thumb = (int) get_post_meta( $post_id, '_thumbnail_id', true );
+	$lista = array();
+	foreach ( $terms as $t ) {
+		$lista[ $t->slug ] = array(
+			'nombre' => $t->name,
+			'img'    => ! empty( $fotos[ $t->slug ] ) ? (int) $fotos[ $t->slug ] : $thumb,
+		);
+	}
+	return $lista;
+}
+
+/**
+ * Presentación elegida: la de la URL si existe en el producto; si no, la mayor.
+ *
+ * @param int $post_id Producto.
+ * @return string Slug.
+ */
+function jau_presentacion_actual( $post_id ) {
+	$pres = jau_presentaciones_de( $post_id );
+	if ( ! $pres ) {
+		return '';
+	}
+	$pedida = isset( $_GET['presentacion'] ) ? sanitize_title( wp_unslash( $_GET['presentacion'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	return isset( $pres[ $pedida ] ) ? $pedida : array_key_last( $pres );
+}
+
+/**
+ * Nombre comercial con la presentación elegida (p. ej. «Drink Cola 400 mL»).
+ *
+ * @param int $post_id Producto.
+ * @return string
+ */
+function jau_producto_nombre_sku( $post_id ) {
+	$pres   = jau_presentaciones_de( $post_id );
+	$actual = jau_presentacion_actual( $post_id );
+	return trim( get_the_title( $post_id ) . ( $actual ? ' ' . $pres[ $actual ]['nombre'] : '' ) );
+}
+
+/**
+ * Enlace «Consultar disponibilidad» (precarga el formulario de Contacto).
+ *
+ * @param string $nombre Producto y presentación.
+ * @return string
+ */
+function jau_producto_consultar_url( $nombre ) {
+	// «interes» y no «producto»: «producto» es la variable de consulta del tipo de contenido.
+	return add_query_arg( 'interes', rawurlencode( $nombre ), home_url( '/contacto/' ) ) . '#formulario';
+}
+
+/**
+ * Enlace de WhatsApp con el producto en el mensaje.
+ *
+ * @param string $nombre Producto y presentación.
+ * @return string
+ */
+function jau_producto_whatsapp_url( $nombre ) {
+	return jau_whatsapp_url( sprintf( 'Hola, quiero información para distribuir %s de Industrias JAU.', $nombre ) );
+}
+
+/** ¿Es la ficha que se está viendo? */
+function jau_es_ficha_actual( $post_id ) {
+	return is_singular( 'producto' ) && (int) $post_id === (int) get_queried_object_id();
+}
+
+/* La foto de la ficha es la de la presentación elegida. */
+add_filter(
+	'post_thumbnail_id',
+	function ( $id, $post ) {
+		$post = get_post( $post );
+		if ( is_admin() || ! $post || ! jau_es_ficha_actual( $post->ID ) ) {
+			return $id;
+		}
+		$pres   = jau_presentaciones_de( $post->ID );
+		$actual = jau_presentacion_actual( $post->ID );
+		return ( $actual && ! empty( $pres[ $actual ]['img'] ) ) ? $pres[ $actual ]['img'] : $id;
+	},
+	10,
+	2
+);
+
+/* El título de la ficha lleva la presentación: «Drink Cola 400 mL». */
+add_filter(
+	'render_block_core/post-title',
+	function ( $html, $parsed, $instance ) {
+		$post_id = isset( $instance->context['postId'] ) ? (int) $instance->context['postId'] : 0;
+		if ( 1 !== (int) ( $parsed['attrs']['level'] ?? 2 ) || ! jau_es_ficha_actual( $post_id ) ) {
+			return $html;
+		}
+		$pres   = jau_presentaciones_de( $post_id );
+		$actual = jau_presentacion_actual( $post_id );
+		if ( ! $actual ) {
+			return $html;
+		}
+		$span = ' <span class="jau-ficha__presentacion">' . esc_html( $pres[ $actual ]['nombre'] ) . '</span>';
+		return preg_replace( '#</h1>#', $span . '</h1>', $html, 1 );
+	},
+	10,
+	3
+);
+
+/* Admin: foto de cada presentación (si no se elige, se usa la foto del producto). */
+add_action(
+	'add_meta_boxes_producto',
+	function () {
+		add_meta_box(
+			'jau-fotos-presentacion',
+			'Foto por presentación',
+			function ( $post ) {
+				wp_enqueue_media();
+				wp_enqueue_script( 'jau-core-imagen', JAU_CORE_URL . 'assets/admin-imagen.js', array( 'jquery' ), JAU_CORE_VERSION, true );
+				wp_nonce_field( 'jau_fotos_presentacion', 'jau_fotos_presentacion_nonce' );
+				$terms = get_the_terms( $post->ID, 'presentacion' );
+				$fotos = get_post_meta( $post->ID, 'jau_fotos_presentacion', true );
+				$fotos = is_array( $fotos ) ? $fotos : array();
+				if ( ! $terms || is_wp_error( $terms ) ) {
+					echo '<p>Marca primero las presentaciones del producto y guarda.</p>';
+					return;
+				}
+				echo '<p class="description">Opcional. Si una presentación no tiene foto propia, se usa la foto del producto.</p>';
+				foreach ( $terms as $t ) {
+					$id = isset( $fotos[ $t->slug ] ) ? (int) $fotos[ $t->slug ] : 0;
+					printf(
+						'<div class="jau-imagen-campo" style="margin:10px 0"><strong>%1$s</strong><input type="hidden" name="jau_fotos_presentacion[%2$s]" value="%3$s"><div class="jau-imagen-vista" style="margin:6px 0">%4$s</div><button type="button" class="button jau-imagen-elegir">Elegir foto</button> <button type="button" class="button-link-delete jau-imagen-quitar">Quitar</button></div>',
+						esc_html( $t->name ),
+						esc_attr( $t->slug ),
+						esc_attr( (string) $id ),
+						$id ? wp_get_attachment_image( $id, 'thumbnail', false, array( 'style' => 'max-height:80px;width:auto' ) ) : '' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					);
+				}
+			},
+			'producto',
+			'side'
+		);
+	}
+);
+add_action(
+	'save_post_producto',
+	function ( $post_id ) {
+		if ( ! isset( $_POST['jau_fotos_presentacion_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['jau_fotos_presentacion_nonce'] ) ), 'jau_fotos_presentacion' ) ) {
+			return;
+		}
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
+		$entrada = isset( $_POST['jau_fotos_presentacion'] ) ? (array) wp_unslash( $_POST['jau_fotos_presentacion'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$fotos   = array();
+		foreach ( $entrada as $slug => $id ) {
+			if ( absint( $id ) ) {
+				$fotos[ sanitize_title( $slug ) ] = absint( $id );
+			}
+		}
+		update_post_meta( $post_id, 'jau_fotos_presentacion', $fotos );
 	}
 );
