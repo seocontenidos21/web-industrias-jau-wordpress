@@ -991,12 +991,16 @@ header.wp-block-template-part,
 /* Slider en móvil: el bloque (texto + escena) va centrado en el alto del slide, así el espacio
    sobrante se reparte arriba y abajo en teléfonos altos; distancia fija entre botones y escena. */
 @media (max-width: 781px) {
-	.jau-slide__cols { justify-content: center; gap: 28px !important; }
+	/* width: 100% porque el contenedor del cover centra con márgenes automáticos y, en flex, el bloque
+	   se encogía al ancho de su contenido (con textos cortos, como Drink Cola, quedaba corrido). */
+	.jau-slide__cols { justify-content: center; gap: 28px !important; width: 100%; }
 	/* El core fuerza flex-basis: 100% en columnas apiladas; en un contenedor vertical sería todo el alto. */
 	.jau-slide .wp-block-columns.jau-slide__cols:not(.is-not-stacked-on-mobile) > .wp-block-column.jau-slide__texto,
 	.jau-slide .wp-block-columns.jau-slide__cols:not(.is-not-stacked-on-mobile) > .wp-block-column.jau-slide__visual { flex: 0 0 auto !important; flex-basis: auto !important; }
 	.jau-slide__visual { margin-top: 0 !important; }
-	.jau-slide__texto { padding-top: 0 !important; gap: 16px; }
+	/* En vertical, «align-items: center» centraría en el ancho los textos cortos (Drink Cola):
+	   el texto ocupa siempre todo el ancho para que todos los slides arranquen en el mismo borde. */
+	.jau-slide__texto { padding-top: 0 !important; gap: 16px; align-self: stretch !important; width: 100%; }
 	.jau-slide__texto > .wp-block-buttons { margin-top: 4px !important; }
 	.jau-escena { margin-top: 0; }
 }
