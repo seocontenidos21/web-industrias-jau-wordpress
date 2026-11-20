@@ -219,26 +219,32 @@ if ( 'medios' === $jau_modo ) {
 }
 
 /* ---------------------------------------------------------------------------
- * 2) Datos de la empresa (DWIJ-55): solo si aún no existen
+ * 2) Datos de la empresa (DWIJ-55, DWIJ-81): solo se agregan las claves que aún no existen,
+ *    así no se pisa lo que el cliente haya editado en «Ajustes › Datos de la empresa».
  * ------------------------------------------------------------------------- */
 if ( 'contenido' === $jau_modo ) {
-	if ( ! get_option( 'jau_empresa' ) ) {
-		update_option(
-			'jau_empresa',
-			array(
-				'telefono'         => '+58 422-5051007',
-				'whatsapp'         => '584225051007',
-				'whatsapp_mensaje' => 'Hola, quiero información para ser distribuidor de Industrias JAU.',
-				'direccion'        => 'Av. Circunvalación 3 y la Calle 148, Local #66-75, Zona Industrial, II Etapa, Sur América, Zulia. Zona postal 4004.',
-				'mapa'             => '',
-				'horario'          => 'De lunes a viernes, de 8:00 a.m. a 5:00 p.m.',
-				'correo'           => '',
-				'instagram'        => '',
-				'facebook'         => '',
-				'tiktok'           => '',
-			)
-		);
-		jau_log( '✓ Datos de la empresa cargados' );
+	$jau_empresa_base = array(
+		'telefono'            => '+58 422-5051007',
+		'whatsapp'            => '584225051007',
+		'whatsapp_mensaje'    => 'Hola, quiero información para ser distribuidor de Industrias JAU.',
+		'clientes_directos'   => "Maracaibo: +58 414-6582455\nMaracay y Valencia: +58 424-3638023\nCaracas: +58 414-3314867",
+		'clientes_nota'       => 'Solo atención en Maracaibo, Caracas, Maracay y Valencia',
+		'consumidor_telefono' => '+58 412-7555591',
+		'consumidor_correo'   => 'atencionalcliente@industriasjau.com',
+		'whatsapp_contactos'  => '1',
+		'direccion'           => 'Av. Circunvalación 3 y la Calle 148, Local #66-75, Zona Industrial, II Etapa, Sur América, Zulia. Zona postal 4004.',
+		'mapa'                => '',
+		'horario'             => 'De lunes a viernes, de 8:00 a.m. a 5:00 p.m.',
+		'correo'              => '',
+		'instagram'           => '',
+		'facebook'            => '',
+		'tiktok'              => '',
+	);
+	$jau_empresa_actual = (array) get_option( 'jau_empresa', array() );
+	$jau_empresa_nuevas = array_diff_key( $jau_empresa_base, $jau_empresa_actual );
+	if ( $jau_empresa_nuevas ) {
+		update_option( 'jau_empresa', array_merge( $jau_empresa_actual, $jau_empresa_nuevas ) );
+		jau_log( '✓ Datos de la empresa: ' . implode( ', ', array_keys( $jau_empresa_nuevas ) ) );
 	}
 
 	/* Términos */

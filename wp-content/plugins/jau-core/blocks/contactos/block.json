@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jau/contactos",
+	"title": "Contactos de la empresa",
+	"category": "widgets",
+	"icon": "phone",
+	"description": "Teléfonos, WhatsApp y correo de distribuidores, cliente directo por ciudad y atención al consumidor (Ajustes › Datos de la empresa).",
+	"textdomain": "jau-core",
+	"attributes": {
+		"tipo": { "type": "string", "default": "todos", "enum": [ "todos", "distribuidores", "cliente", "consumidor" ] },
+		"variante": { "type": "string", "default": "tarjeta", "enum": [ "tarjeta", "compacta" ] }
+	},
+	"supports": { "html": false, "spacing": { "margin": true } },
+	"editorScript": "file:./editor.js",
+	"render": "file:./render.php"
+}

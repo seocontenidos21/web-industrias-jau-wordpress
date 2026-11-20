@@ -17,13 +17,18 @@ const JAU_OPCION_EMPRESA = 'jau_empresa';
  */
 function jau_empresa_campos() {
 	return array(
-		'telefono'         => array( 'label' => 'Teléfono para distribuidores', 'tipo' => 'text', 'ayuda' => 'Tal como se muestra en la web. Ej.: +58 422-5051007' ),
-		'whatsapp'         => array( 'label' => 'Número de WhatsApp de ventas', 'tipo' => 'text', 'ayuda' => 'Solo dígitos con código de país, sin «+». Ej.: 584225051007' ),
-		'whatsapp_mensaje' => array( 'label' => 'Mensaje predefinido de WhatsApp', 'tipo' => 'textarea' ),
+		'telefono'            => array( 'label' => 'Distribuidores: teléfono', 'tipo' => 'text', 'ayuda' => 'Tal como se muestra en la web. Ej.: +58 422-5051007' ),
+		'whatsapp'            => array( 'label' => 'Distribuidores: WhatsApp', 'tipo' => 'text', 'ayuda' => 'Solo dígitos con código de país, sin «+». Ej.: 584225051007. Es el del botón flotante, el slider y las fichas de producto.' ),
+		'whatsapp_mensaje'    => array( 'label' => 'Distribuidores: mensaje predefinido de WhatsApp', 'tipo' => 'textarea' ),
+		'clientes_directos'   => array( 'label' => 'Cliente directo: teléfonos por ciudad', 'tipo' => 'textarea', 'ayuda' => 'Una línea por ciudad, con el formato «Ciudad: teléfono». Ej.: Maracaibo: +58 414-6582455' ),
+		'clientes_nota'       => array( 'label' => 'Cliente directo: nota visible', 'tipo' => 'text', 'ayuda' => 'Ej.: Solo atención en Maracaibo, Caracas, Maracay y Valencia' ),
+		'consumidor_telefono' => array( 'label' => 'Atención al consumidor: teléfono', 'tipo' => 'text' ),
+		'consumidor_correo'   => array( 'label' => 'Atención al consumidor: correo', 'tipo' => 'email' ),
+		'whatsapp_contactos'  => array( 'label' => 'WhatsApp en cliente directo y atención al consumidor', 'tipo' => 'checkbox', 'ayuda' => 'Marcar si esos números tienen WhatsApp: se agrega el enlace junto a cada número y el botón flotante muestra un menú con los tres tipos de contacto.' ),
 		'direccion'        => array( 'label' => 'Dirección de la planta', 'tipo' => 'textarea' ),
 		'mapa'             => array( 'label' => 'Punto del mapa (opcional)', 'tipo' => 'text', 'ayuda' => 'Coordenadas «latitud,longitud» o texto de búsqueda. Si se deja vacío, el mapa usa la dirección.' ),
 		'horario'          => array( 'label' => 'Horario de atención', 'tipo' => 'text' ),
-		'correo'           => array( 'label' => 'Correo que recibe las solicitudes', 'tipo' => 'email', 'ayuda' => 'Si está vacío, las solicitudes se guardan en «Distribuidores» pero no se envía correo.' ),
+		'correo'           => array( 'label' => 'Correo que recibe las solicitudes de distribuidores', 'tipo' => 'email', 'ayuda' => 'No se muestra en la web. Si está vacío, las solicitudes se guardan en «Distribuidores» pero no se envía correo.' ),
 		'instagram'        => array( 'label' => 'Instagram (URL)', 'tipo' => 'url' ),
 		'facebook'         => array( 'label' => 'Facebook (URL)', 'tipo' => 'url' ),
 		'tiktok'           => array( 'label' => 'TikTok (URL)', 'tipo' => 'url' ),
@@ -68,6 +73,64 @@ function jau_whatsapp_url( $mensaje = '' ) {
 	}
 	$mensaje = '' !== $mensaje ? $mensaje : $d['whatsapp_mensaje'];
 	return 'https://wa.me/' . $numero . ( '' !== $mensaje ? '?text=' . rawurlencode( $mensaje ) : '' );
+}
+
+/**
+ * Los tres tipos de contacto (DWIJ-81): distribuidores, cliente directo por ciudad y atención
+ * al consumidor. Solo incluye los grupos con datos.
+ *
+ * @return array<string, array{titulo: string, filas: array<int, array{lugar: string, telefono: string, tel: string, wa: string}>, correo: string, nota: string}>
+ */
+function jau_contactos() {
+	$d      = jau_empresa();
+	$con_wa = '1' === $d['whatsapp_contactos'];
+	$fila   = function ( $lugar, $telefono, $mensaje ) use ( $con_wa ) {
+		$num = jau_digitos( $telefono );
+		return array(
+			'lugar'    => $lugar,
+			'telefono' => $telefono,
+			'tel'      => '' !== $num ? 'tel:+' . $num : '',
+			'wa'       => ( $con_wa && '' !== $num ) ? 'https://wa.me/' . $num . '?text=' . rawurlencode( $mensaje ) : '',
+		);
+	};
+	$grupos = array();
+
+	if ( '' !== $d['telefono'] ) {
+		$distribuidor       = $fila( '', $d['telefono'], '' );
+		$distribuidor['wa'] = jau_whatsapp_url();
+		$grupos['distribuidores'] = array(
+			'titulo' => 'Distribuidores',
+			'filas'  => array( $distribuidor ),
+			'correo' => '',
+			'nota'   => '',
+		);
+	}
+
+	$filas = array();
+	foreach ( preg_split( '/\R/', $d['clientes_directos'] ) as $linea ) {
+		if ( preg_match( '/^\s*(.+?)\s*[:|]\s*(\+?[\d][\d\s().-]{5,})\s*$/u', $linea, $m ) ) {
+			$filas[] = $fila( $m[1], $m[2], 'Hola, quiero ser cliente directo de Industrias JAU en ' . $m[1] . '.' );
+		}
+	}
+	if ( $filas ) {
+		$grupos['cliente'] = array(
+			'titulo' => 'Cliente directo',
+			'filas'  => $filas,
+			'correo' => '',
+			'nota'   => $d['clientes_nota'],
+		);
+	}
+
+	if ( '' !== $d['consumidor_telefono'] || '' !== $d['consumidor_correo'] ) {
+		$grupos['consumidor'] = array(
+			'titulo' => 'Atención al consumidor',
+			'filas'  => '' !== $d['consumidor_telefono'] ? array( $fila( '', $d['consumidor_telefono'], 'Hola, escribo a Atención al consumidor de Industrias JAU.' ) ) : array(),
+			'correo' => $d['consumidor_correo'],
+			'nota'   => '',
+		);
+	}
+
+	return $grupos;
 }
 
 /**
@@ -267,6 +330,9 @@ function jau_empresa_sanitizar( $entrada ) {
 			case 'url':
 				$salida[ $clave ] = esc_url_raw( $valor );
 				break;
+			case 'checkbox':
+				$salida[ $clave ] = '' !== $valor ? '1' : '';
+				break;
 			default:
 				$salida[ $clave ] = sanitize_text_field( $valor );
 		}
@@ -290,7 +356,7 @@ function jau_empresa_pagina() {
 	?>
 	<div class="wrap">
 		<h1>Datos de la empresa</h1>
-		<p>Estos datos se muestran en el footer, Contacto, el bloque «Quiero ser distribuidor», el slider y el botón flotante de WhatsApp. Cambiarlos aquí los actualiza en todo el sitio.</p>
+		<p>Estos datos se muestran en el footer, Contacto, el bloque «Quiero ser distribuidor», el slider y el botón flotante de WhatsApp. Cambiarlos aquí los actualiza en todo el sitio. Un campo vacío no se muestra.</p>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'jau_empresa_grupo' ); ?>
 			<table class="form-table" role="presentation">
@@ -299,10 +365,12 @@ function jau_empresa_pagina() {
 					<tr>
 						<th scope="row"><label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $campo['label'] ); ?></label></th>
 						<td>
-							<?php if ( 'textarea' === $campo['tipo'] ) : ?>
+							<?php if ( 'checkbox' === $campo['tipo'] ) : ?>
+								<input type="checkbox" value="1" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( JAU_OPCION_EMPRESA . '[' . $clave . ']' ); ?>" <?php checked( '1', $datos[ $clave ] ); ?>>
+							<?php elseif ( 'textarea' === $campo['tipo'] ) : ?>
 								<textarea class="large-text" rows="3" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( JAU_OPCION_EMPRESA . '[' . $clave . ']' ); ?>"><?php echo esc_textarea( $datos[ $clave ] ); ?></textarea>
 							<?php else : ?>
-								<input class="regular-text" type="<?php echo esc_attr( 'email' === $campo['tipo'] ? 'email' : ( 'url' === $campo['tipo'] ? 'url' : 'text' ) ); ?>" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( JAU_OPCION_EMPRESA . '[' . $clave . ']' ); ?>" value="<?php echo esc_attr( $datos[ $clave ] ); ?>">
+								<input class="<?php echo 'clientes_nota' === $clave ? 'large-text' : 'regular-text'; ?>" type="<?php echo esc_attr( 'email' === $campo['tipo'] ? 'email' : ( 'url' === $campo['tipo'] ? 'url' : 'text' ) ); ?>" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( JAU_OPCION_EMPRESA . '[' . $clave . ']' ); ?>" value="<?php echo esc_attr( $datos[ $clave ] ); ?>">
 							<?php endif; ?>
 							<?php if ( ! empty( $campo['ayuda'] ) ) : ?>
 								<p class="description"><?php echo esc_html( $campo['ayuda'] ); ?></p>

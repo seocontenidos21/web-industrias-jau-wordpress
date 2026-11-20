@@ -31,6 +31,10 @@ function jau_tema_iconos() {
 		'flecha'   => array( 'nombre' => 'Flecha', 'd' => 'M5 12h14 M13 6l6 6-6 6' ),
 		'wa'       => array( 'nombre' => 'WhatsApp', 'd' => 'M5 19.5l1.2-3.7A8 8 0 1 1 9 18.7z M9 9.5c.3 2.2 2.3 4.2 4.5 4.5l1-1.2 2 .9' ),
 		'check'    => array( 'nombre' => 'Confirmación', 'd' => 'M5 12.5l4.5 4.5L19 7.5' ),
+		'escudo'   => array( 'nombre' => 'Escudo / integridad', 'd' => 'M12 3l7 3v5.5c0 4.3-2.9 8-7 9.5-4.1-1.5-7-5.2-7-9.5V6z M9 12l2 2 4-4' ),
+		'manos'    => array( 'nombre' => 'Apretón de manos / confianza', 'd' => 'M11 17l2 2a1 1 0 1 0 3-3 M14 14l2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4 M21 3l1 11h-2 M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3 M3 4h8' ),
+		'estrella' => array( 'nombre' => 'Estrella / excelencia', 'd' => 'M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z' ),
+		'sonrisa'  => array( 'nombre' => 'Sonrisa / alegría', 'd' => 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M8.5 14a4.5 4.5 0 0 0 7 0 M9 9.5h.01 M15 9.5h.01' ),
 	);
 }
 

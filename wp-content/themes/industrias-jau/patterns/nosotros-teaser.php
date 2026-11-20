@@ -30,6 +30,28 @@ defined( 'ABSPATH' ) || exit;
 <p class="has-text-color has-md-font-size" style="color:#c9ccd3">Somos una empresa venezolana que produce Drink Cola y Frugy en su planta del Zulia, con la misión de resaltar lo hecho en Venezuela a través de cada sorbo de nuestras bebidas.</p>
 <!-- /wp:paragraph -->
 
+<!-- wp:list {"className":"jau-valores-chips"} -->
+<ul class="wp-block-list jau-valores-chips"><!-- wp:list-item -->
+<li>Integridad</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Confianza</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Excelencia</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Alegría</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Pasión por el bien</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button {"className":"is-style-contorno"} -->
 <div class="wp-block-button is-style-contorno"><a class="wp-block-button__link wp-element-button" href="/sobre-nosotros/">Conocer la empresa</a></div>

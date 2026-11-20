@@ -211,6 +211,51 @@ add_action(
 		if ( '' === $url ) {
 			return;
 		}
+
+		/* Con WhatsApp en cliente directo y atención al consumidor (DWIJ-81), el botón abre un menú
+		   con los tres tipos de contacto para que nadie escriba al número equivocado. */
+		$grupos   = function_exists( 'jau_contactos' ) ? jau_contactos() : array();
+		$opciones = array();
+		foreach ( $grupos as $clave => $grupo ) {
+			foreach ( $grupo['filas'] as $fila ) {
+				if ( '' === $fila['wa'] ) {
+					continue;
+				}
+				$opciones[ $clave ][] = array(
+					'texto' => 'distribuidores' === $clave ? 'Quiero ser distribuidor' : ( '' !== $fila['lugar'] ? $fila['lugar'] : $grupo['titulo'] ),
+					'url'   => $fila['wa'],
+				);
+			}
+		}
+		if ( count( $opciones ) > 1 ) {
+			echo '<details class="jau-wa-menu"><summary class="jau-wa-flotante" aria-label="' . esc_attr__( 'Escríbenos por WhatsApp', 'industrias-jau' ) . '">' . jau_tema_svg( 'wa', 28, 1.8 ) . '</summary>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<div class="jau-wa-menu__panel"><p class="jau-wa-menu__titulo">' . esc_html__( 'Escríbenos por WhatsApp', 'industrias-jau' ) . '</p>';
+			foreach ( $opciones as $clave => $lista ) {
+				$con_grupo = 'cliente' === $clave;
+				echo '<div class="jau-wa-menu__grupo">';
+				if ( $con_grupo ) {
+					echo '<p class="jau-wa-menu__subtitulo">' . esc_html( $grupos[ $clave ]['titulo'] ) . '</p>';
+				}
+				foreach ( $lista as $op ) {
+					printf(
+						'<a class="jau-wa-menu__opcion" href="%1$s" target="_blank" rel="noopener"%3$s>%2$s</a>',
+						esc_url( $op['url'] ),
+						esc_html( $op['texto'] ),
+						$con_grupo ? ' aria-label="' . esc_attr( $grupos[ $clave ]['titulo'] . ': ' . $op['texto'] ) . '"' : ''
+					);
+				}
+				echo '</div>';
+			}
+			echo '</div></details>';
+			wp_print_inline_script_tag(
+				"(function(){var m=document.querySelector('.jau-wa-menu');if(!m)return;" .
+				"document.addEventListener('click',function(e){if(m.open&&!m.contains(e.target))m.open=false;});" .
+				"document.addEventListener('keydown',function(e){if(e.key==='Escape'&&m.open){m.open=false;m.querySelector('summary').focus();}});" .
+				"m.addEventListener('click',function(e){if(e.target.closest('a'))m.open=false;});})();"
+			);
+			return;
+		}
+
 		printf(
 			'<a class="jau-wa-flotante" href="%1$s" target="_blank" rel="noopener" aria-label="%2$s" title="%2$s">%3$s</a>',
 			esc_url( $url ),
