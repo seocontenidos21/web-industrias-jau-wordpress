@@ -21,7 +21,6 @@ function jau_empresa_campos() {
 		'whatsapp'            => array( 'label' => 'Distribuidores: WhatsApp', 'tipo' => 'text', 'ayuda' => 'Solo dígitos con código de país, sin «+». Ej.: 584225051007. Es el del botón flotante, el slider y las fichas de producto.' ),
 		'whatsapp_mensaje'    => array( 'label' => 'Distribuidores: mensaje predefinido de WhatsApp', 'tipo' => 'textarea' ),
 		'clientes_directos'   => array( 'label' => 'Cliente directo: teléfonos por ciudad', 'tipo' => 'textarea', 'ayuda' => 'Una línea por ciudad, con el formato «Ciudad: teléfono». Ej.: Maracaibo: +58 414-6582455' ),
-		'clientes_nota'       => array( 'label' => 'Cliente directo: nota visible', 'tipo' => 'text', 'ayuda' => 'Ej.: Solo atención en Maracaibo, Caracas, Maracay y Valencia' ),
 		'consumidor_telefono' => array( 'label' => 'Atención al consumidor: teléfono', 'tipo' => 'text' ),
 		'consumidor_correo'   => array( 'label' => 'Atención al consumidor: correo', 'tipo' => 'email' ),
 		'whatsapp_contactos'  => array( 'label' => 'WhatsApp en cliente directo y atención al consumidor', 'tipo' => 'checkbox', 'ayuda' => 'Marcar si esos números tienen WhatsApp: al tocar cada número se abre WhatsApp (si no, llama) y el botón flotante muestra un menú con los tres tipos de contacto.' ),
@@ -79,7 +78,7 @@ function jau_whatsapp_url( $mensaje = '' ) {
  * Los tres tipos de contacto (DWIJ-81): distribuidores, cliente directo por ciudad y atención
  * al consumidor. Solo incluye los grupos con datos.
  *
- * @return array<string, array{titulo: string, filas: array<int, array{lugar: string, telefono: string, tel: string, wa: string}>, correo: string, nota: string}>
+ * @return array<string, array{titulo: string, filas: array<int, array{lugar: string, telefono: string, tel: string, wa: string}>, correo: string}>
  */
 function jau_contactos() {
 	$d      = jau_empresa();
@@ -102,7 +101,6 @@ function jau_contactos() {
 			'titulo' => 'Distribuidores',
 			'filas'  => array( $distribuidor ),
 			'correo' => '',
-			'nota'   => '',
 		);
 	}
 
@@ -117,7 +115,6 @@ function jau_contactos() {
 			'titulo' => 'Cliente directo',
 			'filas'  => $filas,
 			'correo' => '',
-			'nota'   => $d['clientes_nota'],
 		);
 	}
 
@@ -126,7 +123,6 @@ function jau_contactos() {
 			'titulo' => 'Atención al consumidor',
 			'filas'  => '' !== $d['consumidor_telefono'] ? array( $fila( '', $d['consumidor_telefono'], 'Hola, escribo a Atención al consumidor de Industrias JAU.' ) ) : array(),
 			'correo' => $d['consumidor_correo'],
-			'nota'   => '',
 		);
 	}
 
@@ -370,7 +366,7 @@ function jau_empresa_pagina() {
 							<?php elseif ( 'textarea' === $campo['tipo'] ) : ?>
 								<textarea class="large-text" rows="3" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( JAU_OPCION_EMPRESA . '[' . $clave . ']' ); ?>"><?php echo esc_textarea( $datos[ $clave ] ); ?></textarea>
 							<?php else : ?>
-								<input class="<?php echo 'clientes_nota' === $clave ? 'large-text' : 'regular-text'; ?>" type="<?php echo esc_attr( 'email' === $campo['tipo'] ? 'email' : ( 'url' === $campo['tipo'] ? 'url' : 'text' ) ); ?>" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( JAU_OPCION_EMPRESA . '[' . $clave . ']' ); ?>" value="<?php echo esc_attr( $datos[ $clave ] ); ?>">
+								<input class="regular-text" type="<?php echo esc_attr( 'email' === $campo['tipo'] ? 'email' : ( 'url' === $campo['tipo'] ? 'url' : 'text' ) ); ?>" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( JAU_OPCION_EMPRESA . '[' . $clave . ']' ); ?>" value="<?php echo esc_attr( $datos[ $clave ] ); ?>">
 							<?php endif; ?>
 							<?php if ( ! empty( $campo['ayuda'] ) ) : ?>
 								<p class="description"><?php echo esc_html( $campo['ayuda'] ); ?></p>

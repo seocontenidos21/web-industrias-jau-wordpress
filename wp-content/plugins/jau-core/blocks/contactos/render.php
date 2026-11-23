@@ -79,9 +79,6 @@ foreach ( $jau_grupos as $jau_clave => $jau_g ) {
 	if ( 'todos' === $jau_tipo ) {
 		echo '<p class="jau-contactos__titulo">' . esc_html( $jau_g['titulo'] ) . '</p>';
 	}
-	if ( '' !== $jau_g['nota'] ) {
-		echo '<p class="jau-contactos__nota">' . $jau_svg( 'pin', 16 ) . '<span>' . esc_html( $jau_g['nota'] ) . '</span></p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
 	echo '<ul class="jau-contactos__lista">';
 	foreach ( $jau_g['filas'] as $jau_f ) {
 		echo '<li class="jau-contactos__fila">';

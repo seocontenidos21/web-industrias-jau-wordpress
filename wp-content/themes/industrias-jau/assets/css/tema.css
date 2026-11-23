@@ -559,20 +559,6 @@ header.wp-block-template-part,
 .jau-contacto__dato .jau-icono { margin-top: 2px !important; color: var(--jau-primary); }
 .jau-contacto__dato:not(:has(p)) { display: none !important; }
 .jau-contactos { width: 100%; }
-.jau-contactos__nota {
-	display: flex;
-	gap: 8px;
-	align-items: flex-start;
-	margin: 0 0 12px;
-	padding: 10px 12px;
-	border-radius: var(--jau-r-sm);
-	background: var(--wp--preset--color--primary-tint);
-	color: var(--jau-primary);
-	font-size: 14px;
-	font-weight: 600;
-	line-height: 1.45;
-}
-.jau-contactos__nota svg { flex: none; margin-top: 1px; }
 .jau-contactos__lista { list-style: none; margin: 0; padding: 0; }
 .jau-contactos__fila { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 12px; padding: 8px 0; border-top: 1px solid var(--jau-line); }
 .jau-contactos__fila:first-child { padding-top: 0; border-top: 0; }
@@ -585,7 +571,6 @@ header.wp-block-template-part,
 .jau-contactos__correo { font-size: 15px; overflow-wrap: anywhere; }
 .jau-contactos__num svg,
 .jau-contactos__correo svg { flex: none; color: var(--jau-primary); }
-.jau-contactos__num.is-wa svg { color: #1DA851; }
 .jau-contactos__num:hover,
 .jau-contactos__correo:hover { color: var(--jau-primary); }
 
@@ -598,9 +583,8 @@ header.wp-block-template-part,
 .jau-footer .jau-contactos__correo { min-height: 28px; gap: 7px; color: #C9CCD3; font-size: 14px; font-weight: 500; }
 .jau-footer .jau-contactos__num:hover,
 .jau-footer .jau-contactos__correo:hover { color: #fff; }
-.jau-footer .jau-contactos__num.is-wa svg { color: var(--wp--preset--color--whatsapp); }
-.jau-footer .jau-contactos__correo svg,
-.jau-footer .jau-contactos__num:not(.is-wa) svg { color: #8C929D; }
+.jau-footer .jau-contactos__num svg,
+.jau-footer .jau-contactos__correo svg { color: #fff; }
 /* Cliente directo como tablita (ciudad | número) cuando hay ancho; si no, la ciudad va arriba. */
 @container (min-width: 270px) {
 	.jau-contactos__grupo--cliente { display: grid; grid-template-columns: max-content auto; align-items: center; column-gap: 14px; }
