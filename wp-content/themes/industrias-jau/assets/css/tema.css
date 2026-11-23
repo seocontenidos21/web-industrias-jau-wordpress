@@ -578,9 +578,9 @@ header.wp-block-template-part,
 .jau-contactos--compacta { display: grid; gap: 14px; container-type: inline-size; }
 .jau-footer .jau-contactos__titulo { margin: 0 0 4px; color: #fff; font-size: 14px; font-weight: 700; }
 .jau-contactos__linea { display: flex; flex-wrap: wrap; align-items: center; gap: 0 10px; }
-.jau-footer .jau-contactos__lugar { color: #8C929D; font-weight: 400; }
+.jau-footer .jau-contactos__lugar { color: var(--jau-footer-tenue); font-weight: 400; }
 .jau-footer .jau-contactos__num,
-.jau-footer .jau-contactos__correo { min-height: 28px; gap: 7px; color: #C9CCD3; font-size: 14px; font-weight: 500; }
+.jau-footer .jau-contactos__correo { min-height: 28px; gap: 7px; color: var(--jau-footer-texto); font-size: 14px; font-weight: 500; }
 .jau-footer .jau-contactos__num:hover,
 .jau-footer .jau-contactos__correo:hover { color: #fff; }
 .jau-footer .jau-contactos__num svg,
@@ -613,11 +613,16 @@ header.wp-block-template-part,
 .jau-valores-chips li { padding: 5px 12px; border: 1px solid rgba(255, 255, 255, .3); border-radius: 999px; color: #fff; font-size: 13px; font-weight: 600; }
 
 /* --------------------------------------------------------------------------
-   Footer (DWIJ-21)
+   Footer (DWIJ-21): fondo azul del logo (antes negro #0D0E11)
    -------------------------------------------------------------------------- */
-.jau-footer { color: #C9CCD3; }
+.jau-footer {
+	--jau-footer-texto: #D5DAE6;
+	--jau-footer-tenue: #A9B2C8;
+	--jau-footer-linea: rgba(255, 255, 255, .16);
+	color: var(--jau-footer-texto);
+}
 .jau-footer :is(h2, h3, strong) { color: #fff; }
-.jau-footer a { color: #C9CCD3; }
+.jau-footer a { color: var(--jau-footer-texto); }
 .jau-footer a:hover { color: #fff; text-decoration: none; }
 .jau-footer .jau-footer__titulo { font-family: var(--wp--preset--font-family--text); font-size: 18px; font-weight: 700; letter-spacing: 0; margin: 0 0 6px; }
 .jau-footer p { font-size: 14px; line-height: 1.5; margin: 0; }
@@ -635,18 +640,18 @@ header.wp-block-template-part,
 }
 @media (max-width: 600px) {
 	.jau-footer__columnas { row-gap: 0 !important; padding-top: 36px !important; }
-	.jau-footer__columnas > * + * { margin-top: 24px !important; padding-top: 24px; border-top: 1px solid #23262D; }
+	.jau-footer__columnas > * + * { margin-top: 24px !important; padding-top: 24px; border-top: 1px solid var(--jau-footer-linea); }
 	.jau-footer .jau-footer__titulo { font-size: 17px; }
 	.jau-contactos--compacta { grid-template-columns: 1fr 1fr; gap: 18px 16px; }
 	.jau-contactos__grupo--consumidor { order: 1; }
 	.jau-contactos__grupo--cliente { grid-column: 1 / -1; order: 2; }
 }
-.jau-footer .wp-block-navigation-item__content { font-size: 14px; padding: 2px 0; color: #C9CCD3; }
+.jau-footer .wp-block-navigation-item__content { font-size: 14px; padding: 2px 0; color: var(--jau-footer-texto); }
 .jau-footer .wp-block-navigation-item__content:hover { color: #fff; }
 .jau-footer .jau-wordmark a { color: #fff; }
 .jau-footer .wp-block-button__link { min-height: 44px; padding: 10px 18px; font-size: 14px; }
-.jau-footer__base { border-top: 1px solid #23262D; font-size: 13px; color: #8C929D; }
-.jau-footer__base p { font-size: 13px; color: #8C929D; }
+.jau-footer__base { border-top: 1px solid var(--jau-footer-linea); font-size: 13px; color: var(--jau-footer-tenue); }
+.jau-footer__base p { font-size: 13px; color: var(--jau-footer-tenue); }
 .jau-footer .jau-pc { background: rgba(255, 255, 255, .08); color: #F3C9A0; border-color: rgba(243, 201, 160, .5); }
 
 /* Botón flotante de WhatsApp (DWIJ-19) */
@@ -955,8 +960,13 @@ header.wp-block-template-part,
 .jau-fotos figure { margin: 0 !important; }
 .jau-dark .jau-fotos img { box-shadow: 0 20px 36px -20px rgba(0, 0, 0, .7); }
 
-/* Footer: isotipo sobre recuadro blanco (no se recolorea el logo) */
-.jau-footer .jau-wordmark a::before { background-color: #fff; border-radius: 8px; padding: 4px; background-origin: content-box; width: 44px; height: 40px; }
+/* Footer: isotipo en negativo. La «J» del PNG es transparente, así que se usa como máscara:
+   el hexágono sale blanco y la J toma el azul del fondo (no hace falta otro archivo). */
+.jau-footer .jau-wordmark a::before {
+	background: #fff;
+	-webkit-mask: url("../img/isotipo-industrias-jau.png") center / contain no-repeat;
+	mask: url("../img/isotipo-industrias-jau.png") center / contain no-repeat;
+}
 
 /* Datos sin cargar: no se muestran (sin marcadores «por confirmar») */
 .jau-pc { display: none !important; }
