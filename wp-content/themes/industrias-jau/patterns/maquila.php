@@ -25,13 +25,13 @@ $jau_razones    = array(
 <!-- wp:group {"tagName":"section","anchor":"maquila","align":"full","className":"jau-maquila","style":{"spacing":{"padding":{"top":"56px","bottom":"60px"},"blockGap":"44px"}},"backgroundColor":"primary-tint","layout":{"type":"constrained"}} -->
 <section id="maquila" class="wp-block-group alignfull jau-maquila has-primary-tint-background-color has-background" style="padding-top:56px;padding-bottom:60px"><!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"top":"28px","left":"48px"}}}} -->
 <div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center","width":"56%","style":{"spacing":{"blockGap":"14px"}}} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:56%"><!-- wp:paragraph {"className":"jau-kicker"} -->
-<p class="jau-kicker">JAU Maquila</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"fontSize":"destacado"} -->
-<h2 class="wp-block-heading has-destacado-font-size">Tu marca, nuestra experiencia.</h2>
+<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:56%"><!-- wp:heading {"fontSize":"destacado"} -->
+<h2 class="wp-block-heading has-destacado-font-size">JAU Maquila</h2>
 <!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"jau-lema"} -->
+<p class="jau-lema">Tu marca, nuestra experiencia.</p>
+<!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"textColor":"ink-2","fontSize":"md"} -->
 <p class="has-ink-2-color has-text-color has-md-font-size">En Industrias JAU ponemos nuestra experiencia en la industria de bebidas al servicio de empresas y marcas que buscan un aliado para la fabricación de sus productos.</p>

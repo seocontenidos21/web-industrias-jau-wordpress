@@ -1187,8 +1187,8 @@ header.wp-block-template-part,
 	.jau-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content { height: 48px; padding: 0 4px !important; font-size: 16px; color: var(--jau-ink-2); }
 }
 
-/* Antetítulo dado por el cliente (p. ej. «JAU Maquila»). */
-.jau-kicker { margin: 0 !important; color: var(--jau-primary); font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+/* Lema bajo el título (p. ej. «Tu marca, nuestra experiencia.» bajo «JAU Maquila»). */
+.jau-lema { margin-top: 6px !important; color: var(--jau-primary); font-family: var(--wp--preset--font-family--display); font-size: clamp(19px, 1.8vw, 22px); font-weight: 700; line-height: 1.3; }
 
 /* JAU Maquila (DWIJ-83) en Servicios y su acceso en el inicio */
 .jau-maquila :is(h2, h3, h4),
