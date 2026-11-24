@@ -1191,9 +1191,9 @@ header.wp-block-template-part,
 /* JAU Maquila (DWIJ-83) en Servicios y su acceso en el inicio */
 .jau-maquila :is(h2, h3, h4),
 .jau-maquila-teaser :is(h2, h3, h4) { margin: 0; }
-/* Soluciones: una sola tarjeta con las dos opciones como lista (no cuadritos sueltos). */
-.jau-maquila__soluciones h3 { margin-bottom: 8px !important; }
-.jau-maquila__solucion { align-items: center !important; margin: 0 !important; padding: 16px 0; border-top: 1px solid var(--jau-line); }
+/* «Soluciones para tu marca»: título sobre la escena de botellas (la misma del inicio). */
+.jau-maquila__soluciones-titulo { position: relative; z-index: 4; margin-bottom: 14px !important; color: var(--jau-primary); }
+@media (min-width: 782px) { .jau-maquila .jau-escena--maquila::before { width: min(100%, 460px); } }
 /* «¿Por qué trabajar con nosotros?»: columnas abiertas con una línea azul arriba, sin cajas,
    para que no repita las tarjetas de la parte de distribuidores. */
 .jau-razon { padding-top: 22px; border-top: 3px solid var(--jau-primary); }

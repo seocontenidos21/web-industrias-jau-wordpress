@@ -328,6 +328,31 @@ function jau_tema_bloque_imagen( $clave, $clase = '', $tam = 'full' ) {
 	);
 }
 
+/**
+ * Escena de JAU Maquila (DWIJ-83): círculo azul con una gaseosa y una saborizada, y las dos
+ * soluciones del cliente («Bebidas gaseosas», «Bebidas saborizadas») como etiquetas flotantes.
+ * La usan el inicio (maquila-teaser) y Servicios (maquila).
+ *
+ * @return string Marcado de bloques.
+ */
+function jau_tema_escena_maquila() {
+	$etiquetas = array(
+		array( 'burbujas', 'Bebidas gaseosas', 'jau-escena__etiqueta--arriba' ),
+		array( 'citrico', 'Bebidas saborizadas', 'jau-escena__etiqueta--abajo' ),
+	);
+	$html = '<!-- wp:group {"className":"jau-escena jau-escena--maquila","layout":{"type":"default"}} -->' . "\n"
+		. '<div class="wp-block-group jau-escena jau-escena--maquila"><!-- wp:group {"className":"jau-botellas","layout":{"type":"default"}} -->' . "\n"
+		. '<div class="wp-block-group jau-botellas">' . jau_tema_bloque_imagen( 'drink-cola-1-5-l', 'jau-botella jau-botella--centro', 'full' ) . "\n\n" . jau_tema_bloque_imagen( 'frugy-pina-colada-botella', 'jau-botella jau-botella--media', 'full' ) . '</div>' . "\n"
+		. '<!-- /wp:group -->';
+	foreach ( $etiquetas as $e ) {
+		$html .= "\n\n" . '<!-- wp:group {"className":"jau-escena__etiqueta ' . $e[2] . '","style":{"spacing":{"blockGap":"10px"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->' . "\n"
+			. '<div class="wp-block-group jau-escena__etiqueta ' . $e[2] . '"><!-- wp:industrias-jau/icono {"icono":"' . $e[0] . '","tamano":40,"estilo":"caja"} /-->' . "\n\n"
+			. '<!-- wp:paragraph -->' . "\n" . '<p>' . esc_html( $e[1] ) . '</p>' . "\n" . '<!-- /wp:paragraph --></div>' . "\n"
+			. '<!-- /wp:group -->';
+	}
+	return $html . '</div>' . "\n" . '<!-- /wp:group -->';
+}
+
 /* Tamaños intermedios en WebP con más calidad (por defecto 82 ablanda las fotos en el slider). */
 add_filter(
 	'wp_editor_set_quality',

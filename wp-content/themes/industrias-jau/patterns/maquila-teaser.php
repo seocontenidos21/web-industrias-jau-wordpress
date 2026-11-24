@@ -17,10 +17,6 @@ $jau_razones = array(
 	'Asesoría en requerimientos de empaque.',
 	'Coordinación de la producción y el suministro.',
 );
-$jau_etiquetas = array(
-	array( 'burbujas', 'Bebidas gaseosas', 'jau-escena__etiqueta--arriba' ),
-	array( 'citrico', 'Bebidas saborizadas', 'jau-escena__etiqueta--abajo' ),
-);
 ?>
 <!-- wp:group {"align":"full","className":"jau-maquila-teaser","style":{"spacing":{"padding":{"top":"64px","bottom":"64px"}}},"backgroundColor":"primary-tint","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull jau-maquila-teaser has-primary-tint-background-color has-background" style="padding-top:64px;padding-bottom:64px"><!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"top":"36px","left":"56px"}}}} -->
@@ -55,19 +51,7 @@ $jau_etiquetas = array(
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","width":"48%"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:48%"><!-- wp:group {"className":"jau-escena jau-escena--maquila","layout":{"type":"default"}} -->
-<div class="wp-block-group jau-escena jau-escena--maquila"><!-- wp:group {"className":"jau-botellas","layout":{"type":"default"}} -->
-<div class="wp-block-group jau-botellas"><?php echo jau_tema_bloque_imagen( 'drink-cola-1-5-l', 'jau-botella jau-botella--centro', 'full' ) . "\n\n" . jau_tema_bloque_imagen( 'frugy-pina-colada-botella', 'jau-botella jau-botella--media', 'full' ); // phpcs:ignore ?></div>
-<!-- /wp:group --><?php foreach ( $jau_etiquetas as $jau_e ) : ?>
-
-<!-- wp:group {"className":"jau-escena__etiqueta <?php echo esc_attr( $jau_e[2] ); ?>","style":{"spacing":{"blockGap":"10px"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
-<div class="wp-block-group jau-escena__etiqueta <?php echo esc_attr( $jau_e[2] ); ?>"><!-- wp:industrias-jau/icono {"icono":"<?php echo esc_attr( $jau_e[0] ); ?>","tamano":40,"estilo":"caja"} /-->
-
-<!-- wp:paragraph -->
-<p><?php echo esc_html( $jau_e[1] ); ?></p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --><?php endforeach; ?></div>
-<!-- /wp:group --></div>
+<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:48%"><?php echo jau_tema_escena_maquila(); // phpcs:ignore ?></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>
 <!-- /wp:group -->

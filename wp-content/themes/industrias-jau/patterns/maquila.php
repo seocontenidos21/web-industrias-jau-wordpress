@@ -12,11 +12,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Textos del documento del cliente (24/11/2026).
-$jau_soluciones = array(
-	array( 'burbujas', 'Bebidas gaseosas' ),
-	array( 'citrico', 'Bebidas saborizadas' ),
-);
-$jau_razones    = array(
+$jau_razones = array(
 	array( 'ajustes', 'Soluciones adaptadas a cada cliente.', 'Estudiamos las necesidades particulares de cada proyecto para ofrecer una propuesta de maquila acorde con sus requerimientos.' ),
 	array( 'botella', 'Asesoría en requerimientos de empaque.', 'Orientación sobre las características y necesidades de presentación de cada producto.' ),
 	array( 'calendario', 'Coordinación de la producción y el suministro.', 'Buscamos establecer acuerdos de trabajo que permitan organizar las condiciones de fabricación y entrega de cada proyecto.' ),
@@ -38,20 +34,12 @@ $jau_razones    = array(
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 
-<!-- wp:column {"verticalAlignment":"center","width":"46%"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:46%"><!-- wp:group {"className":"is-style-tarjeta jau-maquila__soluciones","style":{"spacing":{"padding":{"top":"26px","bottom":"10px","left":"26px","right":"26px"},"blockGap":"6px"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta jau-maquila__soluciones" style="padding-top:26px;padding-right:26px;padding-bottom:10px;padding-left:26px"><!-- wp:heading {"level":3,"fontSize":"lg"} -->
-<h3 class="wp-block-heading has-lg-font-size">Soluciones para tu marca</h3>
-<!-- /wp:heading --><?php foreach ( $jau_soluciones as $jau_s ) : ?>
+<!-- wp:column {"verticalAlignment":"center","width":"46%","style":{"spacing":{"blockGap":"6px"}}} -->
+<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:46%"><!-- wp:heading {"level":3,"textAlign":"center","className":"jau-maquila__soluciones-titulo","fontSize":"lg"} -->
+<h3 class="wp-block-heading has-text-align-center jau-maquila__soluciones-titulo has-lg-font-size">Soluciones para tu marca</h3>
+<!-- /wp:heading -->
 
-<!-- wp:group {"className":"jau-maquila__solucion","style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
-<div class="wp-block-group jau-maquila__solucion"><!-- wp:industrias-jau/icono {"icono":"<?php echo esc_attr( $jau_s[0] ); ?>","tamano":52,"estilo":"caja"} /-->
-
-<!-- wp:heading {"level":4,"fontSize":"lg"} -->
-<h4 class="wp-block-heading has-lg-font-size"><?php echo esc_html( $jau_s[1] ); ?></h4>
-<!-- /wp:heading --></div>
-<!-- /wp:group --><?php endforeach; ?></div>
-<!-- /wp:group --></div>
+<?php echo jau_tema_escena_maquila(); // phpcs:ignore ?></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
 
