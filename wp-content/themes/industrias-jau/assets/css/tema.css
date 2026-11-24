@@ -960,13 +960,18 @@ header.wp-block-template-part,
 .jau-fotos figure { margin: 0 !important; }
 .jau-dark .jau-fotos img { box-shadow: 0 20px 36px -20px rgba(0, 0, 0, .7); }
 
-/* Footer: isotipo en negativo. La «J» del PNG es transparente, así que se usa como máscara:
-   el hexágono sale blanco y la J toma el azul del fondo (no hace falta otro archivo). */
-.jau-footer .jau-wordmark a::before {
-	background: #fff;
-	-webkit-mask: url("../img/isotipo-industrias-jau.png") center / contain no-repeat;
-	mask: url("../img/isotipo-industrias-jau.png") center / contain no-repeat;
+/* Footer: logotipo oficial en blanco (archivo del cliente, 24/11/2026). El nombre sigue en el
+   HTML (oculto a la vista) para lectores de pantalla y buscadores. */
+.jau-footer .jau-wordmark a {
+	display: block;
+	width: 178px;
+	aspect-ratio: 600 / 162;
+	background: url("../img/logotipo-industrias-jau-blanco.webp") left center / contain no-repeat;
+	overflow: hidden;
+	white-space: nowrap;
+	text-indent: 110%;
 }
+.jau-footer .jau-wordmark a::before { display: none; }
 
 /* Datos sin cargar: no se muestran (sin marcadores «por confirmar») */
 .jau-pc { display: none !important; }
@@ -1195,6 +1200,9 @@ header.wp-block-template-part,
 .jau-maquila-teaser :is(h2, h3) { margin: 0; }
 .jau-maquila__soluciones > .is-style-tarjeta { height: 100%; text-align: center; }
 .jau-maquila__razones h4 { line-height: 1.3; }
+/* Formulario «Contáctanos» de JAU Maquila (DWIJ-84): centrado, campos en tres columnas en escritorio. */
+.jau-maquila .jau-form-caja { width: 100%; max-width: 900px; margin-inline: auto !important; }
+.jau-form-caja--maquila .jau-form__campos { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
 
 /* Cobertura (DWIJ-85): los estados como etiquetas, sin numeración */
 .jau-cobertura__cabecera { align-items: center !important; }

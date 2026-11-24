@@ -1,7 +1,8 @@
 <?php
 /**
- * Formulario «Contáctanos» de la página Contacto (DWIJ-18, DWIJ-84); envía a admin-post.php → jau_form_procesar().
- * Los botones «Quiero ser distribuidor» y «Consultar disponibilidad» llevan aquí (#formulario).
+ * Formularios del sitio (envían a admin-post.php → jau_form_procesar()):
+ * - «distribuidor»: «Quiero ser distribuidor» en Contacto (DWIJ-18).
+ * - «maquila»: «Contáctanos» de JAU Maquila en Servicios (DWIJ-84).
  *
  * @package jau-core
  * @var array $attributes
@@ -9,7 +10,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$jau_tipo = isset( $attributes['formulario'] ) && array_key_exists( $attributes['formulario'], jau_formularios() ) ? $attributes['formulario'] : 'contacto';
+$jau_tipo = isset( $attributes['formulario'] ) && array_key_exists( $attributes['formulario'], jau_formularios() ) ? $attributes['formulario'] : 'distribuidor';
 $jau_cfg  = jau_formulario( $jau_tipo );
 
 // phpcs:disable WordPress.Security.NonceVerification.Recommended -- solo lectura de estado para mostrar el formulario.

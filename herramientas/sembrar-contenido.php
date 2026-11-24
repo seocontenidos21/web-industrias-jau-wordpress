@@ -240,6 +240,7 @@ if ( 'contenido' === $jau_modo ) {
 		'horario'             => 'De lunes a viernes, de 8:00 a.m. a 5:00 p.m.',
 		'rif'                 => 'J-50420545-1',
 		'correo'              => '',
+		'correo_maquila'      => '',
 		'instagram'           => '',
 		'facebook'            => '',
 		'tiktok'              => '',
@@ -430,7 +431,10 @@ if ( 'paginas' === $jau_modo ) {
 			'titulo'   => 'Servicios',
 			'extracto' => 'Para los negocios que distribuyen nuestras bebidas y para las marcas que buscan quién fabrique las suyas con JAU Maquila.',
 			'orden'    => 1,
-			'patrones' => array( 'servicios-grid', 'cobertura', 'maquila' ),
+			// Cada servicio con su propia llamada a la acción: el bloque de distribuidores cierra esa
+			// parte y JAU Maquila termina con su formulario; por eso la página no lleva cierre al final.
+			'patrones' => array( 'servicios-grid', 'cobertura', 'cierre-distribuidor', 'maquila' ),
+			'plantilla' => 'page-sin-cierre',
 		),
 		array(
 			'slug'     => 'sobre-nosotros',
@@ -442,7 +446,7 @@ if ( 'paginas' === $jau_modo ) {
 		array(
 			'slug'     => 'contacto',
 			'titulo'   => 'Contacto',
-			'extracto' => 'Escríbenos por el formulario o directo al contacto que corresponda: distribuidores, cliente directo o atención al consumidor.',
+			'extracto' => 'Completa el formulario para ser distribuidor o escribe directo al contacto que corresponda.',
 			'orden'    => 4,
 			'patrones' => array( 'contacto' ),
 		),
@@ -459,6 +463,7 @@ if ( 'paginas' === $jau_modo ) {
 			'post_excerpt' => $p['extracto'],
 			'post_content' => $contenido,
 			'menu_order'   => $p['orden'],
+			'page_template' => isset( $p['plantilla'] ) ? $p['plantilla'] : '',
 		);
 		if ( $existente ) {
 			$datos['ID'] = $existente->ID;
