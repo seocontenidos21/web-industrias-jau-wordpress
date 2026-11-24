@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jau/cobertura",
+	"title": "Cobertura (mapa de estados)",
+	"category": "widgets",
+	"icon": "location-alt",
+	"description": "Mapa de Venezuela con los estados donde están los productos en azul, junto a la lista de esos estados (DWIJ-85). Los estados se marcan en la barra lateral.",
+	"textdomain": "jau-core",
+	"attributes": {
+		"estados": {
+			"type": "array",
+			"items": { "type": "string" },
+			"default": [ "Zulia", "Falcón", "Barinas", "Carabobo", "Lara", "Nueva Esparta", "Delta Amacuro", "Miranda", "La Guaira", "Sucre", "Bolívar", "Distrito Capital", "Portuguesa", "Anzoátegui", "Trujillo", "Monagas" ]
+		}
+	},
+	"supports": { "html": false, "align": [ "wide" ] },
+	"editorScript": "file:./editor.js",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

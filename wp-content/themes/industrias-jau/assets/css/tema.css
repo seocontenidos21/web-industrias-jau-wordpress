@@ -1250,3 +1250,36 @@ header.wp-block-template-part,
 @container (min-width: 496px) and (max-width: 751px) {
 	.jau-maquila__razones .is-layout-grid > :nth-child(3):last-child { grid-column: 1 / -1; }
 }
+
+/* Mapa de cobertura (DWIJ-85): estados con presencia en el azul de la marca */
+.jau-cobertura-mapa { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px 36px; align-items: center; }
+.jau-cobertura-mapa__mapa { position: relative; margin: 0; }
+.jau-cobertura-mapa svg { display: block; width: 100%; height: auto; overflow: visible; }
+.jau-estado { fill: #E6E9EF; stroke: #fff; stroke-width: 1.2; stroke-linejoin: round; transition: fill .2s; }
+.jau-estado.is-activo { fill: var(--jau-primary); cursor: pointer; }
+.jau-estado.is-activo.is-resaltado { fill: #4D66B0; }
+.jau-estado-punto { fill: var(--jau-primary); stroke: #fff; stroke-width: 2; cursor: pointer; transition: fill .2s; }
+.jau-estado-punto.is-resaltado { fill: #4D66B0; }
+.jau-cobertura-mapa__etiqueta {
+	position: absolute;
+	z-index: 2;
+	transform: translate(-50%, calc(-100% - 12px));
+	padding: 5px 10px;
+	border-radius: 6px;
+	background: var(--jau-ink);
+	color: #fff;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.2;
+	white-space: nowrap;
+	pointer-events: none;
+	box-shadow: 0 8px 18px -10px rgba(0, 0, 0, .5);
+}
+.jau-cobertura-mapa__etiqueta[hidden] { display: none; }
+.jau-cobertura-mapa .jau-estados { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.jau-cobertura-mapa .jau-estados li { cursor: default; transition: border-color .2s, background-color .2s; }
+.jau-cobertura-mapa .jau-estados li.is-resaltado { border-color: var(--jau-primary); background: var(--wp--preset--color--primary-tint); }
+@media (max-width: 781px) {
+	.jau-cobertura-mapa { grid-template-columns: 1fr; }
+	.jau-cobertura-mapa__mapa { max-width: 520px; width: 100%; margin-inline: auto; }
+}

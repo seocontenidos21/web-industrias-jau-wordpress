@@ -3,16 +3,13 @@
  * Title: Cobertura · estados con presencia
  * Slug: industrias-jau/cobertura
  * Categories: industrias-jau
- * Description: Los 16 estados donde están los productos (DWIJ-85), como etiquetas sin numeración. Ancla #cobertura.
- * Keywords: cobertura, estados, presencia
+ * Description: Mapa de Venezuela con los 16 estados donde están los productos en azul y su lista sin numeración (DWIJ-85). Ancla #cobertura. Los estados se marcan en el bloque «Cobertura».
+ * Keywords: cobertura, estados, presencia, mapa
  *
  * @package industrias-jau
  */
 
 defined( 'ABSPATH' ) || exit;
-
-// Orden del documento del cliente (24/11/2026), sin los números.
-$jau_estados = array( 'Zulia', 'Falcón', 'Barinas', 'Carabobo', 'Lara', 'Nueva Esparta', 'Delta Amacuro', 'Miranda', 'La Guaira', 'Sucre', 'Bolívar', 'Distrito Capital', 'Portuguesa', 'Anzoátegui', 'Trujillo', 'Monagas' );
 ?>
 <!-- wp:group {"tagName":"section","anchor":"cobertura","className":"jau-cobertura","style":{"spacing":{"padding":{"top":"24px","bottom":"8px"}}},"layout":{"type":"constrained"}} -->
 <section id="cobertura" class="wp-block-group jau-cobertura" style="padding-top:24px;padding-bottom:8px"><!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"28px","bottom":"28px","left":"28px","right":"28px"},"blockGap":"22px"}},"layout":{"type":"default"}} -->
@@ -24,10 +21,6 @@ $jau_estados = array( 'Zulia', 'Falcón', 'Barinas', 'Carabobo', 'Lara', 'Nueva 
 <!-- /wp:heading --></div>
 <!-- /wp:group -->
 
-<!-- wp:list {"className":"jau-estados"} -->
-<ul class="wp-block-list jau-estados"><?php foreach ( $jau_estados as $jau_i => $jau_e ) : ?><?php echo $jau_i ? "\n\n" : ''; ?><!-- wp:list-item -->
-<li><?php echo esc_html( $jau_e ); ?></li>
-<!-- /wp:list-item --><?php endforeach; ?></ul>
-<!-- /wp:list --></div>
+<!-- wp:jau/cobertura /--></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->
