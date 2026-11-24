@@ -1484,3 +1484,52 @@ header.wp-block-template-part,
 }
 .es-desplegable .jau-razon-fila.is-abierta p { max-height: 140px; margin-top: 2px !important; opacity: 1; }
 .es-desplegable { gap: 10px !important; }
+
+/* --------------------------------------------------------------------------
+   Revisión en móvil (24/11/2026)
+   -------------------------------------------------------------------------- */
+/* Nada se sale por los lados: la etiqueta de la escena entra deslizándose desde el borde y, en
+   teléfonos, quedaba unos píxeles fuera de la pantalla (scroll horizontal o franja blanca). */
+.jau-main { overflow-x: clip; }
+
+/* Escena de JAU Maquila en móvil: botellas completas dentro del círculo y las etiquetas arriba y
+   abajo, sin taparlas. */
+@media (max-width: 781px) {
+	.jau-escena--maquila { height: 340px; }
+	.jau-escena--maquila::before { width: min(84%, 290px); }
+	.jau-escena--maquila .jau-botellas { height: 276px; padding-bottom: 62px; }
+	.jau-escena__etiqueta--arriba { top: 0; }
+	.jau-escena__etiqueta--abajo { bottom: 0; }
+}
+
+/* Inicio › JAU Maquila en móvil: razones más pequeñas (no compiten con los botones) y botones del
+   mismo ancho, uno sobre otro. */
+@media (max-width: 781px) {
+	.jau-checklist { gap: 8px; margin-top: 16px !important; }
+	.jau-checklist li { color: var(--jau-ink-2); font-size: 15px; font-weight: 500; line-height: 1.4; }
+	.jau-checklist li::before { width: 20px; height: 20px; margin-top: 0; background-size: 12px; }
+	.jau-maquila-teaser .jau-maquila-teaser__botones { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 24px !important; }
+	.jau-maquila-teaser__botones > .wp-block-button { width: 100%; }
+	.jau-maquila-teaser__botones .wp-block-button__link { width: 100%; }
+}
+
+/* Servicios › JAU Maquila en móvil: primero «Soluciones para tu marca» (la escena) y después
+   «¿Por qué trabajar con nosotros?». La columna del texto se «disuelve» para poder reordenar. */
+@media (max-width: 781px) {
+	.jau-maquila > .wp-block-columns { flex-direction: column; flex-wrap: nowrap !important; align-items: stretch !important; gap: 0 !important; }
+	.jau-maquila > .wp-block-columns > .wp-block-column:first-child { display: contents; }
+	.jau-maquila > .wp-block-columns > .wp-block-column:last-child { order: 1; flex: 0 0 auto !important; align-self: stretch !important; margin-top: 36px !important; }
+	.jau-maquila .jau-razones-titulo,
+	.jau-maquila .jau-razones-lista { order: 2; }
+	.jau-maquila .jau-razones-titulo { margin-top: 40px !important; }
+	/* Títulos de las razones más livianos: azul de la marca y la letra del texto. */
+	.jau-maquila .jau-razon-fila h4 { color: var(--jau-primary); font-family: var(--wp--preset--font-family--text); font-size: 16px !important; font-weight: 700; line-height: 1.35; }
+}
+
+/* «Contáctanos» de JAU Maquila en teléfonos: texto más corto y más chico (se oculta la segunda parte
+   de la frase, marcada con .jau-solo-escritorio). */
+@media (max-width: 600px) {
+	.jau-maquila-contacto__cabecera::before { width: 120px; height: 120px; right: -48px; top: -52px; }
+	.jau-maquila-contacto__cabecera > p { max-width: none; font-size: 16px; line-height: 1.5; }
+	.jau-solo-escritorio { display: none; }
+}

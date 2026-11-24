@@ -72,7 +72,7 @@ $jau_razones = array(
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Ofrecemos soluciones de maquila adaptadas a las necesidades de cada proyecto, con el compromiso de establecer relaciones comerciales sólidas y duraderas.</p>
+<p>Ofrecemos soluciones de maquila adaptadas a las necesidades de cada proyecto<span class="jau-solo-escritorio">, con el compromiso de establecer relaciones comerciales sólidas y duraderas</span>.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
