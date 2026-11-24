@@ -1324,13 +1324,35 @@ header.wp-block-template-part,
 .jau-valores-chips { margin-top: 24px !important; margin-bottom: 12px !important; }
 .jau-valores-chips li { border-radius: var(--jau-r-sm); padding: 6px 12px; }
 
-/* Footer: dos botones de contorno (distribuidor y JAU Maquila) del mismo ancho y, debajo,
-   «Trabaja con nosotros». */
-.jau-footer__botones { flex-direction: column; align-items: stretch; gap: 10px !important; width: 100%; max-width: 250px; }
-.jau-footer__botones .wp-block-button { width: 100%; }
-.jau-footer__botones .wp-block-button__link { display: flex; width: 100%; justify-content: space-between; align-items: center; text-align: left; }
-.jau-footer__botones .wp-block-button:first-child .wp-block-button__link { background: rgba(255, 255, 255, .1); }
-.jau-footer__botones .wp-block-button__link:hover { background: rgba(255, 255, 255, .18) !important; }
+/* Footer: accesos «Quiero ser distribuidor» y «JAU Maquila» como enlaces con flecha en círculo
+   (más livianos que dos botones) y, debajo, «Trabaja con nosotros». */
+.jau-footer__botones { flex-direction: column; align-items: flex-start; gap: 6px !important; }
+.jau-footer__botones .wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	min-height: 0 !important;
+	padding: 6px 0 !important;
+	border: 0 !important;
+	background: none !important;
+	color: #fff !important;
+	font-size: 15px !important;
+	font-weight: 700;
+	box-shadow: none !important;
+	transform: none !important;
+}
+.jau-footer__botones .wp-block-button__link::after {
+	order: -1;
+	width: 32px !important;
+	height: 32px !important;
+	border-radius: 50%;
+	-webkit-mask: none;
+	mask: none;
+	background: rgba(255, 255, 255, .14) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14 M13 6l6 6-6 6'/%3E%3C/svg%3E") center / 15px no-repeat;
+	transition: background-color .2s, transform .2s;
+}
+.jau-footer__botones .wp-block-button__link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.jau-footer__botones .wp-block-button__link:hover::after { background-color: rgba(255, 255, 255, .28); transform: translateX(3px); }
 .jau-footer__talento { width: 100%; margin-top: 10px !important; padding-top: 18px; border-top: 1px solid var(--jau-footer-linea); grid-template-columns: 1fr !important; }
 .jau-footer .jau-contactos__desc { margin: -2px 0 2px; color: var(--jau-footer-tenue); font-size: 13px; }
 /* Footer en escritorio: «Secciones» más angosta para que Contacto y Planta respiren; ciudades en el
@@ -1351,4 +1373,42 @@ header.wp-block-template-part,
 @media (max-width: 1000px) {
 	.jau-maquila-contacto__cabecera::before { width: 150px; height: 150px; right: -60px; top: -60px; }
 	.jau-maquila-contacto__cabecera > * { max-width: calc(100% - 70px); }
+}
+
+/* Inicio › JAU Maquila: escena con botellas (gaseosa y saborizada) sobre el círculo azul, las dos
+   soluciones como etiquetas flotantes y las razones como lista con ✓. */
+.jau-escena--maquila { --jau-circulo: var(--jau-primary); max-width: 520px; height: clamp(380px, 36vw, 480px); }
+.jau-escena--maquila::after { content: ""; position: absolute; z-index: -1; top: 7%; right: 9%; width: 21%; aspect-ratio: 1 / 1; border-radius: 50%; background: var(--jau-accent); }
+.jau-escena--maquila .jau-botellas { height: 90%; padding-bottom: 6%; }
+.jau-escena__etiqueta {
+	position: absolute;
+	z-index: 3;
+	align-items: center !important;
+	padding: 10px 18px 10px 10px;
+	border-radius: 14px;
+	background: #fff;
+	box-shadow: 0 18px 36px -18px rgba(20, 24, 30, .5);
+}
+.jau-escena__etiqueta > * { margin: 0 !important; }
+.jau-escena__etiqueta p { color: var(--jau-ink); font-size: 15px; font-weight: 700; white-space: nowrap; }
+.jau-escena__etiqueta--arriba { top: 18%; left: 0; }
+.jau-escena__etiqueta--abajo { right: 0; bottom: 14%; }
+.jau-checklist { display: grid; gap: 10px; margin: 20px 0 0 !important; padding: 0; list-style: none; }
+.jau-checklist li { display: flex; align-items: flex-start; gap: 10px; color: var(--jau-ink); font-weight: 600; }
+.jau-checklist li::before {
+	content: "";
+	flex: none;
+	width: 22px;
+	height: 22px;
+	margin-top: 1px;
+	border-radius: 50%;
+	background: var(--jau-primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 14px no-repeat;
+}
+@media (max-width: 781px) {
+	.jau-escena--maquila { height: 330px; margin-top: 8px; }
+	.jau-escena--maquila::before { width: min(88%, 300px); }
+	.jau-escena__etiqueta { padding: 8px 14px 8px 8px; }
+	.jau-escena__etiqueta p { font-size: 14px; }
+	.jau-escena__etiqueta--arriba { top: 10%; }
+	.jau-escena__etiqueta--abajo { bottom: 8%; }
 }
