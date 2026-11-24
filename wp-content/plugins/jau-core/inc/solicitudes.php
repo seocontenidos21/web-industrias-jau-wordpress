@@ -1,7 +1,9 @@
 <?php
 /**
- * Solicitudes «Quiero ser distribuidor» (DWIJ-18): se guardan en WordPress (menú «Distribuidores»),
- * se exportan a CSV y se envían por correo cuando hay destinatario en «Datos de la empresa».
+ * Formularios propios del sitio. Cada solicitud se guarda en WordPress (un menú por formulario),
+ * se exporta a CSV y se envía por correo cuando hay destinatario en «Datos de la empresa».
+ * - «Quiero ser distribuidor» (DWIJ-18): menú «Distribuidores».
+ * - «Contáctanos» de JAU Maquila (DWIJ-84): menú «Maquila».
  *
  * @package jau-core
  */
@@ -9,35 +11,23 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Campos del formulario (mismos del prototipo: jau-data.js → JAU.formulario).
+ * Formularios disponibles y su configuración.
  *
- * @return array<string, array{label: string, tipo: string, req: bool, opciones?: string[]}>
+ * @return array<string, array>
  */
-function jau_form_campos() {
+function jau_formularios() {
 	return array(
-		'nombre'   => array( 'label' => 'Nombre y apellido', 'tipo' => 'text', 'req' => true ),
-		'empresa'  => array( 'label' => 'Empresa o negocio', 'tipo' => 'text', 'req' => true ),
-		'ciudad'   => array( 'label' => 'Ciudad o zona', 'tipo' => 'text', 'req' => true ),
-		'telefono' => array( 'label' => 'Teléfono o WhatsApp', 'tipo' => 'tel', 'req' => true ),
-		'correo'   => array( 'label' => 'Correo electrónico', 'tipo' => 'email', 'req' => true ),
-		'tipo'     => array(
-			'label'    => 'Tipo de negocio',
-			'tipo'     => 'select',
-			'req'      => true,
-			'opciones' => array( 'Bodega o abasto', 'Supermercado', 'Mayorista', 'Distribuidor', 'Otro' ),
-		),
-		'mensaje'  => array( 'label' => 'Mensaje (opcional)', 'tipo' => 'textarea', 'req' => false ),
-	);
-}
-
-/**
- * Registra el tipo de contenido privado «Solicitud».
- */
-function jau_registrar_solicitudes() {
-	register_post_type(
-		'jau_solicitud',
-		array(
-			'labels'          => array(
+		'distribuidor' => array(
+			'cpt'      => 'jau_solicitud',
+			'titulo'   => 'Quiero ser distribuidor',
+			'ancla'    => 'formulario',
+			'boton'    => 'Enviar solicitud',
+			'exito'    => array( 'Solicitud enviada', 'Recibimos tu solicitud. El equipo de ventas te contactará pronto.', 'Enviar otra solicitud' ),
+			'correo'   => 'correo',
+			'asunto'   => 'Nueva solicitud de distribuidor: %s',
+			'csv'      => 'solicitudes-distribuidores',
+			'columnas' => array( 'ciudad', 'telefono', 'correo', 'tipo' ),
+			'labels'   => array(
 				'name'          => 'Solicitudes de distribuidores',
 				'singular_name' => 'Solicitud',
 				'menu_name'     => 'Distribuidores',
@@ -46,31 +36,140 @@ function jau_registrar_solicitudes() {
 				'search_items'  => 'Buscar solicitudes',
 				'not_found'     => 'Todavía no hay solicitudes',
 			),
-			'public'          => false,
-			'show_ui'         => true,
-			'show_in_menu'    => true,
-			'menu_position'   => 21,
-			'menu_icon'       => 'dashicons-groups',
-			'supports'        => array( 'title' ),
-			'capability_type' => 'post',
-			'capabilities'    => array( 'create_posts' => 'do_not_allow' ),
-			'map_meta_cap'    => true,
-			'show_in_rest'    => false,
-		)
+			'icono'    => 'dashicons-groups',
+			'campos'   => array(
+				// Mismos campos del prototipo (jau-data.js → JAU.formulario).
+				'nombre'   => array( 'label' => 'Nombre y apellido', 'tipo' => 'text', 'req' => true ),
+				'empresa'  => array( 'label' => 'Empresa o negocio', 'tipo' => 'text', 'req' => true ),
+				'ciudad'   => array( 'label' => 'Ciudad o zona', 'tipo' => 'text', 'req' => true ),
+				'telefono' => array( 'label' => 'Teléfono o WhatsApp', 'tipo' => 'tel', 'req' => true ),
+				'correo'   => array( 'label' => 'Correo electrónico', 'tipo' => 'email', 'req' => true ),
+				'tipo'     => array(
+					'label'    => 'Tipo de negocio',
+					'tipo'     => 'select',
+					'req'      => true,
+					'opciones' => array( 'Bodega o abasto', 'Supermercado', 'Mayorista', 'Distribuidor', 'Otro' ),
+				),
+				'mensaje'  => array( 'label' => 'Mensaje (opcional)', 'tipo' => 'textarea', 'req' => false ),
+			),
+		),
+		'maquila'      => array(
+			'cpt'      => 'jau_maquila',
+			'titulo'   => 'Contáctanos',
+			'ancla'    => 'contacto-maquila',
+			'boton'    => 'Enviar mensaje',
+			'exito'    => array( 'Mensaje enviado', 'Recibimos tu mensaje. Te contactaremos pronto.', 'Enviar otro mensaje' ),
+			'correo'   => 'correo_maquila',
+			'asunto'   => 'Nueva solicitud de maquila: %s',
+			'csv'      => 'solicitudes-maquila',
+			'columnas' => array( 'pais', 'ciudad', 'telefono', 'correo' ),
+			'labels'   => array(
+				'name'          => 'Solicitudes de maquila',
+				'singular_name' => 'Solicitud de maquila',
+				'menu_name'     => 'Maquila',
+				'all_items'     => 'Solicitudes',
+				'edit_item'     => 'Solicitud de maquila',
+				'search_items'  => 'Buscar solicitudes',
+				'not_found'     => 'Todavía no hay solicitudes',
+			),
+			'icono'    => 'dashicons-store',
+			'campos'   => array(
+				// Campos del documento del cliente (24/11/2026).
+				'nombre'   => array( 'label' => 'Nombre y apellido', 'tipo' => 'text', 'req' => true ),
+				'correo'   => array( 'label' => 'Correo electrónico', 'tipo' => 'email', 'req' => true ),
+				'telefono' => array( 'label' => 'Teléfono', 'tipo' => 'tel', 'req' => true ),
+				'empresa'  => array( 'label' => 'Empresa', 'tipo' => 'text', 'req' => true ),
+				'pais'     => array( 'label' => 'País', 'tipo' => 'text', 'req' => true ),
+				'ciudad'   => array( 'label' => 'Ciudad', 'tipo' => 'text', 'req' => true ),
+				'mensaje'  => array( 'label' => 'Mensaje', 'tipo' => 'textarea', 'req' => true ),
+			),
+		),
 	);
+}
+
+/**
+ * Configuración de un formulario (si no existe, el de distribuidores).
+ *
+ * @param string $tipo Clave del formulario.
+ * @return array
+ */
+function jau_formulario( $tipo ) {
+	$formularios = jau_formularios();
+	return isset( $formularios[ $tipo ] ) ? $formularios[ $tipo ] : $formularios['distribuidor'];
+}
+
+/**
+ * Clave del formulario que guarda un tipo de contenido.
+ *
+ * @param string $cpt Tipo de contenido.
+ * @return string Clave o '' si no es de un formulario.
+ */
+function jau_formulario_de_cpt( $cpt ) {
+	foreach ( jau_formularios() as $clave => $f ) {
+		if ( $f['cpt'] === $cpt ) {
+			return $clave;
+		}
+	}
+	return '';
+}
+
+/**
+ * Campos de un formulario.
+ *
+ * @param string $tipo Clave del formulario.
+ * @return array<string, array{label: string, tipo: string, req: bool, opciones?: string[]}>
+ */
+function jau_form_campos( $tipo = 'distribuidor' ) {
+	return jau_formulario( $tipo )['campos'];
+}
+
+/**
+ * Etiqueta de un campo sin «(opcional)».
+ *
+ * @param array $campo Campo.
+ * @return string
+ */
+function jau_form_etiqueta( $campo ) {
+	return trim( str_replace( ' (opcional)', '', $campo['label'] ) );
+}
+
+/**
+ * Registra un tipo de contenido privado por formulario.
+ */
+function jau_registrar_solicitudes() {
+	$posicion = 21;
+	foreach ( jau_formularios() as $f ) {
+		register_post_type(
+			$f['cpt'],
+			array(
+				'labels'          => $f['labels'],
+				'public'          => false,
+				'show_ui'         => true,
+				'show_in_menu'    => true,
+				'menu_position'   => $posicion++,
+				'menu_icon'       => $f['icono'],
+				'supports'        => array( 'title' ),
+				'capability_type' => 'post',
+				'capabilities'    => array( 'create_posts' => 'do_not_allow' ),
+				'map_meta_cap'    => true,
+				'show_in_rest'    => false,
+			)
+		);
+	}
 }
 add_action( 'init', 'jau_registrar_solicitudes' );
 
 /**
  * Valida y limpia los valores enviados.
  *
- * @param array $entrada Datos crudos.
+ * @param array  $entrada Datos crudos.
+ * @param string $tipo    Clave del formulario.
  * @return array{0: array<string,string>, 1: array<string,string>} [ valores, errores ]
  */
-function jau_form_validar( $entrada ) {
+function jau_form_validar( $entrada, $tipo = 'distribuidor' ) {
 	$valores = array();
 	$errores = array();
-	foreach ( jau_form_campos() as $id => $c ) {
+	foreach ( jau_form_campos( $tipo ) as $id => $c ) {
 		$v = isset( $entrada[ $id ] ) ? wp_unslash( $entrada[ $id ] ) : '';
 		$v = 'textarea' === $c['tipo'] ? sanitize_textarea_field( $v ) : sanitize_text_field( $v );
 		$v = trim( mb_substr( $v, 0, 'textarea' === $c['tipo'] ? 2000 : 200 ) );
@@ -107,11 +206,15 @@ add_action( 'admin_post_jau_solicitud', 'jau_form_procesar' );
  */
 function jau_form_procesar() {
 	// phpcs:disable WordPress.Security.NonceVerification.Missing -- se verifica abajo.
+	$tipo = isset( $_POST['formulario'] ) ? sanitize_key( wp_unslash( $_POST['formulario'] ) ) : 'distribuidor';
+	$tipo = array_key_exists( $tipo, jau_formularios() ) ? $tipo : 'distribuidor';
+	$f    = jau_formulario( $tipo );
+
 	$volver = isset( $_POST['volver'] ) ? esc_url_raw( wp_unslash( $_POST['volver'] ) ) : '';
 	$volver = wp_validate_redirect( $volver, home_url( '/contacto/' ) );
 	$volver = remove_query_arg( array( 'enviado', 'jau_f', 'interes' ), $volver );
 
-	$exito = add_query_arg( 'enviado', '1', $volver ) . '#formulario';
+	$exito = add_query_arg( 'enviado', '1', $volver ) . '#' . $f['ancla'];
 
 	// Trampa para robots: el campo oculto debe llegar vacío; si no, se finge éxito.
 	if ( ! empty( $_POST['sitio_web'] ) ) {
@@ -126,7 +229,7 @@ function jau_form_procesar() {
 	}
 	$nonce_ok = isset( $_POST['jau_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['jau_nonce'] ) ), 'jau_solicitud' );
 
-	list( $valores, $errores ) = jau_form_validar( $_POST );
+	list( $valores, $errores ) = jau_form_validar( $_POST, $tipo );
 	// phpcs:enable
 
 	if ( ! $nonce_ok ) {
@@ -135,13 +238,13 @@ function jau_form_procesar() {
 	if ( $errores ) {
 		$token = wp_generate_password( 12, false );
 		set_transient( 'jau_f_' . $token, array( $valores, $errores ), 15 * MINUTE_IN_SECONDS );
-		wp_safe_redirect( add_query_arg( 'jau_f', $token, $volver ) . '#formulario' );
+		wp_safe_redirect( add_query_arg( 'jau_f', $token, $volver ) . '#' . $f['ancla'] );
 		exit;
 	}
 
 	$post_id = wp_insert_post(
 		array(
-			'post_type'   => 'jau_solicitud',
+			'post_type'   => $f['cpt'],
 			'post_status' => 'publish',
 			'post_title'  => sprintf( '%s · %s', $valores['empresa'], $valores['nombre'] ),
 		),
@@ -152,7 +255,7 @@ function jau_form_procesar() {
 			update_post_meta( $post_id, 'jau_' . $id, $v );
 		}
 		update_post_meta( $post_id, 'jau_origen', $volver );
-		jau_form_notificar( $valores );
+		jau_form_notificar( $valores, $tipo );
 	}
 
 	wp_safe_redirect( $exito );
@@ -162,94 +265,113 @@ function jau_form_procesar() {
 /**
  * Envía la solicitud por correo si hay destinatario configurado.
  *
- * @param array<string,string> $v Valores.
+ * @param array<string,string> $v    Valores.
+ * @param string               $tipo Clave del formulario.
  */
-function jau_form_notificar( $v ) {
-	$para = jau_dato( 'correo' );
+function jau_form_notificar( $v, $tipo = 'distribuidor' ) {
+	$f    = jau_formulario( $tipo );
+	$para = jau_dato( $f['correo'] );
 	if ( '' === $para || ! is_email( $para ) ) {
 		return;
 	}
 	$lineas = array();
-	foreach ( jau_form_campos() as $id => $c ) {
-		$lineas[] = rtrim( str_replace( ' (opcional)', '', $c['label'] ) ) . ': ' . ( '' !== $v[ $id ] ? $v[ $id ] : '—' );
+	foreach ( $f['campos'] as $id => $c ) {
+		$lineas[] = jau_form_etiqueta( $c ) . ': ' . ( '' !== $v[ $id ] ? $v[ $id ] : '—' );
 	}
 	$lineas[] = '';
-	$lineas[] = 'Ver todas las solicitudes: ' . admin_url( 'edit.php?post_type=jau_solicitud' );
+	$lineas[] = 'Ver todas las solicitudes: ' . admin_url( 'edit.php?post_type=' . $f['cpt'] );
 
 	wp_mail(
 		$para,
-		sprintf( 'Nueva solicitud de distribuidor: %s', $v['empresa'] ),
+		sprintf( $f['asunto'], $v['empresa'] ),
 		implode( "\n", $lineas ),
 		array( 'Reply-To: ' . $v['nombre'] . ' <' . $v['correo'] . '>' )
 	);
 }
 
 /* ---------------------------------------------------------------------------
- * Admin: columnas, detalle de la solicitud y exportación a CSV
+ * Admin: columnas, detalle de la solicitud y exportación a CSV (uno por formulario)
  * ------------------------------------------------------------------------- */
-add_filter(
-	'manage_jau_solicitud_posts_columns',
+add_action(
+	'admin_init',
 	function () {
-		return array(
-			'cb'           => '<input type="checkbox" />',
-			'title'        => 'Solicitud',
-			'jau_ciudad'   => 'Ciudad o zona',
-			'jau_telefono' => 'Teléfono',
-			'jau_correo'   => 'Correo',
-			'jau_tipo'     => 'Tipo de negocio',
-			'date'         => 'Fecha',
-		);
+		foreach ( jau_formularios() as $clave => $f ) {
+			add_filter(
+				'manage_' . $f['cpt'] . '_posts_columns',
+				function () use ( $f ) {
+					$cols = array(
+						'cb'    => '<input type="checkbox" />',
+						'title' => 'Solicitud',
+					);
+					foreach ( $f['columnas'] as $id ) {
+						$cols[ 'jau_' . $id ] = jau_form_etiqueta( $f['campos'][ $id ] );
+					}
+					$cols['date'] = 'Fecha';
+					return $cols;
+				}
+			);
+			add_action( 'manage_' . $f['cpt'] . '_posts_custom_column', 'jau_form_columna', 10, 2 );
+
+			add_filter(
+				'views_edit-' . $f['cpt'],
+				function ( $views ) use ( $clave ) {
+					$url             = wp_nonce_url( admin_url( 'admin-post.php?action=jau_exportar_solicitudes&formulario=' . $clave ), 'jau_exportar' );
+					$views['export'] = '<a href="' . esc_url( $url ) . '" class="button button-primary" style="margin-left:8px">Exportar CSV</a>';
+					return $views;
+				}
+			);
+		}
 	}
 );
-add_action(
-	'manage_jau_solicitud_posts_custom_column',
-	function ( $col, $post_id ) {
-		$v = (string) get_post_meta( $post_id, $col, true );
-		if ( 'jau_correo' === $col && '' !== $v ) {
-			printf( '<a href="mailto:%1$s">%2$s</a>', esc_attr( $v ), esc_html( $v ) );
-		} elseif ( 'jau_telefono' === $col && '' !== $v ) {
-			printf( '<a href="%1$s" target="_blank" rel="noopener">%2$s</a>', esc_url( 'https://wa.me/' . jau_digitos( $v ) ), esc_html( $v ) );
-		} else {
-			echo esc_html( $v );
-		}
-	},
-	10,
-	2
-);
+
+/**
+ * Celda de una columna de la lista de solicitudes.
+ *
+ * @param string $col     Columna.
+ * @param int    $post_id Solicitud.
+ */
+function jau_form_columna( $col, $post_id ) {
+	$v = (string) get_post_meta( $post_id, $col, true );
+	if ( 'jau_correo' === $col && '' !== $v ) {
+		printf( '<a href="mailto:%1$s">%2$s</a>', esc_attr( $v ), esc_html( $v ) );
+	} elseif ( 'jau_telefono' === $col && '' !== $v ) {
+		printf( '<a href="%1$s" target="_blank" rel="noopener">%2$s</a>', esc_url( 'https://wa.me/' . jau_digitos( $v ) ), esc_html( $v ) );
+	} else {
+		echo esc_html( $v );
+	}
+}
 
 add_action(
-	'add_meta_boxes_jau_solicitud',
-	function () {
-		remove_meta_box( 'submitdiv', 'jau_solicitud', 'side' );
+	'add_meta_boxes',
+	function ( $post_type, $post ) {
+		$clave = jau_formulario_de_cpt( $post_type );
+		if ( '' === $clave ) {
+			return;
+		}
+		$f = jau_formulario( $clave );
+		remove_meta_box( 'submitdiv', $post_type, 'side' );
 		add_meta_box(
 			'jau-solicitud-datos',
 			'Datos de la solicitud',
-			function ( $post ) {
+			function ( $post ) use ( $f ) {
 				echo '<table class="widefat striped"><tbody>';
-				foreach ( jau_form_campos() as $id => $c ) {
+				foreach ( $f['campos'] as $id => $c ) {
 					printf(
 						'<tr><th style="width:220px">%1$s</th><td>%2$s</td></tr>',
-						esc_html( str_replace( ' (opcional)', '', $c['label'] ) ),
+						esc_html( jau_form_etiqueta( $c ) ),
 						nl2br( esc_html( (string) get_post_meta( $post->ID, 'jau_' . $id, true ) ) )
 					);
 				}
 				printf( '<tr><th>Recibida</th><td>%s</td></tr>', esc_html( get_the_date( 'j \d\e F \d\e Y, g:i a', $post ) ) );
 				echo '</tbody></table>';
 			},
-			'jau_solicitud',
+			$post_type,
 			'normal',
 			'high'
 		);
-	}
-);
-
-add_filter(
-	'views_edit-jau_solicitud',
-	function ( $views ) {
-		$url             = wp_nonce_url( admin_url( 'admin-post.php?action=jau_exportar_solicitudes' ), 'jau_exportar' );
-		$views['export'] = '<a href="' . esc_url( $url ) . '" class="button button-primary" style="margin-left:8px">Exportar CSV</a>';
-		return $views;
-	}
+	},
+	10,
+	2
 );
 
 add_action(
@@ -260,10 +382,12 @@ add_action(
 		}
 		check_admin_referer( 'jau_exportar' );
 
-		$campos = jau_form_campos();
+		$tipo   = isset( $_GET['formulario'] ) ? sanitize_key( wp_unslash( $_GET['formulario'] ) ) : 'distribuidor';
+		$f      = jau_formulario( $tipo );
+		$campos = $f['campos'];
 		$ids    = get_posts(
 			array(
-				'post_type'      => 'jau_solicitud',
+				'post_type'      => $f['cpt'],
 				'post_status'    => 'any',
 				'posts_per_page' => -1,
 				'fields'         => 'ids',
@@ -274,13 +398,13 @@ add_action(
 
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename=solicitudes-distribuidores-' . wp_date( 'Y-m-d' ) . '.csv' );
+		header( 'Content-Disposition: attachment; filename=' . $f['csv'] . '-' . wp_date( 'Y-m-d' ) . '.csv' );
 
 		$salida = fopen( 'php://output', 'w' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 		fwrite( $salida, "\xEF\xBB\xBF" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- BOM para que Excel lea los acentos.
 		$cabecera = array( 'Fecha' );
 		foreach ( $campos as $c ) {
-			$cabecera[] = str_replace( ' (opcional)', '', $c['label'] );
+			$cabecera[] = jau_form_etiqueta( $c );
 		}
 		fputcsv( $salida, $cabecera, ';' );
 		foreach ( $ids as $id ) {

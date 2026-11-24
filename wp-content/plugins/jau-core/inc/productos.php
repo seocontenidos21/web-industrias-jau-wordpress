@@ -405,13 +405,16 @@ function jau_presentaciones_de( $post_id ) {
 		$lista[ $t->slug ] = array(
 			'nombre' => $t->name,
 			'img'    => ! empty( $fotos[ $t->slug ] ) ? (int) $fotos[ $t->slug ] : $thumb,
+			'propia' => ! empty( $fotos[ $t->slug ] ),
 		);
 	}
 	return $lista;
 }
 
 /**
- * Presentación elegida: la de la URL si existe en el producto; si no, la mayor.
+ * Presentación elegida: la de la URL si existe en el producto; si no, la mayor que tenga foto
+ * propia (así una presentación nueva sin foto, como Drink Cola 2 L, no abre la ficha con la
+ * botella de otra); si ninguna tiene foto propia, la mayor.
  *
  * @param int $post_id Producto.
  * @return string Slug.
@@ -422,7 +425,11 @@ function jau_presentacion_actual( $post_id ) {
 		return '';
 	}
 	$pedida = isset( $_GET['presentacion'] ) ? sanitize_title( wp_unslash( $_GET['presentacion'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	return isset( $pres[ $pedida ] ) ? $pedida : array_key_last( $pres );
+	if ( isset( $pres[ $pedida ] ) ) {
+		return $pedida;
+	}
+	$con_foto = array_keys( array_filter( $pres, fn( $p ) => $p['propia'] ) );
+	return $con_foto ? end( $con_foto ) : array_key_last( $pres );
 }
 
 /**
@@ -552,4 +559,31 @@ add_action(
 		}
 		update_post_meta( $post_id, 'jau_fotos_presentacion', $fotos );
 	}
+);
+
+/* Producto todavía sin foto (p. ej. un sabor nuevo): en su lugar va el logo de la marca sobre el
+   círculo de color, para que la tarjeta y la ficha no queden con el hueco de la imagen. */
+add_filter(
+	'render_block_core/post-featured-image',
+	function ( $html, $block, $instance ) {
+		if ( '' !== trim( (string) $html ) ) {
+			return $html;
+		}
+		$post_id = isset( $instance->context['postId'] ) ? (int) $instance->context['postId'] : get_the_ID();
+		if ( ! $post_id || 'producto' !== get_post_type( $post_id ) ) {
+			return $html;
+		}
+		$marcas = get_the_terms( $post_id, 'marca' );
+		$logo   = ( $marcas && ! is_wp_error( $marcas ) ) ? (int) get_term_meta( $marcas[0]->term_id, 'jau_logo_id', true ) : 0;
+		if ( ! $logo ) {
+			return $html;
+		}
+		$img = wp_get_attachment_image( $logo, 'medium', false, array( 'alt' => '' ) );
+		if ( ! empty( $block['attrs']['isLink'] ) ) {
+			$img = '<a href="' . esc_url( get_permalink( $post_id ) ) . '" tabindex="-1" aria-hidden="true">' . $img . '</a>';
+		}
+		return '<figure class="wp-block-post-featured-image jau-sin-foto">' . $img . '</figure>';
+	},
+	10,
+	3
 );

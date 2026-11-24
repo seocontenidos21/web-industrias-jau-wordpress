@@ -66,7 +66,7 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Bebida gaseosa de cola negra · 400 mL y 1.5 L</p>
+<p>Bebida gaseosa de cola negra · 400 mL, 1.5 L y 2 L</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons -->
@@ -96,7 +96,7 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>6 sabores: manzana, naranja, pera, durazno, mango y limón-coco · 250 mL, 500 mL y 1.5 L</p>
+<p>7 sabores: manzana, naranja, pera, durazno, mango, limón-coco y piña colada · 250 mL, 500 mL y 1.5 L</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons -->

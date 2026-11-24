@@ -130,20 +130,22 @@ function jau_adjunto( $clave ) {
 	return $ids ? (int) $ids[0] : 0;
 }
 
-/* Catálogo oficial (DWIJ-56): Drink Cola 400 mL y 1.5 L; Frugy 250 mL, 500 mL y 1.5 L en 6 sabores. */
+/* Catálogo oficial (DWIJ-56, DWIJ-86): Drink Cola 400 mL, 1.5 L y 2 L; Frugy 250 mL, 500 mL y 1.5 L en 7 sabores. */
 $jau_sabores = array(
-	'manzana'    => 'Manzana',
-	'naranja'    => 'Naranja',
-	'pera'       => 'Pera',
-	'durazno'    => 'Durazno',
-	'mango'      => 'Mango',
-	'limon-coco' => 'Limón-coco',
+	'manzana'     => 'Manzana',
+	'naranja'     => 'Naranja',
+	'pera'        => 'Pera',
+	'durazno'     => 'Durazno',
+	'mango'       => 'Mango',
+	'limon-coco'  => 'Limón-coco',
+	'pina-colada' => 'Piña colada',
 );
 $jau_ml = array(
 	'250-ml' => array( '250 mL', '250' ),
 	'400-ml' => array( '400 mL', '400' ),
 	'500-ml' => array( '500 mL', '500' ),
 	'1-5-l'  => array( '1.5 L', '1500' ),
+	'2-l'    => array( '2 L', '2000' ),
 );
 
 /**
@@ -163,6 +165,7 @@ function jau_alt_de( $clave, $sabores ) {
 		'logo-frugy-blanco-verde'    => 'Frugy',
 		'drink-cola-400-ml'          => 'Botella de Drink Cola 400 mL',
 		'drink-cola-1-5-l'           => 'Botella de Drink Cola 1.5 L',
+		'drink-cola-2-l'             => 'Botella de Drink Cola 2 L',
 		'jau-distribuidores'         => 'Distribuidora de Industrias JAU con bebidas Frugy en el punto de venta',
 		'jau-distribuidora-circulo'  => 'Distribuidora de Industrias JAU en el punto de venta',
 	);
@@ -229,18 +232,34 @@ if ( 'contenido' === $jau_modo ) {
 		'whatsapp_mensaje'    => 'Hola, quiero información para ser distribuidor de Industrias JAU.',
 		'clientes_directos'   => "Maracaibo: +58 414-6582455\nMaracay y Valencia: +58 424-3638023\nCaracas: +58 414-3314867",
 		'consumidor_telefono' => '+58 412-7555591',
-		'consumidor_correo'   => 'atencionalcliente@industriasjau.com',
+		// Los correos corporativos aún no están creados (DWIJ-82): no se muestra ninguno en la web.
+		'consumidor_correo'   => '',
 		'whatsapp_contactos'  => '1',
-		'direccion'           => 'Av. Circunvalación 3 y la Calle 148, Local #66-75, Zona Industrial, II Etapa, Sur América, Zulia. Zona postal 4004.',
+		'direccion'           => 'Av. Circunvalación 3 y la Calle 148, Local #66-75, Zona Industrial, II Etapa, Suramérica, Zulia. Zona postal 4004.',
 		'mapa'                => '',
 		'horario'             => 'De lunes a viernes, de 8:00 a.m. a 5:00 p.m.',
+		'rif'                 => 'J-50420545-1',
 		'correo'              => '',
+		'correo_maquila'      => '',
 		'instagram'           => '',
 		'facebook'            => '',
 		'tiktok'              => '',
 	);
 	$jau_empresa_actual = (array) get_option( 'jau_empresa', array() );
 	$jau_empresa_nuevas = array_diff_key( $jau_empresa_base, $jau_empresa_actual );
+
+	// Correcciones del cliente (DWIJ-82): solo se aplican si el dato sigue igual al de la carga
+	// anterior; si alguien ya lo editó en el admin, se respeta.
+	$jau_empresa_cambios = array(
+		'direccion'         => array( 'Av. Circunvalación 3 y la Calle 148, Local #66-75, Zona Industrial, II Etapa, Sur América, Zulia. Zona postal 4004.' => $jau_empresa_base['direccion'] ),
+		'consumidor_correo' => array( 'atencionalcliente@industriasjau.com' => '' ),
+	);
+	foreach ( $jau_empresa_cambios as $jau_clave => $jau_mapa ) {
+		$jau_valor = isset( $jau_empresa_actual[ $jau_clave ] ) ? (string) $jau_empresa_actual[ $jau_clave ] : null;
+		if ( null !== $jau_valor && array_key_exists( $jau_valor, $jau_mapa ) ) {
+			$jau_empresa_nuevas[ $jau_clave ] = $jau_mapa[ $jau_valor ];
+		}
+	}
 	if ( $jau_empresa_nuevas ) {
 		update_option( 'jau_empresa', array_merge( $jau_empresa_actual, $jau_empresa_nuevas ) );
 		jau_log( '✓ Datos de la empresa: ' . implode( ', ', array_keys( $jau_empresa_nuevas ) ) );
@@ -304,12 +323,13 @@ if ( 'contenido' === $jau_modo ) {
 		'titulo'    => 'Drink Cola',
 		'extracto'  => 'Bebida gaseosa de cola negra.',
 		'marca'     => $marca_dc,
-		'pres'      => array( '400-ml', '1-5-l' ),
+		'pres'      => array( '400-ml', '1-5-l', '2-l' ),
 		'sabor'     => 0,
 		'foto'      => 'drink-cola-1-5-l',
 		'contenido' => null,
-		// Cada presentación con su botella: la ficha cambia de foto al elegir 400 mL o 1.5 L.
-		'fotos_pres' => array( '400-ml' => 'drink-cola-400-ml', '1-5-l' => 'drink-cola-1-5-l' ),
+		// Cada presentación con su botella: la ficha cambia de foto al elegir la presentación.
+		// La de 2 L se asigna sola cuando exista insumos-optimizados/drink-cola-2-l.webp.
+		'fotos_pres' => array( '400-ml' => 'drink-cola-400-ml', '1-5-l' => 'drink-cola-1-5-l', '2-l' => 'drink-cola-2-l' ),
 		'destacado' => true,
 	);
 	foreach ( $jau_sabores as $slug => $nombre ) {
@@ -395,14 +415,14 @@ if ( 'paginas' === $jau_modo ) {
 			'titulo'   => 'Inicio',
 			'extracto' => '',
 			'orden'    => 0,
-			'patrones' => array( 'hero-slider', 'marcas', 'productos-destacados', 'servicios-teaser', 'nosotros-teaser' ),
+			'patrones' => array( 'hero-slider', 'marcas', 'productos-destacados', 'servicios-teaser', 'maquila-teaser', 'nosotros-teaser' ),
 		),
 		array(
 			'slug'     => 'servicios',
-			'titulo'   => 'Servicios para distribuidores',
-			'extracto' => 'Lo que ofrece Industrias JAU a los negocios que se suman como distribuidores de sus bebidas.',
+			'titulo'   => 'Servicios',
+			'extracto' => 'Para los negocios que distribuyen nuestras bebidas y para las marcas que buscan quién fabrique las suyas con JAU Maquila.',
 			'orden'    => 1,
-			'patrones' => array( 'servicios-grid' ),
+			'patrones' => array( 'servicios-grid', 'cobertura', 'maquila' ),
 		),
 		array(
 			'slug'     => 'sobre-nosotros',

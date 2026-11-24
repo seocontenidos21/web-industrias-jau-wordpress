@@ -22,12 +22,14 @@ function jau_empresa_campos() {
 		'whatsapp_mensaje'    => array( 'label' => 'Distribuidores: mensaje predefinido de WhatsApp', 'tipo' => 'textarea' ),
 		'clientes_directos'   => array( 'label' => 'Cliente directo: teléfonos por ciudad', 'tipo' => 'textarea', 'ayuda' => 'Una línea por ciudad, con el formato «Ciudad: teléfono». Ej.: Maracaibo: +58 414-6582455' ),
 		'consumidor_telefono' => array( 'label' => 'Atención al consumidor: teléfono', 'tipo' => 'text' ),
-		'consumidor_correo'   => array( 'label' => 'Atención al consumidor: correo', 'tipo' => 'email' ),
+		'consumidor_correo'   => array( 'label' => 'Atención al consumidor: correo', 'tipo' => 'email', 'ayuda' => 'Se muestra en la web. Dejarlo vacío mientras el correo corporativo no esté creado.' ),
 		'whatsapp_contactos'  => array( 'label' => 'WhatsApp en cliente directo y atención al consumidor', 'tipo' => 'checkbox', 'ayuda' => 'Marcar si esos números tienen WhatsApp: al tocar cada número se abre WhatsApp (si no, llama) y el botón flotante muestra un menú con los tres tipos de contacto.' ),
 		'direccion'        => array( 'label' => 'Dirección de la planta', 'tipo' => 'textarea' ),
 		'mapa'             => array( 'label' => 'Punto del mapa (opcional)', 'tipo' => 'text', 'ayuda' => 'Coordenadas «latitud,longitud» o texto de búsqueda. Si se deja vacío, el mapa usa la dirección.' ),
 		'horario'          => array( 'label' => 'Horario de atención', 'tipo' => 'text' ),
+		'rif'              => array( 'label' => 'RIF', 'tipo' => 'text', 'ayuda' => 'Se muestra en el footer, junto al copyright. Ej.: J-50420545-1' ),
 		'correo'           => array( 'label' => 'Correo que recibe las solicitudes de distribuidores', 'tipo' => 'email', 'ayuda' => 'No se muestra en la web. Si está vacío, las solicitudes se guardan en «Distribuidores» pero no se envía correo.' ),
+		'correo_maquila'   => array( 'label' => 'Correo que recibe las solicitudes de JAU Maquila', 'tipo' => 'email', 'ayuda' => 'No se muestra en la web. Si está vacío, las solicitudes se guardan en «Maquila» pero no se envía correo.' ),
 		'instagram'        => array( 'label' => 'Instagram (URL)', 'tipo' => 'url' ),
 		'facebook'         => array( 'label' => 'Facebook (URL)', 'tipo' => 'url' ),
 		'tiktok'           => array( 'label' => 'TikTok (URL)', 'tipo' => 'url' ),
@@ -165,7 +167,7 @@ function jau_dato( $clave ) {
 				)
 			);
 		case 'copyright':
-			return '© ' . wp_date( 'Y' ) . ' ' . get_bloginfo( 'name' );
+			return '© ' . wp_date( 'Y' ) . ' ' . get_bloginfo( 'name' ) . ( '' !== $d['rif'] ? ' · RIF ' . $d['rif'] : '' );
 		default:
 			return isset( $d[ $clave ] ) ? $d[ $clave ] : '';
 	}

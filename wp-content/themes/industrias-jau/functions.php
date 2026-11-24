@@ -150,35 +150,33 @@ add_filter(
  * Menú: marca como activo el enlace de la sección actual (incluye las fichas dentro de Productos)
  * y añade el botón de menú móvil a la navegación principal.
  */
-add_filter(
-	'render_block_core/navigation-link',
-	function ( $html, $block ) {
-		$url = isset( $block['attrs']['url'] ) ? $block['attrs']['url'] : '';
-		if ( '' === $url ) {
-			return $html;
-		}
-		$ruta_enlace = trailingslashit( (string) wp_parse_url( $url, PHP_URL_PATH ) );
-		$ruta_actual = trailingslashit( (string) wp_parse_url( home_url( add_query_arg( array() ) ), PHP_URL_PATH ) );
-		$base        = trailingslashit( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ) );
-
-		$activo = ( $ruta_enlace === $ruta_actual )
-			|| ( $ruta_enlace !== $base && str_starts_with( $ruta_actual, $ruta_enlace ) );
-
-		if ( $activo ) {
-			$p = new WP_HTML_Tag_Processor( $html );
-			if ( $p->next_tag( 'li' ) ) {
-				$p->add_class( 'current-menu-item' );
-			}
-			if ( $p->next_tag( 'a' ) ) {
-				$p->set_attribute( 'aria-current', 'page' );
-			}
-			$html = $p->get_updated_html();
-		}
+$jau_tema_menu_activo = function ( $html, $block ) {
+	$url = isset( $block['attrs']['url'] ) ? $block['attrs']['url'] : '';
+	// Las anclas dentro de una página (p. ej. Servicios › JAU Maquila) no marcan la sección: la marca el padre.
+	if ( '' === $url || ( 'core/navigation-link' === $block['blockName'] && str_contains( $url, '#' ) ) ) {
 		return $html;
-	},
-	10,
-	2
-);
+	}
+	$ruta_enlace = trailingslashit( (string) wp_parse_url( $url, PHP_URL_PATH ) );
+	$ruta_actual = trailingslashit( (string) wp_parse_url( home_url( add_query_arg( array() ) ), PHP_URL_PATH ) );
+	$base        = trailingslashit( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ) );
+
+	$activo = ( $ruta_enlace === $ruta_actual )
+		|| ( $ruta_enlace !== $base && str_starts_with( $ruta_actual, $ruta_enlace ) );
+
+	if ( $activo ) {
+		$p = new WP_HTML_Tag_Processor( $html );
+		if ( $p->next_tag( 'li' ) ) {
+			$p->add_class( 'current-menu-item' );
+		}
+		if ( $p->next_tag( 'a' ) ) {
+			$p->set_attribute( 'aria-current', 'page' );
+		}
+		$html = $p->get_updated_html();
+	}
+	return $html;
+};
+add_filter( 'render_block_core/navigation-link', $jau_tema_menu_activo, 10, 2 );
+add_filter( 'render_block_core/navigation-submenu', $jau_tema_menu_activo, 10, 2 );
 
 add_filter(
 	'render_block_core/navigation',

@@ -35,6 +35,12 @@ function jau_tema_iconos() {
 		'manos'    => array( 'nombre' => 'Apretón de manos / confianza', 'd' => 'M11 17l2 2a1 1 0 1 0 3-3 M14 14l2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4 M21 3l1 11h-2 M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3 M3 4h8' ),
 		'estrella' => array( 'nombre' => 'Estrella / excelencia', 'd' => 'M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z' ),
 		'sonrisa'  => array( 'nombre' => 'Sonrisa / alegría', 'd' => 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M8.5 14a4.5 4.5 0 0 0 7 0 M9 9.5h.01 M15 9.5h.01' ),
+		// JAU Maquila (DWIJ-83).
+		'burbujas'   => array( 'nombre' => 'Burbujas / gaseosa', 'd' => 'M4.5 16a3.5 3.5 0 1 0 7 0 3.5 3.5 0 1 0-7 0z M13 8.5a3 3 0 1 0 6 0 3 3 0 1 0-6 0z M14.5 17.5a2 2 0 1 0 4 0 2 2 0 1 0-4 0z M6 6.5a2 2 0 1 0 4 0 2 2 0 1 0-4 0z' ),
+		'citrico'    => array( 'nombre' => 'Fruta / saborizada', 'd' => 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12z M12 6v12 M6 12h12 M7.8 7.8l8.4 8.4 M16.2 7.8l-8.4 8.4' ),
+		'ajustes'    => array( 'nombre' => 'Ajustes / a la medida', 'd' => 'M4 6h9 M17 6h3 M15 4v4 M4 12h3 M11 12h9 M9 10v4 M4 18h11 M19 18h1 M17 16v4' ),
+		'botella'    => array( 'nombre' => 'Botella / empaque', 'd' => 'M10 2.5h4 M10.5 2.5v3L9 8.5V20a1.5 1.5 0 0 0 1.5 1.5h3A1.5 1.5 0 0 0 15 20V8.5l-1.5-3v-3 M9 12h6 M9 16h6' ),
+		'calendario' => array( 'nombre' => 'Calendario / coordinación', 'd' => 'M4 5h16v15H4z M4 9h16 M8 3v4 M16 3v4 M8 13h3 M13 13h3 M8 16.5h3' ),
 	);
 }
 

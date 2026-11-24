@@ -51,5 +51,17 @@ $jau_servicios = array(
 <!-- /wp:group -->
 
 <?php endforeach; ?></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"jau-cobertura-tira","style":{"spacing":{"padding":{"top":"14px","bottom":"14px","left":"18px","right":"18px"},"blockGap":"12px"}},"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group jau-cobertura-tira" style="padding-top:14px;padding-right:18px;padding-bottom:14px;padding-left:18px"><!-- wp:industrias-jau/icono {"icono":"pin","tamano":22} /-->
+
+<!-- wp:paragraph {"className":"jau-cobertura-tira__texto"} -->
+<p class="jau-cobertura-tira__texto"><strong>Presentes en 16 estados</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"jau-mas"} -->
+<p class="jau-mas"><a href="/servicios/#cobertura">Ver estados</a></p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group -->

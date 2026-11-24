@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"textColor":"muted","fontSize":"sm"} -->
-<p class="has-muted-color has-text-color has-sm-font-size">Bebida gaseosa de cola negra, en presentaciones de 400 mL y 1.5 L.</p>
+<p class="has-muted-color has-text-color has-sm-font-size">Bebida gaseosa de cola negra, en presentaciones de 400 mL, 1.5 L y 2 L.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"className":"jau-mas","fontSize":"sm"} -->
@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"textColor":"muted","fontSize":"sm"} -->
-<p class="has-muted-color has-text-color has-sm-font-size">6 sabores: manzana, naranja, pera, durazno, mango y limón-coco. En 250 mL, 500 mL y 1.5 L.</p>
+<p class="has-muted-color has-text-color has-sm-font-size">7 sabores: manzana, naranja, pera, durazno, mango, limón-coco y piña colada. En 250 mL, 500 mL y 1.5 L.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"className":"jau-mas","fontSize":"sm"} -->
