@@ -31,7 +31,29 @@ $jau_razones = array(
 
 <!-- wp:paragraph {"textColor":"ink-2","fontSize":"md"} -->
 <p class="has-ink-2-color has-text-color has-md-font-size">En Industrias JAU ponemos nuestra experiencia en la industria de bebidas al servicio de empresas y marcas que buscan un aliado para la fabricación de sus productos.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3,"className":"jau-razones-titulo","fontSize":"xl"} -->
+<h3 class="wp-block-heading jau-razones-titulo has-xl-font-size">¿Por qué trabajar con nosotros?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:group {"className":"jau-razones-lista","style":{"spacing":{"blockGap":"18px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group jau-razones-lista"><?php foreach ( $jau_razones as $jau_i => $jau_r ) : ?><?php echo $jau_i ? "
+
+" : ''; ?><!-- wp:group {"className":"jau-razon-fila","style":{"spacing":{"blockGap":"14px"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"top"}} -->
+<div class="wp-block-group jau-razon-fila"><!-- wp:industrias-jau/icono {"icono":"<?php echo esc_attr( $jau_r[0] ); ?>","tamano":44,"estilo":"caja"} /-->
+
+<!-- wp:group {"style":{"spacing":{"blockGap":"4px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":4,"fontSize":"md"} -->
+<h4 class="wp-block-heading has-md-font-size"><?php echo esc_html( $jau_r[1] ); ?></h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"textColor":"ink-2","fontSize":"sm"} -->
+<p class="has-ink-2-color has-text-color has-sm-font-size"><?php echo esc_html( $jau_r[2] ); ?></p>
 <!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --><?php endforeach; ?></div>
+<!-- /wp:group --></div>
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","width":"46%","style":{"spacing":{"blockGap":"6px"}}} -->
@@ -42,26 +64,6 @@ $jau_razones = array(
 <?php echo jau_tema_escena_maquila(); // phpcs:ignore ?></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
-
-<!-- wp:group {"className":"jau-maquila__razones","style":{"spacing":{"blockGap":"24px"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group jau-maquila__razones"><!-- wp:heading {"level":3,"fontSize":"subtitulo"} -->
-<h3 class="wp-block-heading has-subtitulo-font-size">¿Por qué trabajar con nosotros?</h3>
-<!-- /wp:heading -->
-
-<!-- wp:group {"style":{"spacing":{"blockGap":"32px"}},"layout":{"type":"grid","columnCount":3,"minimumColumnWidth":"240px"}} -->
-<div class="wp-block-group"><?php foreach ( $jau_razones as $jau_i => $jau_r ) : ?><?php echo $jau_i ? "\n\n" : ''; ?><!-- wp:group {"className":"jau-razon","style":{"spacing":{"blockGap":"10px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
-<div class="wp-block-group jau-razon"><!-- wp:industrias-jau/icono {"icono":"<?php echo esc_attr( $jau_r[0] ); ?>","tamano":34} /-->
-
-<!-- wp:heading {"level":4,"fontSize":"lg"} -->
-<h4 class="wp-block-heading has-lg-font-size"><?php echo esc_html( $jau_r[1] ); ?></h4>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"textColor":"ink-2","fontSize":"sm"} -->
-<p class="has-ink-2-color has-text-color has-sm-font-size"><?php echo esc_html( $jau_r[2] ); ?></p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --><?php endforeach; ?></div>
-<!-- /wp:group --></div>
-<!-- /wp:group -->
 
 <!-- wp:group {"className":"jau-maquila-contacto","style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group jau-maquila-contacto"><!-- wp:group {"className":"jau-cierre jau-maquila-contacto__cabecera","style":{"spacing":{"padding":{"top":"clamp(28px, 3.5vw, 40px)","bottom":"clamp(28px, 3.5vw, 40px)","left":"clamp(22px, 4vw, 48px)","right":"clamp(22px, 4vw, 48px)"},"blockGap":"10px"}},"backgroundColor":"primary","textColor":"white","layout":{"type":"default"}} -->

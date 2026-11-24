@@ -1191,14 +1191,18 @@ header.wp-block-template-part,
 /* JAU Maquila (DWIJ-83) en Servicios y su acceso en el inicio */
 .jau-maquila :is(h2, h3, h4),
 .jau-maquila-teaser :is(h2, h3, h4) { margin: 0; }
+/* «¿Por qué trabajar con nosotros?» en la columna del texto, junto a la escena: ícono en caja
+   blanca, título y texto corto, uno debajo del otro. */
+.jau-maquila .jau-razones-titulo { margin-top: 48px !important; }
+@media (max-width: 781px) { .jau-maquila .jau-razones-titulo { margin-top: 36px !important; } }
+.jau-razones-lista { margin-top: 12px !important; }
+.jau-razones-lista > * { margin: 0 !important; }
+.jau-razon-fila .jau-icono--caja { background: #fff; box-shadow: 0 8px 18px -12px rgba(20, 24, 30, .35); }
+.jau-razon-fila h4 { line-height: 1.3; }
+.jau-razon-fila p { margin: 0; }
 /* «Soluciones para tu marca»: título sobre la escena de botellas (la misma del inicio). */
 .jau-maquila__soluciones-titulo { position: relative; z-index: 4; margin-bottom: 14px !important; color: var(--jau-primary); }
 @media (min-width: 782px) { .jau-maquila .jau-escena--maquila::before { width: min(100%, 460px); } }
-/* «¿Por qué trabajar con nosotros?»: columnas abiertas con una línea azul arriba, sin cajas,
-   para que no repita las tarjetas de la parte de distribuidores. */
-.jau-razon { padding-top: 22px; border-top: 3px solid var(--jau-primary); }
-.jau-razon > * { margin: 0 !important; }
-.jau-razon h4 { line-height: 1.3; }
 .jau-maquila-teaser .jau-maquila-teaser__botones { margin-top: 28px !important; }
 
 /* «Contáctanos» de JAU Maquila: cabecera azul en la línea del bloque de distribuidores (círculo,
@@ -1278,10 +1282,6 @@ header.wp-block-template-part,
 @media (max-width: 600px) {
 	.jau-cobertura .is-style-tarjeta { padding: 20px !important; }
 	.jau-cobertura h2 { font-size: 20px !important; line-height: 1.25; }
-}
-/* «¿Por qué trabajar con nosotros?»: en dos columnas (tablet) la tercera tarjeta ocupa todo el ancho. */
-@container (min-width: 496px) and (max-width: 751px) {
-	.jau-maquila__razones .is-layout-grid > :nth-child(3):last-child { grid-column: 1 / -1; }
 }
 
 /* Mapa de cobertura (DWIJ-85): estados con presencia en el azul de la marca */
@@ -1412,3 +1412,75 @@ header.wp-block-template-part,
 	.jau-escena__etiqueta--arriba { top: 10%; }
 	.jau-escena__etiqueta--abajo { bottom: 8%; }
 }
+
+/* Animación de la escena de JAU Maquila (escenas.js agrega .jau-anima y, al verse, .is-visible):
+   el círculo crece, las botellas suben, el punto naranja aparece y las etiquetas entran por los
+   lados; después las botellas y las etiquetas flotan suavemente. */
+@media (prefers-reduced-motion: no-preference) {
+	/* Estado inicial (sin transición: se oculta al instante, sin parpadeo). */
+	.jau-escena--maquila.jau-anima::before { opacity: 0; transform: translate(-50%, -50%) scale(.8); }
+	.jau-escena--maquila.jau-anima::after { transform: scale(0); }
+	.jau-escena--maquila.jau-anima .jau-botellas > figure { opacity: 0; transform: translateY(48px); }
+	.jau-escena--maquila.jau-anima .jau-escena__etiqueta { opacity: 0; }
+	.jau-escena--maquila.jau-anima .jau-escena__etiqueta--arriba { transform: translateX(-28px); }
+	.jau-escena--maquila.jau-anima .jau-escena__etiqueta--abajo { transform: translateX(28px); }
+
+	/* Entrada al verse en pantalla. */
+	.jau-escena--maquila.jau-anima.is-visible::before { opacity: 1; transform: translate(-50%, -50%) scale(1); transition: opacity .6s ease, transform .9s cubic-bezier(.2, .8, .2, 1); }
+	.jau-escena--maquila.jau-anima.is-visible::after { transform: scale(1); transition: transform .7s cubic-bezier(.34, 1.56, .64, 1) .5s; animation: jauLatir 6s ease-in-out 1.4s infinite; }
+	.jau-escena--maquila.jau-anima.is-visible .jau-botellas > figure { opacity: 1; transform: none; transition: opacity .6s ease .2s, transform .9s cubic-bezier(.2, .8, .2, 1) .2s; }
+	.jau-escena--maquila.jau-anima.is-visible .jau-botellas > figure:nth-child(2) { transition-delay: .38s; }
+	.jau-escena--maquila.jau-anima.is-visible .jau-escena__etiqueta { opacity: 1; transform: none; transition: opacity .5s ease .7s, transform .7s cubic-bezier(.2, .8, .2, 1) .7s; }
+	.jau-escena--maquila.jau-anima.is-visible .jau-escena__etiqueta--abajo { transition-delay: .9s; }
+
+	/* Después: flotación suave. */
+	.jau-escena--maquila.is-visible .jau-botellas > figure img { animation: jauFlotar 5s ease-in-out 1.3s infinite; }
+	.jau-escena--maquila.is-visible .jau-botellas > figure:nth-child(2) img { animation-duration: 6s; animation-delay: 1.8s; }
+	.jau-escena--maquila.is-visible .jau-escena__etiqueta--arriba { animation: jauFlotarSuave 7s ease-in-out 1.8s infinite; }
+	.jau-escena--maquila.is-visible .jau-escena__etiqueta--abajo { animation: jauFlotarSuave 8s ease-in-out 2.4s infinite reverse; }
+}
+@keyframes jauFlotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes jauFlotarSuave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes jauLatir { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+/* Razones de JAU Maquila desplegables (desplegables.js agrega .es-desplegable): solo el título a la
+   altura del ícono y una flecha; la descripción se abre con hover o clic. */
+.jau-razon-fila h4 { display: flex; align-items: center; min-height: 44px; }
+.jau-razon__boton {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+	transition: color .2s;
+}
+.jau-razon__boton::after {
+	content: "";
+	flex: none;
+	width: 16px;
+	height: 16px;
+	background: currentColor;
+	opacity: .55;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+	transition: transform .25s ease, opacity .2s;
+}
+.jau-razon__boton:focus-visible { outline: 2px solid var(--jau-primary); outline-offset: 3px; border-radius: 4px; }
+.jau-razon-fila.is-abierta .jau-razon__boton,
+.jau-razon__boton:hover { color: var(--jau-primary); }
+.jau-razon-fila.is-abierta .jau-razon__boton::after { transform: rotate(180deg); opacity: 1; }
+.es-desplegable .jau-razon-fila > .wp-block-group { gap: 0 !important; }
+.es-desplegable .jau-razon-fila p {
+	max-height: 0;
+	opacity: 0;
+	overflow: hidden;
+	transition: max-height .35s ease, opacity .25s ease, margin-top .35s ease;
+}
+.es-desplegable .jau-razon-fila.is-abierta p { max-height: 140px; margin-top: 2px !important; opacity: 1; }
+.es-desplegable { gap: 10px !important; }

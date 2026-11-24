@@ -71,12 +71,37 @@ add_action(
 	}
 );
 
-/* El slider solo se carga en las páginas que lo tienen. */
+/* El slider y la animación de la escena de JAU Maquila solo se cargan en las páginas que los tienen. */
 add_filter(
 	'render_block_core/group',
 	function ( $html, $block ) {
-		if ( ! empty( $block['attrs']['className'] ) && str_contains( $block['attrs']['className'], 'jau-slider' ) ) {
+		$clase = ! empty( $block['attrs']['className'] ) ? $block['attrs']['className'] : '';
+		if ( str_contains( $clase, 'jau-slider' ) ) {
 			wp_enqueue_script( 'industrias-jau-slider' );
+		}
+		if ( str_contains( $clase, 'jau-razones-lista' ) ) {
+			wp_enqueue_script(
+				'industrias-jau-desplegables',
+				get_theme_file_uri( 'assets/js/desplegables.js' ),
+				array(),
+				jau_tema_version( 'assets/js/desplegables.js' ),
+				array(
+					'strategy'  => 'defer',
+					'in_footer' => true,
+				)
+			);
+		}
+		if ( str_contains( $clase, 'jau-escena--maquila' ) ) {
+			wp_enqueue_script(
+				'industrias-jau-escenas',
+				get_theme_file_uri( 'assets/js/escenas.js' ),
+				array(),
+				jau_tema_version( 'assets/js/escenas.js' ),
+				array(
+					'strategy'  => 'defer',
+					'in_footer' => true,
+				)
+			);
 		}
 		return $html;
 	},
