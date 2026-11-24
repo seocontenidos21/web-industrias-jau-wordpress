@@ -629,8 +629,8 @@ header.wp-block-template-part,
 .jau-footer .jau-footer__titulo { font-family: var(--wp--preset--font-family--text); font-size: 18px; font-weight: 700; letter-spacing: 0; margin: 0 0 6px; }
 .jau-footer p { font-size: 14px; line-height: 1.5; margin: 0; }
 .jau-footer .wp-block-navigation__container { gap: 8px; }
-/* Footer en móvil: Secciones en dos columnas (3 + 2), Distribuidores y Atención al consumidor lado a
-   lado, Cliente directo debajo como tablita, y líneas finas entre bloques para ordenar la lectura. */
+/* Footer en móvil: Secciones en dos columnas (3 + 2), Cliente directo como tablita y Atención al
+   consumidor debajo, y líneas finas entre bloques para ordenar la lectura. */
 @media (max-width: 781px) {
 	.jau-footer .jau-footer-nav .wp-block-navigation__container {
 		display: grid !important;
@@ -644,9 +644,7 @@ header.wp-block-template-part,
 	.jau-footer__columnas { row-gap: 0 !important; padding-top: 36px !important; }
 	.jau-footer__columnas > * + * { margin-top: 24px !important; padding-top: 24px; border-top: 1px solid var(--jau-footer-linea); }
 	.jau-footer .jau-footer__titulo { font-size: 17px; }
-	.jau-contactos--compacta { grid-template-columns: 1fr 1fr; gap: 18px 16px; }
-	.jau-contactos__grupo--consumidor { order: 1; }
-	.jau-contactos__grupo--cliente { grid-column: 1 / -1; order: 2; }
+	.jau-contactos--compacta { gap: 18px; }
 }
 .jau-footer .wp-block-navigation-item__content { font-size: 14px; padding: 2px 0; color: var(--jau-footer-texto); }
 .jau-footer .wp-block-navigation-item__content:hover { color: #fff; }
@@ -1533,3 +1531,10 @@ header.wp-block-template-part,
 	.jau-maquila-contacto__cabecera > p { max-width: none; font-size: 16px; line-height: 1.5; }
 	.jau-solo-escritorio { display: none; }
 }
+
+/* Correcciones del cliente (DWIJ-90) · Cliente directo: nota de cobertura antes de los números,
+   legible (tamaño normal y color de texto, no gris claro). */
+.jau-contactos__nota { margin: 0 0 12px; padding: 9px 12px; border-radius: var(--jau-r-sm); background: var(--wp--preset--color--primary-tint); color: var(--jau-ink); font-size: 15px; font-weight: 600; line-height: 1.4; }
+.jau-footer .jau-contactos__nota { margin: 0 0 6px; padding: 7px 10px; background: rgba(255, 255, 255, .1); color: #fff; font-size: 14px; }
+/* En la tablita del footer (ciudad | número) la nota ocupa el ancho de la tabla sin agrandarla. */
+.jau-contactos__grupo--cliente > .jau-contactos__nota { grid-column: 1 / -1; contain: inline-size; }

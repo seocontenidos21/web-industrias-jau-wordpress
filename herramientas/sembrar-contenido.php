@@ -231,6 +231,8 @@ if ( 'contenido' === $jau_modo ) {
 		'whatsapp'            => '584225051007',
 		'whatsapp_mensaje'    => 'Hola, quiero información para ser distribuidor de Industrias JAU.',
 		'clientes_directos'   => "Maracaibo: +58 414-6582455\nMaracay y Valencia: +58 424-3638023\nCaracas: +58 414-3314867",
+		// Corrección del cliente (DWIJ-91).
+		'clientes_directos_nota' => 'Solo atención en Maracaibo, Caracas, Maracay y Valencia.',
 		'consumidor_telefono' => '+58 412-7555591',
 		// Los correos corporativos aún no están creados (DWIJ-82): no se muestra ninguno en la web.
 		'consumidor_correo'   => '',

@@ -20,6 +20,10 @@ if ( 'talento' === $jau_tipo ) {
 	$jau_grupos = jau_contacto_talento();
 } elseif ( 'todos' !== $jau_tipo ) {
 	$jau_grupos = isset( $jau_grupos[ $jau_tipo ] ) ? array( $jau_tipo => $jau_grupos[ $jau_tipo ] ) : array();
+} else {
+	// DWIJ-92: «Distribuidores» ya no se lista con los contactos (footer): quien quiera ser
+	// distribuidor usa el formulario «Quiero ser distribuidor».
+	unset( $jau_grupos['distribuidores'] );
 }
 if ( ! $jau_grupos ) {
 	return;
@@ -56,6 +60,11 @@ $jau_correo_enlace = function ( $correo, $tamano ) use ( $jau_svg, $jau_correo )
 	);
 };
 
+// Nota del grupo antes de los números (DWIJ-91: ciudades con atención como cliente directo).
+$jau_nota = function ( $grupo ) {
+	return empty( $grupo['nota'] ) ? '' : '<p class="jau-contactos__nota">' . esc_html( $grupo['nota'] ) . '</p>';
+};
+
 $jau_wrap = get_block_wrapper_attributes( array( 'class' => 'jau-contactos jau-contactos--' . $jau_variante ) );
 echo '<div ' . $jau_wrap . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
@@ -66,6 +75,7 @@ foreach ( $jau_grupos as $jau_clave => $jau_g ) {
 		if ( ! empty( $jau_g['desc'] ) ) {
 			echo '<p class="jau-contactos__desc">' . esc_html( $jau_g['desc'] ) . '</p>';
 		}
+		echo $jau_nota( $jau_g ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		foreach ( $jau_g['filas'] as $jau_f ) {
 			echo '<p class="jau-contactos__linea">';
 			if ( '' !== $jau_f['lugar'] ) {
@@ -84,6 +94,7 @@ foreach ( $jau_grupos as $jau_clave => $jau_g ) {
 	if ( 'todos' === $jau_tipo ) {
 		echo '<p class="jau-contactos__titulo">' . esc_html( $jau_g['titulo'] ) . '</p>';
 	}
+	echo $jau_nota( $jau_g ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo '<ul class="jau-contactos__lista">';
 	foreach ( $jau_g['filas'] as $jau_f ) {
 		echo '<li class="jau-contactos__fila">';

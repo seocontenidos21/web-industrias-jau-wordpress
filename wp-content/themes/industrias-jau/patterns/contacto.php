@@ -3,7 +3,7 @@
  * Title: Contacto: formulario, tipos de contacto y mapa
  * Slug: industrias-jau/contacto
  * Categories: industrias-jau
- * Description: Formulario «Quiero ser distribuidor» primero (DWIJ-18) y, a su lado, los tres tipos de contacto separados (distribuidores, cliente directo por ciudad y atención al consumidor, DWIJ-81), «Trabaja con nosotros» y redes; el horario va bajo el formulario; debajo, el mapa de la planta (DWIJ-55, DWIJ-62 a DWIJ-64).
+ * Description: Formulario «Quiero ser distribuidor» primero (DWIJ-18) y, a su lado, los tipos de contacto separados (cliente directo por ciudad con su nota de cobertura y atención al consumidor, DWIJ-81, DWIJ-91; sin tarjeta de distribuidores, DWIJ-92), «Trabaja con nosotros» y redes; el horario va bajo el formulario; debajo, el mapa de la planta (DWIJ-55, DWIJ-62 a DWIJ-64).
  * Keywords: contacto, formulario, distribuidor, cliente, consumidor, mapa, whatsapp
  *
  * @package industrias-jau
@@ -11,9 +11,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-// Ícono, título, descripción opcional y tipo del bloque jau/contactos.
+// Ícono, título, descripción opcional y tipo del bloque jau/contactos. Sin tarjeta «Distribuidores»
+// (DWIJ-92): para ser distribuidor está el formulario de esta misma página.
 $jau_tipos = array(
-	array( 'camion', 'Distribuidores', '', 'distribuidores' ),
 	array( 'caja', 'Cliente directo', '', 'cliente' ),
 	array( 'chat', 'Atención al consumidor', 'Dudas, reclamos o comentarios sobre los productos.', 'consumidor' ),
 	array( 'maletin', 'Trabaja con nosotros', 'Captación de talento: envía tu currículo.', 'talento' ),

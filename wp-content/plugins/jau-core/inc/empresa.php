@@ -21,6 +21,7 @@ function jau_empresa_campos() {
 		'whatsapp'            => array( 'label' => 'Distribuidores: WhatsApp', 'tipo' => 'text', 'ayuda' => 'Solo dígitos con código de país, sin «+». Ej.: 584225051007. Es el del botón flotante, el slider y las fichas de producto.' ),
 		'whatsapp_mensaje'    => array( 'label' => 'Distribuidores: mensaje predefinido de WhatsApp', 'tipo' => 'textarea' ),
 		'clientes_directos'   => array( 'label' => 'Cliente directo: teléfonos por ciudad', 'tipo' => 'textarea', 'ayuda' => 'Una línea por ciudad, con el formato «Ciudad: teléfono». Ej.: Maracaibo: +58 414-6582455' ),
+		'clientes_directos_nota' => array( 'label' => 'Cliente directo: nota de cobertura', 'tipo' => 'text', 'ayuda' => 'Se muestra bajo «Cliente directo» en Contacto y en el footer, antes de los números. Dejarlo vacío para ocultarla.' ),
 		'consumidor_telefono' => array( 'label' => 'Atención al consumidor: teléfono', 'tipo' => 'text' ),
 		'consumidor_correo'   => array( 'label' => 'Atención al consumidor: correo', 'tipo' => 'email', 'ayuda' => 'Se muestra en la web. Dejarlo vacío mientras el correo corporativo no esté creado.' ),
 		'talento_correo'      => array( 'label' => 'Trabaja con nosotros: correo para currículos', 'tipo' => 'email', 'ayuda' => 'Se muestra en el footer y en Contacto («Trabaja con nosotros»). Dejarlo vacío para ocultarlo.' ),
@@ -116,6 +117,8 @@ function jau_contactos() {
 	if ( $filas ) {
 		$grupos['cliente'] = array(
 			'titulo' => 'Cliente directo',
+			// DWIJ-91: dejar claro, antes de los números, en qué ciudades hay atención.
+			'nota'   => $d['clientes_directos_nota'],
 			'filas'  => $filas,
 			'correo' => '',
 		);
