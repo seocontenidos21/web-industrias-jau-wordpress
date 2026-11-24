@@ -3,7 +3,7 @@
  * Title: Contacto: formulario, tipos de contacto y mapa
  * Slug: industrias-jau/contacto
  * Categories: industrias-jau
- * Description: Formulario «Quiero ser distribuidor» primero y, a su lado, los tres tipos de contacto separados (distribuidores, cliente directo por ciudad y atención al consumidor, DWIJ-81), horario y redes; debajo, el mapa de la planta (DWIJ-55, DWIJ-62 a DWIJ-64).
+ * Description: Formulario «Contáctanos» primero (campos del documento del cliente, DWIJ-84) y, a su lado, los tres tipos de contacto separados (distribuidores, cliente directo por ciudad y atención al consumidor, DWIJ-81), horario y redes; debajo, el mapa de la planta (DWIJ-55, DWIJ-62 a DWIJ-64).
  * Keywords: contacto, formulario, distribuidor, cliente, consumidor, mapa, whatsapp
  *
  * @package industrias-jau

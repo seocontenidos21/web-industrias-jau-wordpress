@@ -3,7 +3,7 @@
  * Title: JAU Maquila (página Servicios)
  * Slug: industrias-jau/maquila
  * Categories: industrias-jau
- * Description: Servicio de fabricación de bebidas para otras marcas (DWIJ-83) con su formulario «Contáctanos» (DWIJ-84). Ancla #maquila.
+ * Description: Servicio de fabricación de bebidas para otras marcas (DWIJ-83). «Contáctanos» lleva al formulario de Contacto (DWIJ-84). Ancla #maquila.
  * Keywords: maquila, fabricación, marcas
  *
  * @package industrias-jau
@@ -43,7 +43,7 @@ $jau_razones    = array(
 
 <!-- wp:buttons {"style":{"spacing":{"margin":{"top":"8px"}}}} -->
 <div class="wp-block-buttons" style="margin-top:8px"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#contacto-maquila">Contáctanos</a></div>
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/contacto/?interes=JAU%20Maquila#formulario">Contáctanos</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:column -->
@@ -83,7 +83,5 @@ $jau_razones    = array(
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --><?php endforeach; ?></div>
 <!-- /wp:group --></div>
-<!-- /wp:group -->
-
-<!-- wp:jau/formulario-distribuidor {"formulario":"maquila"} /--></section>
+<!-- /wp:group --></section>
 <!-- /wp:group -->

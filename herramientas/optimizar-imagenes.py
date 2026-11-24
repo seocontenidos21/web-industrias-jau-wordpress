@@ -53,6 +53,7 @@ NOMBRES = {
     "jugo-de-durazno-con-gotas": "frugy-durazno-botella",
     "botella-400ml": "drink-cola-400-ml",
     "botella-actualizada-2026": "drink-cola-1-5-l",
+    "botella-pina-colada": "frugy-pina-colada-botella",  # DWIJ-86
 }
 
 

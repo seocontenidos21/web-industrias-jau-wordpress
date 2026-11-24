@@ -2,14 +2,11 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "jau/formulario-distribuidor",
-	"title": "Formulario de solicitud",
+	"title": "Formulario «Contáctanos»",
 	"category": "widgets",
 	"icon": "forms",
-	"description": "Formulario «Quiero ser distribuidor» o «Contáctanos» de JAU Maquila. Guarda cada solicitud en «Distribuidores» o en «Maquila».",
+	"description": "Formulario de contacto de la página Contacto. Guarda cada mensaje en el menú «Contacto».",
 	"textdomain": "jau-core",
-	"attributes": {
-		"formulario": { "type": "string", "enum": [ "distribuidor", "maquila" ], "default": "distribuidor" }
-	},
 	"supports": { "html": false, "multiple": false, "align": [ "wide", "full" ], "spacing": { "margin": true } },
 	"editorScript": "file:./editor.js",
 	"viewScript": "file:./view.js",

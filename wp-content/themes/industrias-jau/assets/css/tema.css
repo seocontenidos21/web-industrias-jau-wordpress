@@ -1146,9 +1146,17 @@ header.wp-block-template-part,
 /* Anclas de sección (#distribuidores, #cobertura, #maquila) por debajo del header fijo. */
 .jau-main [id]:not(.jau-ancla) { scroll-margin-top: calc(var(--jau-header-h) + 16px); }
 
-/* Menú: «Servicios» con submenú (Para distribuidores · JAU Maquila). */
-.jau-nav .has-child > .wp-block-navigation-item__content { padding-right: 4px !important; }
-.jau-nav .wp-block-navigation__submenu-icon { height: 40px; margin: 0 8px 0 0; padding: 0 4px; color: var(--jau-ink-2); }
+/* Menú: «Servicios» con submenú (Para distribuidores · JAU Maquila). El fondo de hover y de sección
+   activa va en el ítem completo (texto + flecha) para que quede centrado. */
+.jau-nav .wp-block-navigation-item.has-child { border-radius: var(--jau-r-sm); transition: background-color .2s; }
+.jau-nav .has-child > .wp-block-navigation-item__content { padding-right: 2px !important; background: none !important; }
+.jau-nav .wp-block-navigation__submenu-icon { height: 40px; margin: 0; padding: 0 12px 0 4px; color: var(--jau-ink-2); cursor: pointer; }
+@media (min-width: 1180px) {
+	.jau-nav .wp-block-navigation-item.has-child:is(:hover, :focus-within) { background: var(--wp--preset--color--gray); }
+	.jau-nav .wp-block-navigation-item.has-child:hover > .wp-block-navigation-item__content { color: var(--jau-ink); }
+	.jau-nav .wp-block-navigation-item.has-child.current-menu-item { background: var(--wp--preset--color--primary-tint); }
+	.jau-nav .has-child.current-menu-item > .wp-block-navigation__submenu-icon { color: var(--jau-primary); }
+}
 .jau-nav .wp-block-navigation__submenu-container {
 	min-width: 230px !important;
 	padding: 6px !important;
@@ -1187,8 +1195,6 @@ header.wp-block-template-part,
 .jau-maquila-teaser :is(h2, h3) { margin: 0; }
 .jau-maquila__soluciones > .is-style-tarjeta { height: 100%; text-align: center; }
 .jau-maquila__razones h4 { line-height: 1.3; }
-.jau-maquila .jau-form-caja { width: 100%; max-width: 900px; margin-inline: auto !important; }
-.jau-form-caja--maquila .jau-form__campos { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
 
 /* Cobertura (DWIJ-85): los estados como etiquetas, sin numeración */
 .jau-cobertura__cabecera { align-items: center !important; }

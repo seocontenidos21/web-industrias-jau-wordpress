@@ -240,7 +240,6 @@ if ( 'contenido' === $jau_modo ) {
 		'horario'             => 'De lunes a viernes, de 8:00 a.m. a 5:00 p.m.',
 		'rif'                 => 'J-50420545-1',
 		'correo'              => '',
-		'correo_maquila'      => '',
 		'instagram'           => '',
 		'facebook'            => '',
 		'tiktok'              => '',
@@ -399,6 +398,15 @@ if ( 'contenido' === $jau_modo ) {
  * 3) Páginas con el contenido de los patrones (editables por el cliente)
  * ------------------------------------------------------------------------- */
 if ( 'paginas' === $jau_modo ) {
+	// Fuera del modo desarrollo WordPress guarda en caché la lista de patrones del tema (por versión):
+	// se vacía y se registran los nuevos para que las páginas no queden sin las secciones recién agregadas.
+	$jau_tema = wp_get_theme();
+	if ( method_exists( $jau_tema, 'delete_pattern_cache' ) ) {
+		$jau_tema->delete_pattern_cache();
+	}
+	if ( function_exists( '_register_theme_block_patterns' ) ) {
+		_register_theme_block_patterns();
+	}
 	$registro = WP_Block_Patterns_Registry::get_instance();
 	$patron   = function ( $slug ) use ( $registro ) {
 		$p = $registro->get_registered( 'industrias-jau/' . $slug );
@@ -434,7 +442,7 @@ if ( 'paginas' === $jau_modo ) {
 		array(
 			'slug'     => 'contacto',
 			'titulo'   => 'Contacto',
-			'extracto' => 'Completa el formulario para ser distribuidor o escribe directo al equipo de ventas.',
+			'extracto' => 'Escríbenos por el formulario o directo al contacto que corresponda: distribuidores, cliente directo o atención al consumidor.',
 			'orden'    => 4,
 			'patrones' => array( 'contacto' ),
 		),

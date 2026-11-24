@@ -460,5 +460,16 @@
     "kb_original": 198,
     "kb": 10,
     "supera_limite": false
+  },
+  {
+    "original": "Productos/FRUGY/BOTELLAS/botella piña colada.PNG",
+    "archivo": "frugy-pina-colada-botella.webp",
+    "tipo": "botella",
+    "marca": "frugy",
+    "ancho": 243,
+    "alto": 800,
+    "kb_original": 1385,
+    "kb": 39,
+    "supera_limite": false
   }
 ]
