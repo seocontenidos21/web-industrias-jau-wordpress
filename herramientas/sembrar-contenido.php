@@ -240,7 +240,9 @@ if ( 'contenido' === $jau_modo ) {
 		'talento_correo'      => 'talentojau@industriasjau.com',
 		'whatsapp_contactos'  => '1',
 		'direccion'           => 'Av. Circunvalación 3 y la Calle 148, Local #66-75, Zona Industrial, II Etapa, Suramérica, Zulia. Zona postal 4004.',
-		'mapa'                => '',
+		// Punto exacto de la planta (DWIJ-62): ficha «Industrias JAU» en Google Maps, código plus
+		// H8MH+QM Maracaibo. Con la dirección sola, Google ubicaba otro lugar de la calle 148.
+		'mapa'                => '10.584438,-71.670813',
 		'horario'             => 'De lunes a viernes, de 8:00 a.m. a 5:00 p.m.',
 		'rif'                 => 'J-50420545-1',
 		'correo'              => '',
@@ -257,6 +259,7 @@ if ( 'contenido' === $jau_modo ) {
 	$jau_empresa_cambios = array(
 		'direccion'         => array( 'Av. Circunvalación 3 y la Calle 148, Local #66-75, Zona Industrial, II Etapa, Sur América, Zulia. Zona postal 4004.' => $jau_empresa_base['direccion'] ),
 		'consumidor_correo' => array( 'atencionalcliente@industriasjau.com' => '' ),
+		'mapa'              => array( '' => $jau_empresa_base['mapa'] ),
 	);
 	foreach ( $jau_empresa_cambios as $jau_clave => $jau_mapa ) {
 		$jau_valor = isset( $jau_empresa_actual[ $jau_clave ] ) ? (string) $jau_empresa_actual[ $jau_clave ] : null;
