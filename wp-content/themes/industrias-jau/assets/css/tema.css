@@ -1201,14 +1201,31 @@ header.wp-block-template-part,
 .jau-razon h4 { line-height: 1.3; }
 .jau-maquila-teaser .jau-maquila-teaser__botones { margin-top: 28px !important; }
 
-/* Cierre de JAU Maquila: misma línea que «¿Quieres distribuir nuestras bebidas?» (tarjeta azul
-   redondeada con círculo), con el círculo abajo a la izquierda y el formulario «Contáctanos» al lado. */
-.jau-cierre--maquila::before { top: auto; right: auto; bottom: -80px; left: -80px; }
-.jau-cierre--maquila .wp-block-columns { margin: 0; }
-.jau-cierre--maquila .jau-cierre__texto > * { margin-block: 0; }
-.jau-cierre--maquila .jau-cierre__texto > * + * { margin-top: 14px; }
-.jau-cierre--maquila .jau-form-caja { color: var(--jau-ink); border: 0; box-shadow: 0 24px 48px -24px rgba(0, 0, 0, .45); }
-.jau-cierre--maquila .jau-form__titulo { display: none; }
+/* «Contáctanos» de JAU Maquila: cabecera azul en la línea del bloque de distribuidores (círculo,
+   bordes redondeados) unida al formulario sobre blanco, como en la referencia del cliente (celema.co):
+   campos cortos a la izquierda y mensaje + envío a la derecha. */
+.jau-maquila-contacto { overflow: hidden; border-radius: var(--jau-r-lg); background: #fff; box-shadow: 0 30px 60px -36px rgba(20, 24, 30, .45); }
+.jau-maquila-contacto > * { margin-block: 0 !important; }
+.jau-maquila-contacto__cabecera { border-radius: 0 !important; }
+.jau-maquila-contacto__cabecera > * { max-width: 680px; margin-block: 0 !important; }
+.jau-maquila-contacto__cabecera > * + * { margin-top: 10px !important; }
+.jau-maquila-contacto__cabecera p { font-size: 17px; opacity: .92; }
+.jau-maquila-contacto .jau-form-caja { padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+.jau-maquila-contacto .jau-form__titulo { display: none; }
+@media (min-width: 900px) {
+	.jau-maquila-contacto .jau-form {
+		display: grid;
+		grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+		grid-template-areas: "aviso aviso" "campos mensaje" "campos pie";
+		grid-template-rows: auto 1fr auto;
+		gap: 0 32px;
+	}
+	.jau-maquila-contacto .jau-form__aviso { grid-area: aviso; margin-bottom: 16px; }
+	.jau-maquila-contacto .jau-form__campos { grid-area: campos; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.jau-maquila-contacto .jau-form__campo--ancho { grid-area: mensaje; display: flex; flex-direction: column; }
+	.jau-maquila-contacto .jau-form__campo--ancho textarea { flex: 1 1 auto; min-height: 150px; }
+	.jau-maquila-contacto .jau-form__pie { grid-area: pie; margin-top: 16px; }
+}
 .jau-form-caja--maquila .jau-form__campos { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
 
 /* Cobertura (DWIJ-85): los estados como etiquetas, sin numeración */
@@ -1242,10 +1259,19 @@ header.wp-block-template-part,
 	.jau-estados { grid-template-columns: 1fr 1fr; gap: 8px; }
 	.jau-estados li { gap: 8px; padding: 8px 10px; font-size: 14px; }
 }
-/* Versión corta en el inicio: «Presentes en 16 estados» */
-.jau-cobertura-tira { background: var(--wp--preset--color--paper); border: 1px solid var(--jau-line); border-radius: var(--jau-r-md); }
-.jau-cobertura-tira > * { margin: 0 !important; }
-.jau-cobertura-tira__texto { color: var(--jau-ink); font-size: 16px; }
+/* Versión corta en el inicio: mini mapa + «Presentes en 16 estados» en una tarjeta destacada. */
+.jau-cobertura-destacada { border-radius: var(--jau-r-lg); }
+.jau-cobertura-destacada > * { margin: 0 !important; }
+.jau-cobertura-destacada .jau-cobertura-mapa--mini { flex: 0 0 auto; width: min(100%, 300px); }
+.jau-cobertura-destacada .jau-estado { fill: #fff; stroke: var(--wp--preset--color--primary-tint); }
+.jau-cobertura-destacada .jau-estado.is-activo { fill: var(--jau-primary); }
+.jau-cobertura-destacada .jau-estado.is-activo.is-resaltado { fill: #4D66B0; }
+.jau-cobertura-destacada__texto { flex: 1 1 280px; }
+.jau-cobertura-destacada__texto > * { margin: 0 !important; }
+.jau-cobertura-destacada__titulo { color: var(--jau-primary); font-size: clamp(26px, 3vw, 36px); line-height: 1.1; }
+.jau-cobertura-destacada__texto p { font-size: 17px; }
+.jau-cobertura-mapa.jau-cobertura-mapa--mini { display: block; }
+@media (max-width: 600px) { .jau-cobertura-destacada .jau-cobertura-mapa--mini { width: 100%; max-width: 280px; margin-inline: auto !important; } }
 
 /* Producto todavía sin foto: logo de la marca sobre el círculo de color */
 .jau-sin-foto img { padding: 28% !important; filter: none !important; }
@@ -1290,8 +1316,39 @@ header.wp-block-template-part,
 	.jau-cobertura-mapa { grid-template-columns: 1fr; }
 	.jau-cobertura-mapa__mapa { max-width: 520px; width: 100%; margin-inline: auto; }
 }
-@media (max-width: 600px) {
-	.jau-cierre--maquila { padding-left: 14px !important; padding-right: 14px !important; }
-	.jau-cierre--maquila .jau-cierre__texto { padding-inline: 6px; }
-	.jau-cierre--maquila .jau-form-caja { padding: 18px 16px; }
+
+/* --------------------------------------------------------------------------
+   Ajustes de revisión (24/11/2026)
+   -------------------------------------------------------------------------- */
+/* Inicio › Sobre nosotros: valores con el mismo radio que los botones y más aire con el texto. */
+.jau-valores-chips { margin-top: 24px !important; margin-bottom: 12px !important; }
+.jau-valores-chips li { border-radius: var(--jau-r-sm); padding: 6px 12px; }
+
+/* Footer: dos botones de contorno (distribuidor y JAU Maquila) del mismo ancho y, debajo,
+   «Trabaja con nosotros». */
+.jau-footer__botones { flex-direction: column; align-items: stretch; gap: 10px !important; width: 100%; max-width: 250px; }
+.jau-footer__botones .wp-block-button { width: 100%; }
+.jau-footer__botones .wp-block-button__link { display: flex; width: 100%; justify-content: space-between; align-items: center; text-align: left; }
+.jau-footer__botones .wp-block-button:first-child .wp-block-button__link { background: rgba(255, 255, 255, .1); }
+.jau-footer__botones .wp-block-button__link:hover { background: rgba(255, 255, 255, .18) !important; }
+.jau-footer__talento { width: 100%; margin-top: 10px !important; padding-top: 18px; border-top: 1px solid var(--jau-footer-linea); grid-template-columns: 1fr !important; }
+.jau-footer .jau-contactos__desc { margin: -2px 0 2px; color: var(--jau-footer-tenue); font-size: 13px; }
+/* Footer en escritorio: «Secciones» más angosta para que Contacto y Planta respiren; ciudades en el
+   mismo color que los números. */
+@media (min-width: 1100px) {
+	.jau-footer__columnas { grid-template-columns: minmax(0, 1.15fr) minmax(0, .7fr) minmax(0, 1.35fr) minmax(0, 1.1fr) !important; }
+}
+.jau-footer .jau-contactos__lugar { color: var(--jau-footer-texto); }
+
+/* Contacto: tarjeta «Trabaja con nosotros» (se oculta si no hay correo cargado). */
+.jau-tipo-contacto--talento:not(:has(.jau-contactos)) { display: none !important; }
+/* Números con cifras de igual ancho: los íconos de WhatsApp quedan alineados en Cliente directo. */
+.jau-contactos__num { font-variant-numeric: tabular-nums; }
+
+/* Formularios: horario de atención bajo los campos, con ícono y en negrita. */
+.jau-form__nota { display: inline-flex; align-items: flex-start; gap: 8px; margin: 0; color: var(--jau-ink); font-size: 15px; line-height: 1.4; }
+.jau-form__nota svg { flex: none; margin-top: 1px; color: var(--jau-primary); }
+@media (max-width: 1000px) {
+	.jau-maquila-contacto__cabecera::before { width: 150px; height: 150px; right: -60px; top: -60px; }
+	.jau-maquila-contacto__cabecera > * { max-width: calc(100% - 70px); }
 }

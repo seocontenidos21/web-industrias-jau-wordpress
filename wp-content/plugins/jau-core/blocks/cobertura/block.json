@@ -8,6 +8,7 @@
 	"description": "Mapa de Venezuela con los estados donde están los productos en azul, junto a la lista de esos estados (DWIJ-85). Los estados se marcan en la barra lateral.",
 	"textdomain": "jau-core",
 	"attributes": {
+		"variante": { "type": "string", "enum": [ "completa", "mini" ], "default": "completa" },
 		"estados": {
 			"type": "array",
 			"items": { "type": "string" },

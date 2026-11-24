@@ -8,7 +8,7 @@
 	"description": "Teléfonos, WhatsApp y correo de distribuidores, cliente directo por ciudad y atención al consumidor (Ajustes › Datos de la empresa).",
 	"textdomain": "jau-core",
 	"attributes": {
-		"tipo": { "type": "string", "default": "todos", "enum": [ "todos", "distribuidores", "cliente", "consumidor" ] },
+		"tipo": { "type": "string", "default": "todos", "enum": [ "todos", "distribuidores", "cliente", "consumidor", "talento" ] },
 		"variante": { "type": "string", "default": "tarjeta", "enum": [ "tarjeta", "compacta" ] }
 	},
 	"supports": { "html": false, "spacing": { "margin": true } },

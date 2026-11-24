@@ -3,7 +3,7 @@
  * Title: Contacto: formulario, tipos de contacto y mapa
  * Slug: industrias-jau/contacto
  * Categories: industrias-jau
- * Description: Formulario «Quiero ser distribuidor» primero (DWIJ-18) y, a su lado, los tres tipos de contacto separados (distribuidores, cliente directo por ciudad y atención al consumidor, DWIJ-81), horario y redes; debajo, el mapa de la planta (DWIJ-55, DWIJ-62 a DWIJ-64).
+ * Description: Formulario «Quiero ser distribuidor» primero (DWIJ-18) y, a su lado, los tres tipos de contacto separados (distribuidores, cliente directo por ciudad y atención al consumidor, DWIJ-81), «Trabaja con nosotros» y redes; el horario va bajo el formulario; debajo, el mapa de la planta (DWIJ-55, DWIJ-62 a DWIJ-64).
  * Keywords: contacto, formulario, distribuidor, cliente, consumidor, mapa, whatsapp
  *
  * @package industrias-jau
@@ -16,10 +16,10 @@ $jau_tipos = array(
 	array( 'camion', 'Distribuidores', '', 'distribuidores' ),
 	array( 'caja', 'Cliente directo', '', 'cliente' ),
 	array( 'chat', 'Atención al consumidor', 'Dudas, reclamos o comentarios sobre los productos.', 'consumidor' ),
+	array( 'maletin', 'Trabaja con nosotros', 'Captación de talento: envía tu currículo.', 'talento' ),
 );
 // Líneas con un dato de «Datos de la empresa» al final de la columna: se ocultan solas si el dato está vacío.
 $jau_datos = array(
-	array( 'reloj', 'Horario de atención', 'horario' ),
 	array( 'red', 'Redes sociales', 'redes' ),
 );
 
@@ -48,8 +48,8 @@ $jau_cabecera = function ( $icono, $titulo ) {
 <!-- /wp:column -->
 
 <!-- wp:column {"width":"38%","className":"jau-contacto__lateral","style":{"spacing":{"blockGap":"12px"}}} -->
-<div class="wp-block-column jau-contacto__lateral" style="flex-basis:38%"><?php foreach ( $jau_tipos as $jau_t ) : ?><!-- wp:group {"className":"is-style-tarjeta jau-tipo-contacto","style":{"spacing":{"padding":{"top":"18px","bottom":"18px","left":"18px","right":"18px"},"blockGap":"12px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
-<div class="wp-block-group is-style-tarjeta jau-tipo-contacto" style="padding-top:18px;padding-right:18px;padding-bottom:18px;padding-left:18px"><?php $jau_cabecera( $jau_t[0], $jau_t[1] ); ?>
+<div class="wp-block-column jau-contacto__lateral" style="flex-basis:38%"><?php foreach ( $jau_tipos as $jau_t ) : ?><!-- wp:group {"className":"is-style-tarjeta jau-tipo-contacto jau-tipo-contacto--<?php echo esc_attr( $jau_t[3] ); ?>","style":{"spacing":{"padding":{"top":"18px","bottom":"18px","left":"18px","right":"18px"},"blockGap":"12px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group is-style-tarjeta jau-tipo-contacto jau-tipo-contacto--<?php echo esc_attr( $jau_t[3] ); ?>" style="padding-top:18px;padding-right:18px;padding-bottom:18px;padding-left:18px"><?php $jau_cabecera( $jau_t[0], $jau_t[1] ); ?>
 
 <?php if ( '' !== $jau_t[2] ) : ?><!-- wp:paragraph {"className":"jau-tipo-contacto__desc"} -->
 <p class="jau-tipo-contacto__desc"><?php echo esc_html( $jau_t[2] ); ?></p>

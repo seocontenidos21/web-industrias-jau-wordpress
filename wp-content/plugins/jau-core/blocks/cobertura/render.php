@@ -39,7 +39,9 @@ uasort(
 $jau_con_punto = array( 'VEA', 'VEX' );
 $jau_titulo_id = wp_unique_id( 'jau-cobertura-' );
 
-$jau_wrap = get_block_wrapper_attributes( array( 'class' => 'jau-cobertura-mapa' ) );
+// «mini»: solo el mapa, para la franja del inicio.
+$jau_mini = isset( $attributes['variante'] ) && 'mini' === $attributes['variante'];
+$jau_wrap = get_block_wrapper_attributes( array( 'class' => 'jau-cobertura-mapa' . ( $jau_mini ? ' jau-cobertura-mapa--mini' : '' ) ) );
 ?>
 <div <?php echo $jau_wrap; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<figure class="jau-cobertura-mapa__mapa">
@@ -61,7 +63,7 @@ $jau_wrap = get_block_wrapper_attributes( array( 'class' => 'jau-cobertura-mapa'
 		</svg>
 		<span class="jau-cobertura-mapa__etiqueta" aria-hidden="true" hidden></span>
 	</figure>
-	<?php if ( $jau_elegidos ) : ?>
+	<?php if ( $jau_elegidos && ! $jau_mini ) : ?>
 		<ul class="jau-estados">
 			<?php foreach ( $jau_elegidos as $jau_nombre ) : ?>
 				<li data-estado="<?php echo esc_attr( $jau_nombre ); ?>"><?php echo esc_html( $jau_nombre ); ?></li>

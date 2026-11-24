@@ -3,7 +3,7 @@
  * Title: JAU Maquila (página Servicios)
  * Slug: industrias-jau/maquila
  * Categories: industrias-jau
- * Description: Servicio de fabricación de bebidas para otras marcas (DWIJ-83) y su formulario «Contáctanos» (DWIJ-84), distinto del de distribuidores. Cierra con una tarjeta azul en la misma línea del bloque de distribuidores. Ancla #maquila.
+ * Description: Servicio de fabricación de bebidas para otras marcas (DWIJ-83) y su formulario «Contáctanos» (DWIJ-84), distinto del de distribuidores. Cierra con «Contáctanos»: cabecera azul en la línea del bloque de distribuidores unida al formulario sobre blanco (referencia del cliente: celema.co). Ancla #maquila.
  * Keywords: maquila, fabricación, marcas
  *
  * @package industrias-jau
@@ -75,21 +75,19 @@ $jau_razones    = array(
 <!-- /wp:group --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"jau-cierre jau-cierre--maquila","style":{"spacing":{"padding":{"top":"clamp(28px, 4vw, 48px)","bottom":"clamp(28px, 4vw, 48px)","left":"clamp(24px, 4vw, 48px)","right":"clamp(24px, 4vw, 48px)"}}},"backgroundColor":"primary","textColor":"white","layout":{"type":"default"}} -->
-<div class="wp-block-group jau-cierre jau-cierre--maquila has-white-color has-primary-background-color has-text-color has-background" style="padding-top:clamp(28px, 4vw, 48px);padding-right:clamp(24px, 4vw, 48px);padding-bottom:clamp(28px, 4vw, 48px);padding-left:clamp(24px, 4vw, 48px)"><!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"top":"28px","left":"48px"}}}} -->
-<div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center","width":"36%","className":"jau-cierre__texto","style":{"spacing":{"blockGap":"14px"}}} -->
-<div class="wp-block-column is-vertically-aligned-center jau-cierre__texto" style="flex-basis:36%"><!-- wp:heading {"fontSize":"destacado"} -->
+<!-- wp:group {"className":"jau-maquila-contacto","style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
+<div class="wp-block-group jau-maquila-contacto"><!-- wp:group {"className":"jau-cierre jau-maquila-contacto__cabecera","style":{"spacing":{"padding":{"top":"clamp(28px, 3.5vw, 40px)","bottom":"clamp(28px, 3.5vw, 40px)","left":"clamp(22px, 4vw, 48px)","right":"clamp(22px, 4vw, 48px)"},"blockGap":"10px"}},"backgroundColor":"primary","textColor":"white","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-cierre jau-maquila-contacto__cabecera has-white-color has-primary-background-color has-text-color has-background" style="padding-top:clamp(28px, 3.5vw, 40px);padding-right:clamp(22px, 4vw, 48px);padding-bottom:clamp(28px, 3.5vw, 40px);padding-left:clamp(22px, 4vw, 48px)"><!-- wp:heading {"fontSize":"destacado"} -->
 <h2 class="wp-block-heading has-destacado-font-size">Contáctanos</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>Ofrecemos soluciones de maquila adaptadas a las necesidades de cada proyecto, con el compromiso de establecer relaciones comerciales sólidas y duraderas.</p>
 <!-- /wp:paragraph --></div>
-<!-- /wp:column -->
+<!-- /wp:group -->
 
-<!-- wp:column {"verticalAlignment":"center","width":"64%"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:64%"><!-- wp:jau/formulario-distribuidor {"formulario":"maquila"} /--></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></div>
+<!-- wp:group {"className":"jau-maquila-contacto__cuerpo","style":{"spacing":{"padding":{"top":"32px","bottom":"36px","left":"clamp(18px, 4vw, 48px)","right":"clamp(18px, 4vw, 48px)"}}},"backgroundColor":"white","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-maquila-contacto__cuerpo has-white-background-color has-background" style="padding-top:32px;padding-right:clamp(18px, 4vw, 48px);padding-bottom:36px;padding-left:clamp(18px, 4vw, 48px)"><!-- wp:jau/formulario-distribuidor {"formulario":"maquila"} /--></div>
+<!-- /wp:group --></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->

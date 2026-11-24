@@ -234,6 +234,8 @@ if ( 'contenido' === $jau_modo ) {
 		'consumidor_telefono' => '+58 412-7555591',
 		// Los correos corporativos aún no están creados (DWIJ-82): no se muestra ninguno en la web.
 		'consumidor_correo'   => '',
+		// «Trabaja con nosotros» (documento del cliente); Daiana pidió mostrarlo (24/11/2026).
+		'talento_correo'      => 'talentojau@industriasjau.com',
 		'whatsapp_contactos'  => '1',
 		'direccion'           => 'Av. Circunvalación 3 y la Calle 148, Local #66-75, Zona Industrial, II Etapa, Suramérica, Zulia. Zona postal 4004.',
 		'mapa'                => '',

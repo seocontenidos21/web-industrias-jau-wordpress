@@ -23,6 +23,7 @@ function jau_empresa_campos() {
 		'clientes_directos'   => array( 'label' => 'Cliente directo: teléfonos por ciudad', 'tipo' => 'textarea', 'ayuda' => 'Una línea por ciudad, con el formato «Ciudad: teléfono». Ej.: Maracaibo: +58 414-6582455' ),
 		'consumidor_telefono' => array( 'label' => 'Atención al consumidor: teléfono', 'tipo' => 'text' ),
 		'consumidor_correo'   => array( 'label' => 'Atención al consumidor: correo', 'tipo' => 'email', 'ayuda' => 'Se muestra en la web. Dejarlo vacío mientras el correo corporativo no esté creado.' ),
+		'talento_correo'      => array( 'label' => 'Trabaja con nosotros: correo para currículos', 'tipo' => 'email', 'ayuda' => 'Se muestra en el footer y en Contacto («Trabaja con nosotros»). Dejarlo vacío para ocultarlo.' ),
 		'whatsapp_contactos'  => array( 'label' => 'WhatsApp en cliente directo y atención al consumidor', 'tipo' => 'checkbox', 'ayuda' => 'Marcar si esos números tienen WhatsApp: al tocar cada número se abre WhatsApp (si no, llama) y el botón flotante muestra un menú con los tres tipos de contacto.' ),
 		'direccion'        => array( 'label' => 'Dirección de la planta', 'tipo' => 'textarea' ),
 		'mapa'             => array( 'label' => 'Punto del mapa (opcional)', 'tipo' => 'text', 'ayuda' => 'Coordenadas «latitud,longitud» o texto de búsqueda. Si se deja vacío, el mapa usa la dirección.' ),
@@ -129,6 +130,27 @@ function jau_contactos() {
 	}
 
 	return $grupos;
+}
+
+/**
+ * «Trabaja con nosotros» (captación de talento): aparte de los tres tipos de contacto, porque no va
+ * en la columna Contacto del footer ni en el menú de WhatsApp. Vacío si no hay correo.
+ *
+ * @return array<string, array> Mismo formato que jau_contactos().
+ */
+function jau_contacto_talento() {
+	$correo = jau_empresa()['talento_correo'];
+	if ( '' === $correo ) {
+		return array();
+	}
+	return array(
+		'talento' => array(
+			'titulo' => 'Trabaja con nosotros',
+			'desc'   => 'Captación de talento: envía tu currículo.',
+			'filas'  => array(),
+			'correo' => $correo,
+		),
+	);
 }
 
 /**

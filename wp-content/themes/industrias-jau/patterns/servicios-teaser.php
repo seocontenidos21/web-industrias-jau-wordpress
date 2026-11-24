@@ -53,15 +53,23 @@ $jau_servicios = array(
 <?php endforeach; ?></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"jau-cobertura-tira","style":{"spacing":{"padding":{"top":"14px","bottom":"14px","left":"18px","right":"18px"},"blockGap":"12px"}},"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group jau-cobertura-tira" style="padding-top:14px;padding-right:18px;padding-bottom:14px;padding-left:18px"><!-- wp:industrias-jau/icono {"icono":"pin","tamano":22} /-->
+<!-- wp:group {"className":"jau-cobertura-destacada","style":{"spacing":{"padding":{"top":"28px","bottom":"28px","left":"clamp(20px, 4vw, 40px)","right":"clamp(20px, 4vw, 40px)"},"blockGap":"32px"}},"backgroundColor":"primary-tint","layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
+<div class="wp-block-group jau-cobertura-destacada has-primary-tint-background-color has-background" style="padding-top:28px;padding-right:clamp(20px, 4vw, 40px);padding-bottom:28px;padding-left:clamp(20px, 4vw, 40px)"><!-- wp:jau/cobertura {"variante":"mini"} /-->
 
-<!-- wp:paragraph {"className":"jau-cobertura-tira__texto"} -->
-<p class="jau-cobertura-tira__texto"><strong>Presentes en 16 estados</strong></p>
+<!-- wp:group {"className":"jau-cobertura-destacada__texto","style":{"spacing":{"blockGap":"12px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group jau-cobertura-destacada__texto"><!-- wp:heading {"level":3,"className":"jau-cobertura-destacada__titulo"} -->
+<h3 class="wp-block-heading jau-cobertura-destacada__titulo">Presentes en 16 estados</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"textColor":"ink-2"} -->
+<p class="has-ink-2-color has-text-color">Estados en donde se encuentran nuestros productos.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"className":"jau-mas"} -->
-<p class="jau-mas"><a href="/servicios/#cobertura">Ver estados</a></p>
-<!-- /wp:paragraph --></div>
+<!-- wp:buttons {"style":{"spacing":{"margin":{"top":"8px"}}}} -->
+<div class="wp-block-buttons" style="margin-top:8px"><!-- wp:button {"className":"jau-btn-flecha"} -->
+<div class="wp-block-button jau-btn-flecha"><a class="wp-block-button__link wp-element-button" href="/servicios/#cobertura">Ver estados</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group -->

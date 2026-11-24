@@ -22,7 +22,8 @@
 								{ label: 'Todos', value: 'todos' },
 								{ label: 'Distribuidores', value: 'distribuidores' },
 								{ label: 'Cliente directo', value: 'cliente' },
-								{ label: 'Atención al consumidor', value: 'consumidor' }
+								{ label: 'Atención al consumidor', value: 'consumidor' },
+								{ label: 'Trabaja con nosotros', value: 'talento' }
 							],
 							onChange: function ( v ) { props.setAttributes( { tipo: v } ); }
 						} ),

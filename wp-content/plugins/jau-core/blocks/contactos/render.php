@@ -16,7 +16,9 @@ $jau_grupos   = jau_contactos();
 $jau_tipo     = isset( $attributes['tipo'] ) ? (string) $attributes['tipo'] : 'todos';
 $jau_variante = ( isset( $attributes['variante'] ) && 'compacta' === $attributes['variante'] ) ? 'compacta' : 'tarjeta';
 
-if ( 'todos' !== $jau_tipo ) {
+if ( 'talento' === $jau_tipo ) {
+	$jau_grupos = jau_contacto_talento();
+} elseif ( 'todos' !== $jau_tipo ) {
 	$jau_grupos = isset( $jau_grupos[ $jau_tipo ] ) ? array( $jau_tipo => $jau_grupos[ $jau_tipo ] ) : array();
 }
 if ( ! $jau_grupos ) {
@@ -61,6 +63,9 @@ foreach ( $jau_grupos as $jau_clave => $jau_g ) {
 	if ( 'compacta' === $jau_variante ) {
 		echo '<div class="jau-contactos__grupo jau-contactos__grupo--' . esc_attr( $jau_clave ) . '">';
 		echo '<p class="jau-contactos__titulo">' . esc_html( $jau_g['titulo'] ) . '</p>';
+		if ( ! empty( $jau_g['desc'] ) ) {
+			echo '<p class="jau-contactos__desc">' . esc_html( $jau_g['desc'] ) . '</p>';
+		}
 		foreach ( $jau_g['filas'] as $jau_f ) {
 			echo '<p class="jau-contactos__linea">';
 			if ( '' !== $jau_f['lugar'] ) {

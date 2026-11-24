@@ -107,7 +107,9 @@ $jau_check  = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" strok
 			<?php wp_nonce_field( 'jau_solicitud', 'jau_nonce', false ); ?>
 
 			<div class="jau-form__pie">
-				<span class="jau-form__nota"><?php echo wp_kses_post( 'Atención: ' . jau_dato_html( 'horario' ) ); ?></span>
+				<?php if ( '' !== jau_dato( 'horario' ) ) : ?>
+					<p class="jau-form__nota"><?php echo function_exists( 'jau_tema_svg' ) ? jau_tema_svg( 'reloj', 18, 1.8 ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php echo wp_kses_post( jau_dato_html( 'horario', 'Horario de atención' ) ); ?></span></p>
+				<?php endif; ?>
 				<button type="submit" class="jau-form__enviar"><?php echo esc_html( $jau_cfg['boton'] ); ?></button>
 			</div>
 		</form>

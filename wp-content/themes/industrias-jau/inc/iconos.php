@@ -40,6 +40,7 @@ function jau_tema_iconos() {
 		'citrico'    => array( 'nombre' => 'Fruta / saborizada', 'd' => 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12z M12 6v12 M6 12h12 M7.8 7.8l8.4 8.4 M16.2 7.8l-8.4 8.4' ),
 		'ajustes'    => array( 'nombre' => 'Ajustes / a la medida', 'd' => 'M4 6h9 M17 6h3 M15 4v4 M4 12h3 M11 12h9 M9 10v4 M4 18h11 M19 18h1 M17 16v4' ),
 		'botella'    => array( 'nombre' => 'Botella / empaque', 'd' => 'M10 2.5h4 M10.5 2.5v3L9 8.5V20a1.5 1.5 0 0 0 1.5 1.5h3A1.5 1.5 0 0 0 15 20V8.5l-1.5-3v-3 M9 12h6 M9 16h6' ),
+		'maletin'    => array( 'nombre' => 'Maletín / trabaja con nosotros', 'd' => 'M3 8h18v12H3z M8 8V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V8 M3 13h18 M10.5 13v2h3v-2' ),
 		'calendario' => array( 'nombre' => 'Calendario / coordinación', 'd' => 'M4 5h16v15H4z M4 9h16 M8 3v4 M16 3v4 M8 13h3 M13 13h3 M8 16.5h3' ),
 	);
 }
