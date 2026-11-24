@@ -1535,6 +1535,7 @@ header.wp-block-template-part,
 /* Correcciones del cliente (DWIJ-90) · Cliente directo: nota de cobertura antes de los números,
    legible (tamaño normal y color de texto, no gris claro). */
 .jau-contactos__nota { margin: 0 0 12px; padding: 9px 12px; border-radius: var(--jau-r-sm); background: var(--wp--preset--color--primary-tint); color: var(--jau-ink); font-size: 15px; font-weight: 600; line-height: 1.4; }
-.jau-footer .jau-contactos__nota { margin: 0 0 6px; padding: 7px 10px; background: rgba(255, 255, 255, .1); color: #fff; font-size: 14px; }
+/* En el footer, más delicada: como subtítulo claro, igual que «Captación de talento» (sin recuadro). */
+.jau-footer .jau-contactos__nota { margin: -2px 0 2px; padding: 0; border-radius: 0; background: none; color: var(--jau-footer-tenue); font-size: 13px; font-weight: 400; }
 /* En la tablita del footer (ciudad | número) la nota ocupa el ancho de la tabla sin agrandarla. */
 .jau-contactos__grupo--cliente > .jau-contactos__nota { grid-column: 1 / -1; contain: inline-size; }
