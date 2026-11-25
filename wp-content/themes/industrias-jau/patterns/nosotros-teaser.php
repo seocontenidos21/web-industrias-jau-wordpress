@@ -3,7 +3,7 @@
  * Title: Sobre nosotros (resumen oscuro)
  * Slug: industrias-jau/nosotros-teaser
  * Categories: industrias-jau
- * Description: Bloque oscuro con foto, presentación de la empresa y enlace a Sobre nosotros.
+ * Description: Bloque oscuro con foto, el primer párrafo de «Nuestra historia» (DWIJ-93) y enlace a Sobre nosotros.
  * Keywords: nosotros, empresa
  *
  * @package industrias-jau
@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"style":{"color":{"text":"#c9ccd3"}},"fontSize":"md"} -->
-<p class="has-text-color has-md-font-size" style="color:#c9ccd3">Somos una empresa venezolana que produce Drink Cola y Frugy en su planta del Zulia, con la misión de resaltar lo hecho en Venezuela a través de cada sorbo de nuestras bebidas.</p>
+<p class="has-text-color has-md-font-size" style="color:#c9ccd3">Industria Venezolana de Bebidas JAU nació en Maracaibo, Venezuela, en 2023, por iniciativa de tres emprendedores con experiencia en el sector alimentario y una visión compartida: desarrollar bebidas de calidad que respondieran a los gustos y preferencias del consumidor venezolano.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:list {"className":"jau-valores-chips"} -->

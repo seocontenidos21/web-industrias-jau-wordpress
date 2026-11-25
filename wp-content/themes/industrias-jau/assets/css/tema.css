@@ -1539,3 +1539,56 @@ header.wp-block-template-part,
 .jau-footer .jau-contactos__nota { margin: -2px 0 2px; padding: 0; border-radius: 0; background: none; color: var(--jau-footer-tenue); font-size: 13px; font-weight: 400; }
 /* En la tablita del footer (ciudad | número) la nota ocupa el ancho de la tabla sin agrandarla. */
 .jau-contactos__grupo--cliente > .jau-contactos__nota { grid-column: 1 / -1; contain: inline-size; }
+
+/* Sobre nosotros › «Nuestra historia» (DWIJ-93, texto del cliente del 25/11/2026): primer bloque, en una
+   franja clara. A la izquierda el título, el origen como entrada y el resto como línea de tiempo
+   discreta (puntos azules; el de «Hoy» en naranja). A la derecha, la foto de ambiente sobre el
+   círculo azul de la marca con el dato «2023 · Maracaibo, Venezuela», como las escenas del sitio. */
+/* Si la página arranca con una franja de color a todo el ancho, va pegada al banner (sin la
+   línea clara de 16px que queda entre ambos). */
+.jau-banner + .jau-secciones:has(> .alignfull:first-child) { margin-top: 0 !important; }
+.jau-historia h2 { margin: 0; }
+.jau-historia__entrada { margin: 18px 0 0 !important; color: var(--jau-ink); font-size: clamp(18px, 1.55vw, 20px); line-height: 1.6; }
+.jau-historia__linea { position: relative; margin-top: 30px !important; padding-left: 36px; }
+.jau-historia__linea > p { position: relative; margin: 0 !important; line-height: 1.6; }
+.jau-historia__linea > p::before {
+	content: "";
+	position: absolute;
+	left: -36px;
+	top: 6px;
+	width: 16px;
+	height: 16px;
+	box-sizing: border-box;
+	border: 3px solid var(--jau-primary);
+	border-radius: 50%;
+	background: #fff;
+}
+.jau-historia__linea > p:last-child::before { border-color: var(--jau-accent); background: var(--jau-accent); }
+/* Tramo de línea de cada punto al siguiente (el espacio entre párrafos es de 24px). */
+.jau-historia__linea > p:not(:last-child)::after {
+	content: "";
+	position: absolute;
+	left: -29px;
+	top: 22px;
+	bottom: -30px;
+	width: 2px;
+	background: rgba(48, 64, 110, .22);
+}
+/* Escena: foto vertical sobre el círculo azul, punto naranja y el dato flotante. */
+.jau-escena--historia { --jau-circulo: var(--jau-primary); max-width: 460px; height: clamp(420px, 40vw, 540px); }
+.jau-escena--historia::before { width: min(100%, 440px); }
+.jau-escena--historia::after { content: ""; position: absolute; z-index: -1; top: 6%; right: 4%; width: 19%; aspect-ratio: 1 / 1; border-radius: 50%; background: var(--jau-accent); }
+.jau-escena--historia > figure { height: 86%; }
+.jau-escena__etiqueta.jau-historia__dato { top: 16%; left: 0; align-items: flex-start !important; padding: 14px 20px 14px 18px; }
+.jau-historia__dato p { color: var(--jau-ink-2); font-size: 14px; font-weight: 600; }
+.jau-historia__dato .jau-historia__anio { color: var(--jau-primary); font-family: var(--wp--preset--font-family--display); font-size: 36px; font-weight: 800; line-height: 1; letter-spacing: -.01em; }
+@media (max-width: 781px) {
+	.jau-historia { padding-top: 48px !important; padding-bottom: 48px !important; }
+	.jau-historia__linea { margin-top: 24px !important; padding-left: 30px; gap: 22px !important; }
+	.jau-historia__linea > p::before { left: -30px; width: 14px; height: 14px; top: 6px; }
+	.jau-historia__linea > p:not(:last-child)::after { left: -24px; top: 20px; bottom: -28px; }
+	.jau-escena--historia { height: 380px; margin-top: 8px; }
+	.jau-escena--historia::before { width: min(88%, 320px); }
+	.jau-escena__etiqueta.jau-historia__dato { top: 8%; padding: 12px 16px; }
+	.jau-historia__dato .jau-historia__anio { font-size: 30px; }
+}
