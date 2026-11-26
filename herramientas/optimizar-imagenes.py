@@ -108,6 +108,26 @@ def guardar_webp(img: Image.Image, destino: Path, limite: int, calidad: int = 86
     return len(datos)
 
 
+def quitar_sombra(img: Image.Image) -> Image.Image:
+    """Botellas: borra la sombra que algunas fotos traen pegada bajo la base (DWIJ-97).
+
+    Sin el círculo de color detrás, esa sombra se ve como un fondo gris cortado en la base
+    (p. ej. Frugy Mango). En el 15 % inferior de la silueta se vuelven transparentes los
+    píxeles semitransparentes oscuros y sin color (la sombra); la botella, opaca o de color,
+    no se toca. La sombra la pone el CSS, igual para todas.
+    """
+    caja = img.getchannel("A").point(lambda v: 255 if v > 40 else 0).getbbox()
+    if not caja:
+        return img
+    px = img.load()
+    for y in range(caja[3] - round((caja[3] - caja[1]) * 0.15), img.height):
+        for x in range(img.width):
+            r, g, b, a = px[x, y]
+            if 0 < a < 250 and max(r, g, b) < 72 and max(r, g, b) - min(r, g, b) < 40:
+                px[x, y] = (r, g, b, 0)
+    return img
+
+
 def procesar(ruta: Path) -> dict | None:
     try:
         img = Image.open(ruta)
@@ -126,6 +146,8 @@ def procesar(ruta: Path) -> dict | None:
         limite = LIMITE_AMBIENTE
     else:
         img = img.convert("RGBA")
+        if tipo == "botella":
+            img = quitar_sombra(img)
         # Recorte por la silueta real: se ignoran halos y sombras casi transparentes (alfa <= 40),
         # que agrandan la caja y separan las botellas en las composiciones.
         caja = img.getchannel("A").point(lambda v: 255 if v > 40 else 0).getbbox()

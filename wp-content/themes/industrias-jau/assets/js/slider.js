@@ -28,8 +28,10 @@
 		}
 
 		var titulos = slides.map( function ( s, i ) {
+			// El titular puede ser el logo de la marca (DWIJ-98): entonces vale su texto alternativo.
 			var h = s.querySelector( 'h1, h2' );
-			var t = h ? h.textContent.trim() : 'Diapositiva';
+			var logo = h ? h.querySelector( 'img[alt]' ) : null;
+			var t = ( h ? h.textContent.trim() : '' ) || ( logo ? logo.alt.trim() : '' ) || 'Diapositiva';
 			s.setAttribute( 'role', 'group' );
 			s.setAttribute( 'aria-roledescription', 'diapositiva' );
 			s.setAttribute( 'aria-label', t );

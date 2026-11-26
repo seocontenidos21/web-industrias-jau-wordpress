@@ -13,7 +13,6 @@
 				{ "slug": "primary", "name": "Primario (azul del logo)", "color": "#30406E" },
 				{ "slug": "primary-soft", "name": "Primario suave", "color": "#58678D" },
 				{ "slug": "primary-tint", "name": "Primario tinte", "color": "#E3E6ED" },
-				{ "slug": "accent", "name": "Acento (provisional)", "color": "#EF7926" },
 				{ "slug": "ink", "name": "Tinta", "color": "#16181D" },
 				{ "slug": "ink-2", "name": "Tinta secundaria", "color": "#3B3F48" },
 				{ "slug": "muted", "name": "Texto atenuado", "color": "#646A76" },
@@ -25,7 +24,8 @@
 				{ "slug": "drink-cola", "name": "Drink Cola (rojo del logo)", "color": "#C4023C" },
 				{ "slug": "drink-cola-fondo", "name": "Drink Cola (fondo con texto blanco)", "color": "#B3302D" },
 				{ "slug": "drink-cola-oscuro", "name": "Drink Cola (negro cola)", "color": "#1F1416" },
-				{ "slug": "frugy", "name": "Frugy", "color": "#F09C17" },
+				{ "slug": "frugy", "name": "Frugy (verde del logo)", "color": "#10A339" },
+				{ "slug": "frugy-oscuro", "name": "Frugy (verde oscuro, fondo con texto blanco)", "color": "#0B6E2A" },
 				{ "slug": "whatsapp", "name": "WhatsApp", "color": "#25D366" },
 				{ "slug": "error", "name": "Error", "color": "#B3261E" }
 			]
@@ -163,7 +163,7 @@
 					"lineHeight": "1.3"
 				},
 				":hover": { "color": { "background": "var:preset|color|primary", "text": "var:preset|color|white" } },
-				":focus": { "outline": { "color": "var:preset|color|accent", "offset": "2px", "style": "solid", "width": "2px" } }
+				":focus": { "outline": { "color": "var:preset|color|primary", "offset": "2px", "style": "solid", "width": "2px" } }
 			}
 		},
 		"blocks": {

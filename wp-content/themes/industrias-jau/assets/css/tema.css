@@ -6,7 +6,6 @@
 
 :root {
 	--jau-primary: var(--wp--preset--color--primary);
-	--jau-accent: var(--wp--preset--color--accent);
 	--jau-ink: var(--wp--preset--color--ink);
 	--jau-ink-2: var(--wp--preset--color--ink-2);
 	--jau-muted: var(--wp--preset--color--muted);
@@ -31,7 +30,9 @@ body { overflow-x: clip; }
 @keyframes jauAIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @keyframes jauAFade { from { opacity: 0; } to { opacity: 1; } }
 
-:focus-visible { outline: 2px solid var(--jau-accent); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--jau-primary); outline-offset: 2px; }
+/* Sobre fondos de color (slider, cierre, banners, footer) el foco va en blanco. Sin naranja (DWIJ-95). */
+:is(.jau-slide, .jau-cierre, .jau-dark, .jau-banner, .jau-footer, .has-primary-background-color) :focus-visible { outline-color: #fff; }
 
 /* --------------------------------------------------------------------------
    Marcador «por confirmar» (DWIJ-1): se muestra u oculta en theme.json → custom.pc-display
@@ -435,14 +436,12 @@ header.wp-block-template-part,
 .jau-producto .wp-block-post-featured-image {
 	margin: 0;
 	aspect-ratio: 1 / 1;
-	background: radial-gradient(circle closest-side at 50% 52%, var(--jau-tinte, #EEF0F4) 0 70%, transparent 71%), var(--jau-white);
+	background: var(--jau-white);
 	border-bottom: 1px solid var(--jau-line);
 	display: grid;
 	place-items: center;
 }
 .jau-producto .wp-block-post-featured-image img { width: 100%; height: 100%; object-fit: contain; padding: 9% 0; filter: drop-shadow(0 10px 12px rgba(20, 24, 30, .18)); }
-.marca-frugy { --jau-tinte: #FDEBCB; }
-.marca-drink-cola { --jau-tinte: #F6DADA; }
 .jau-q-destacados .wp-block-post-template,
 .jau-q-relacionados .wp-block-post-template { grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
 .jau-producto .wp-block-post-featured-image a { display: block; width: 100%; height: 100%; }
@@ -510,7 +509,7 @@ header.wp-block-template-part,
 	border: 1px solid var(--jau-line);
 	border-radius: 14px;
 	overflow: hidden;
-	background: radial-gradient(circle closest-side at 50% 52%, var(--jau-tinte, #EEF0F4) 0 72%, transparent 73%), var(--jau-white);
+	background: var(--jau-white);
 }
 .jau-ficha__foto .wp-block-post-featured-image img { width: 100%; height: 100%; object-fit: contain; padding: 8% 0; filter: drop-shadow(0 16px 18px rgba(20, 24, 30, .2)); }
 .jau-ficha__info > * { margin-block: 0 !important; }
@@ -527,19 +526,6 @@ header.wp-block-template-part,
    Bloque de cierre «Quiero ser distribuidor» (DWIJ-29)
    -------------------------------------------------------------------------- */
 .jau-cierre { position: relative; overflow: hidden; border-radius: var(--jau-r-lg); }
-.jau-cierre::before {
-	content: "";
-	position: absolute;
-	right: -60px;
-	top: -60px;
-	width: 240px;
-	height: 240px;
-	border-radius: 50%;
-	background: var(--jau-accent);
-	opacity: .9;
-	pointer-events: none;
-}
-.jau-cierre > * { position: relative; }
 .jau-cierre .jau-cierre__texto { max-width: 620px; }
 .jau-cierre .jau-cierre__texto p { font-size: 17px; opacity: .92; }
 
@@ -727,7 +713,7 @@ header.wp-block-template-part,
 	.jau-contacto__cols .jau-form__campo--ancho,
 	.jau-contacto__cols .jau-form__campo--ancho textarea { flex: 1 1 auto; }
 }
-.jau-form__req { color: var(--jau-accent); }
+.jau-form__req { color: var(--jau-primary); }
 .jau-form input, .jau-form select, .jau-form textarea {
 	width: 100%;
 	font: inherit;
@@ -966,8 +952,8 @@ header.wp-block-template-part,
 /* Datos sin cargar: no se muestran (sin marcadores «por confirmar») */
 .jau-pc { display: none !important; }
 
-/* Galerías de la ficha: botellas sobre círculo de color de la marca */
-.jau-galeria-botellas figure { background: radial-gradient(circle closest-side at 50% 52%, var(--jau-tinte, #EEF0F4) 0 72%, transparent 73%), var(--jau-white); padding: 20px 0 8px; }
+/* Galerías de la ficha: botellas sobre fondo limpio (sin círculo de color, DWIJ-97) */
+.jau-galeria-botellas figure { background: var(--jau-white); padding: 20px 0 8px; }
 .jau-galeria-botellas img { max-height: 360px; width: auto !important; margin-inline: auto; filter: drop-shadow(0 14px 16px rgba(20, 24, 30, .2)); }
 .jau-galeria-botellas figcaption { position: static !important; background: none !important; color: var(--jau-ink) !important; font-weight: 600; text-align: center; padding: 8px 0 0 !important; }
 .jau-ficha__contenido .jau-fotos figure { border: 0; background: none; }
@@ -1368,15 +1354,10 @@ header.wp-block-template-part,
 /* Formularios: horario de atención bajo los campos, con ícono y en negrita. */
 .jau-form__nota { display: inline-flex; align-items: flex-start; gap: 8px; margin: 0; color: var(--jau-ink); font-size: 15px; line-height: 1.4; }
 .jau-form__nota svg { flex: none; margin-top: 1px; color: var(--jau-primary); }
-@media (max-width: 1000px) {
-	.jau-maquila-contacto__cabecera::before { width: 150px; height: 150px; right: -60px; top: -60px; }
-	.jau-maquila-contacto__cabecera > * { max-width: calc(100% - 70px); }
-}
 
 /* Inicio › JAU Maquila: escena con botellas (gaseosa y saborizada) sobre el círculo azul, las dos
    soluciones como etiquetas flotantes y las razones como lista con ✓. */
 .jau-escena--maquila { --jau-circulo: var(--jau-primary); max-width: 520px; height: clamp(380px, 36vw, 480px); }
-.jau-escena--maquila::after { content: ""; position: absolute; z-index: -1; top: 7%; right: 9%; width: 21%; aspect-ratio: 1 / 1; border-radius: 50%; background: var(--jau-accent); }
 .jau-escena--maquila .jau-botellas { height: 90%; padding-bottom: 6%; }
 .jau-escena__etiqueta {
 	position: absolute;
@@ -1412,12 +1393,11 @@ header.wp-block-template-part,
 }
 
 /* Animación de la escena de JAU Maquila (escenas.js agrega .jau-anima y, al verse, .is-visible):
-   el círculo crece, las botellas suben, el punto naranja aparece y las etiquetas entran por los
+   el círculo crece, las botellas suben y las etiquetas entran por los
    lados; después las botellas y las etiquetas flotan suavemente. */
 @media (prefers-reduced-motion: no-preference) {
 	/* Estado inicial (sin transición: se oculta al instante, sin parpadeo). */
 	.jau-escena--maquila.jau-anima::before { opacity: 0; transform: translate(-50%, -50%) scale(.8); }
-	.jau-escena--maquila.jau-anima::after { transform: scale(0); }
 	.jau-escena--maquila.jau-anima .jau-botellas > figure { opacity: 0; transform: translateY(48px); }
 	.jau-escena--maquila.jau-anima .jau-escena__etiqueta { opacity: 0; }
 	.jau-escena--maquila.jau-anima .jau-escena__etiqueta--arriba { transform: translateX(-28px); }
@@ -1425,7 +1405,6 @@ header.wp-block-template-part,
 
 	/* Entrada al verse en pantalla. */
 	.jau-escena--maquila.jau-anima.is-visible::before { opacity: 1; transform: translate(-50%, -50%) scale(1); transition: opacity .6s ease, transform .9s cubic-bezier(.2, .8, .2, 1); }
-	.jau-escena--maquila.jau-anima.is-visible::after { transform: scale(1); transition: transform .7s cubic-bezier(.34, 1.56, .64, 1) .5s; animation: jauLatir 6s ease-in-out 1.4s infinite; }
 	.jau-escena--maquila.jau-anima.is-visible .jau-botellas > figure { opacity: 1; transform: none; transition: opacity .6s ease .2s, transform .9s cubic-bezier(.2, .8, .2, 1) .2s; }
 	.jau-escena--maquila.jau-anima.is-visible .jau-botellas > figure:nth-child(2) { transition-delay: .38s; }
 	.jau-escena--maquila.jau-anima.is-visible .jau-escena__etiqueta { opacity: 1; transform: none; transition: opacity .5s ease .7s, transform .7s cubic-bezier(.2, .8, .2, 1) .7s; }
@@ -1439,7 +1418,6 @@ header.wp-block-template-part,
 }
 @keyframes jauFlotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @keyframes jauFlotarSuave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-@keyframes jauLatir { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 
 /* Razones de JAU Maquila desplegables (desplegables.js agrega .es-desplegable): solo el título a la
    altura del ícono y una flecha; la descripción se abre con hover o clic. */
@@ -1527,7 +1505,6 @@ header.wp-block-template-part,
 /* «Contáctanos» de JAU Maquila en teléfonos: texto más corto y más chico (se oculta la segunda parte
    de la frase, marcada con .jau-solo-escritorio). */
 @media (max-width: 600px) {
-	.jau-maquila-contacto__cabecera::before { width: 120px; height: 120px; right: -48px; top: -52px; }
 	.jau-maquila-contacto__cabecera > p { max-width: none; font-size: 16px; line-height: 1.5; }
 	.jau-solo-escritorio { display: none; }
 }
@@ -1542,7 +1519,7 @@ header.wp-block-template-part,
 
 /* Sobre nosotros › «Nuestra historia» (DWIJ-93, texto del cliente del 25/11/2026): primer bloque, en una
    franja clara. A la izquierda el título, el origen como entrada y el resto como línea de tiempo
-   discreta (puntos azules; el de «Hoy» en naranja). A la derecha, la foto de ambiente sobre el
+   discreta (puntos azules; el de «Hoy», relleno). A la derecha, la foto de ambiente sobre el
    círculo azul de la marca con el dato «2023 · Maracaibo, Venezuela», como las escenas del sitio. */
 /* Si la página arranca con una franja de color a todo el ancho, va pegada al banner (sin la
    línea clara de 16px que queda entre ambos). */
@@ -1563,7 +1540,7 @@ header.wp-block-template-part,
 	border-radius: 50%;
 	background: #fff;
 }
-.jau-historia__linea > p:last-child::before { border-color: var(--jau-accent); background: var(--jau-accent); }
+.jau-historia__linea > p:last-child::before { background: var(--jau-primary); }
 /* Tramo de línea de cada punto al siguiente (el espacio entre párrafos es de 24px). */
 .jau-historia__linea > p:not(:last-child)::after {
 	content: "";
@@ -1574,10 +1551,9 @@ header.wp-block-template-part,
 	width: 2px;
 	background: rgba(48, 64, 110, .22);
 }
-/* Escena: foto vertical sobre el círculo azul, punto naranja y el dato flotante. */
+/* Escena: foto vertical sobre el círculo azul y el dato flotante. */
 .jau-escena--historia { --jau-circulo: var(--jau-primary); max-width: 460px; height: clamp(420px, 40vw, 540px); }
 .jau-escena--historia::before { width: min(100%, 440px); }
-.jau-escena--historia::after { content: ""; position: absolute; z-index: -1; top: 6%; right: 4%; width: 19%; aspect-ratio: 1 / 1; border-radius: 50%; background: var(--jau-accent); }
 .jau-escena--historia > figure { height: 86%; }
 .jau-escena__etiqueta.jau-historia__dato { top: 16%; left: 0; align-items: flex-start !important; padding: 14px 20px 14px 18px; }
 .jau-historia__dato p { color: var(--jau-ink-2); font-size: 14px; font-weight: 600; }
@@ -1592,3 +1568,15 @@ header.wp-block-template-part,
 	.jau-escena__etiqueta.jau-historia__dato { top: 8%; padding: 12px 16px; }
 	.jau-historia__dato .jau-historia__anio { font-size: 30px; }
 }
+
+/* Correcciones del cliente del 26/11/2026.
+   DWIJ-95: sin naranja en el sitio. La diapositiva de Frugy pasa al verde de su logo: fondo verde
+   oscuro (texto blanco legible) y círculo en el verde del logo, igual que Drink Cola con su rojo.
+   DWIJ-98: en Drink Cola y Frugy el titular es el logo (H2 con la imagen y el nombre como texto
+   alternativo), sin texto visible. */
+.jau-escena--verde { --jau-circulo: rgba(16, 163, 57, .85); }
+.jau-slide__texto h2.jau-slide__logo { font-size: 0; line-height: 0; letter-spacing: 0; }
+.jau-slide__logo img { display: block; }
+/* Sin el titular, el logo de Frugy (apaisado) crece para equilibrar la diapositiva. */
+.jau-slide__logo:not(.jau-slide__logo--alto) img { height: 84px; }
+@media (max-width: 781px) { .jau-slide__logo:not(.jau-slide__logo--alto) img { height: 58px; } }

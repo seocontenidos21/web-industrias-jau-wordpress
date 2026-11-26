@@ -3,7 +3,7 @@
  * Title: Slider del inicio
  * Slug: industrias-jau/hero-slider
  * Categories: industrias-jau, banner
- * Description: Banner principal en 4 diapositivas: institucional, Drink Cola, Frugy y distribuidores (DWIJ-53). Cada una con su escena (círculo + botellas o foto). Solo el primer titular es H1.
+ * Description: Banner principal en 4 diapositivas: institucional, Drink Cola, Frugy y distribuidores (DWIJ-53). Cada una con su escena (círculo + botellas o foto). Solo el primer titular es H1; en Drink Cola y Frugy el titular es el logo de la marca (DWIJ-98). Frugy en el verde de su logo, sin naranja (DWIJ-95). Distribuidores solo con el botón al formulario (DWIJ-96).
  * Keywords: slider, hero, banner, carrusel
  * Viewport Width: 1440
  *
@@ -21,6 +21,30 @@ defined( 'ABSPATH' ) || exit;
  */
 $jau_botella = function ( $clave, $tipo = '' ) {
 	return jau_tema_bloque_imagen( $clave, 'jau-botella' . ( $tipo ? ' jau-botella--' . $tipo : '' ), 'full' );
+};
+
+/**
+ * Logo de la marca como titular de la diapositiva (DWIJ-98): un H2 con la imagen y el nombre de la
+ * marca como texto alternativo. Se ve solo el logo, y la diapositiva conserva su título para
+ * buscadores y lectores de pantalla.
+ *
+ * @param string $clave  Clave del adjunto.
+ * @param string $nombre Nombre de la marca (texto alternativo).
+ * @param string $clase  Clases del titular.
+ * @return string
+ */
+$jau_logo_titulo = function ( $clave, $nombre, $clase ) {
+	$img = jau_tema_img( $clave );
+	if ( ! $img['id'] ) {
+		return '';
+	}
+	return sprintf(
+		'<!-- wp:heading {"className":"%1$s"} -->' . "\n" . '<h2 class="wp-block-heading %1$s"><img class="wp-image-%2$d" src="%3$s" alt="%4$s"></h2>' . "\n" . '<!-- /wp:heading -->',
+		esc_attr( $clase ),
+		$img['id'],
+		esc_url( (string) wp_get_attachment_image_url( $img['id'], 'medium_large' ) ),
+		esc_attr( $nombre )
+	);
 };
 ?>
 <!-- wp:group {"align":"full","className":"jau-slider","layout":{"type":"default"}} -->
@@ -59,11 +83,7 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <!-- wp:cover {"dimRatio":100,"overlayColor":"drink-cola-oscuro","isUserOverlayColor":true,"isDark":true,"className":"jau-slide","layout":{"type":"constrained"}} -->
 <div class="wp-block-cover jau-slide"><span aria-hidden="true" class="wp-block-cover__background has-drink-cola-oscuro-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:columns {"verticalAlignment":"center","className":"jau-slide__cols"} -->
 <div class="wp-block-columns are-vertically-aligned-center jau-slide__cols"><!-- wp:column {"verticalAlignment":"center","className":"jau-slide__texto"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><?php echo jau_tema_bloque_imagen( 'logo-drink-cola', 'jau-slide__logo jau-slide__logo--alto', 'medium' ); // phpcs:ignore ?>
-
-<!-- wp:heading -->
-<h2 class="wp-block-heading">Refresco de cola</h2>
-<!-- /wp:heading -->
+<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><?php echo $jau_logo_titulo( 'logo-drink-cola', 'Drink Cola', 'jau-slide__logo jau-slide__logo--alto' ); // phpcs:ignore ?>
 
 <!-- wp:paragraph -->
 <p>Bebida gaseosa de cola negra · 400 mL, 1.5 L y 2 L</p>
@@ -86,29 +106,25 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <!-- /wp:columns --></div></div>
 <!-- /wp:cover -->
 
-<!-- wp:cover {"dimRatio":100,"overlayColor":"frugy","isUserOverlayColor":true,"isDark":false,"className":"jau-slide","layout":{"type":"constrained"}} -->
-<div class="wp-block-cover is-light jau-slide"><span aria-hidden="true" class="wp-block-cover__background has-frugy-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:columns {"verticalAlignment":"center","className":"jau-slide__cols"} -->
+<!-- wp:cover {"dimRatio":100,"overlayColor":"frugy-oscuro","isUserOverlayColor":true,"isDark":true,"className":"jau-slide","layout":{"type":"constrained"}} -->
+<div class="wp-block-cover jau-slide"><span aria-hidden="true" class="wp-block-cover__background has-frugy-oscuro-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:columns {"verticalAlignment":"center","className":"jau-slide__cols"} -->
 <div class="wp-block-columns are-vertically-aligned-center jau-slide__cols"><!-- wp:column {"verticalAlignment":"center","className":"jau-slide__texto"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><?php echo jau_tema_bloque_imagen( 'logo-frugy-verde-blanco', 'jau-slide__logo', 'medium' ); // phpcs:ignore ?>
-
-<!-- wp:heading -->
-<h2 class="wp-block-heading">Bebidas saborizadas a frutas</h2>
-<!-- /wp:heading -->
+<div class="wp-block-column is-vertically-aligned-center jau-slide__texto"><?php echo $jau_logo_titulo( 'logo-frugy-verde-blanco', 'Frugy', 'jau-slide__logo' ); // phpcs:ignore ?>
 
 <!-- wp:paragraph -->
 <p>7 sabores: manzana, naranja, pera, durazno, mango, limón-coco y piña colada · 250 mL, 500 mL y 1.5 L</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"jau-btn-flecha","backgroundColor":"ink","textColor":"white"} -->
-<div class="wp-block-button jau-btn-flecha"><a class="wp-block-button__link has-white-color has-ink-background-color has-text-color has-background wp-element-button" href="/productos/?marca=frugy">Ver sabores</a></div>
+<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-blanco jau-btn-flecha"} -->
+<div class="wp-block-button is-style-blanco jau-btn-flecha"><a class="wp-block-button__link wp-element-button" href="/productos/?marca=frugy">Ver sabores</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","className":"jau-slide__visual"} -->
-<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena jau-escena--claro","layout":{"type":"default"}} -->
-<div class="wp-block-group jau-escena jau-escena--claro"><!-- wp:group {"className":"jau-botellas","layout":{"type":"default"}} -->
+<div class="wp-block-column is-vertically-aligned-center jau-slide__visual"><!-- wp:group {"className":"jau-escena jau-escena--verde","layout":{"type":"default"}} -->
+<div class="wp-block-group jau-escena jau-escena--verde"><!-- wp:group {"className":"jau-botellas","layout":{"type":"default"}} -->
 <div class="wp-block-group jau-botellas"><?php echo $jau_botella( 'frugy-pera-botella' ) . "\n\n" . $jau_botella( 'frugy-durazno-botella', 'media' ) . "\n\n" . $jau_botella( 'frugy-limon-coco-botella', 'centro' ) . "\n\n" . $jau_botella( 'frugy-naranja-botella', 'media' ) . "\n\n" . $jau_botella( 'frugy-manzana-botella' ); // phpcs:ignore ?></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
@@ -130,10 +146,6 @@ $jau_botella = function ( $clave, $tipo = '' ) {
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button {"className":"is-style-blanco jau-btn-flecha"} -->
 <div class="wp-block-button is-style-blanco jau-btn-flecha"><a class="wp-block-button__link wp-element-button" href="/contacto/#formulario">Quiero ser distribuidor</a></div>
-<!-- /wp:button -->
-
-<!-- wp:button {"className":"is-style-whatsapp","metadata":{"bindings":{"url":{"source":"jau/empresa","args":{"key":"whatsapp_url"}}}}} -->
-<div class="wp-block-button is-style-whatsapp"><a class="wp-block-button__link wp-element-button" href="#" target="_blank" rel="noreferrer noopener">Escríbenos por WhatsApp</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:column -->
